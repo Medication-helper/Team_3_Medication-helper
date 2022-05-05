@@ -9,23 +9,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="사용자 목록"
+        android:text="사용자 선택"
         android:textSize="30dp"
         android:layout_marginTop="40dp"
         android:layout_gravity="center"/>
 
-    <ListView
+    <ScrollView
         android:layout_width="200dp"
         android:layout_height="300dp"
-        android:id="@+id/userView"
+        android:id="@+id/scrView"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:scrollbars="vertical" />
+        android:layout_marginTop="30dp"
+        android:fillViewport="true"
+        android:background="@drawable/scrollview_outline">
+
+        <ListView
+            android:layout_width="200dp"
+            android:layout_height="300dp"
+            android:id="@+id/userView"
+            android:layout_gravity="center" />
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="100dp"
         android:orientation="horizontal">
 
         <Button
