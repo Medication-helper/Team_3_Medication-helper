@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="25dp"
+            android:background="@drawable/green_box"
+            android:padding="10dp"
+            android:text="복약정보 등록"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="210dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="110dp"
+                android:background="@drawable/white_button"
+                android:paddingLeft="72.5dp"
+                android:paddingTop="20dp"
+                android:text="복약 시작 날짜"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+            <DatePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:layout_marginTop="135dp"/>
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="210dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="360dp"
+                android:background="@drawable/white_button"
+                android:paddingLeft="72.5dp"
+                android:paddingTop="20dp"
+                android:text="복약 종료 날짜"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+            <DatePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:layout_marginTop="385dp"/>
+            <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다음 단계로"
+            android:textSize="17sp"
+            android:background="@drawable/white_button"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="610dp" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>
