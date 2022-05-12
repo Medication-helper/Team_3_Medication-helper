@@ -22,8 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
+            <!--병용 금기 부분-->
             <LinearLayout
-                android:id="@+id/tabComb"
+                android:id="@+id/TABCOMB"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -35,10 +36,17 @@
                     android:text="약 목록 조회"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
-                <ListView
+
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:id="@+id/MedicineList1"/>
+                    android:fillViewport="true">
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/MedicineList1"/>
+                </ScrollView>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
@@ -46,10 +54,15 @@
                     android:text="같이 복용하면 안됩니다!"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
-                <ListView
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:id="@+id/CombinationForbidden"/>
+                    android:fillViewport="true">
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/CombinationForbidden"/>
+                </ScrollView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -72,6 +85,7 @@
 
             </LinearLayout>
 
+            <!--임부 금기 부분-->
             <LinearLayout
                 android:id="@+id/tabPreg"
                 android:layout_width="match_parent"
@@ -85,10 +99,16 @@
                     android:text="약 목록 조회"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
-                <ListView
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:id="@+id/MedicineList2"/>
+                    android:fillViewport="true">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/MedicineList2"/>
+                </ScrollView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
@@ -96,11 +116,16 @@
                     android:text="임산부는 복용하면 안됩니다!"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
-                <ListView
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:id="@+id/PregnantForbidden"/>
+                    android:fillViewport="true">
 
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/PregnantForbidden"/>
+                </ScrollView>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -122,6 +147,7 @@
 
             </LinearLayout>
 
+            <!--연령 금기 부분-->
             <LinearLayout
                 android:id="@+id/tabAge"
                 android:layout_width="match_parent"
@@ -135,10 +161,16 @@
                     android:text="약 목록 조회"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
-                <ListView
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:id="@+id/MedicineList3"/>
+                    android:fillViewport="true">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/MedicineList3"/>
+                </ScrollView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
@@ -146,10 +178,16 @@
                     android:text="사용자 연령에 복용하면 안됩니다!"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
-                <ListView
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:id="@+id/AgeForbidden"/>
+                    android:fillViewport="true">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/AgeForbidden"/>
+                </ScrollView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
