@@ -26,10 +26,18 @@
         android:textSize="18dp"
         android:text="사진 촬영"
         android:id="@+id/takePicture"/>
-    <ListView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:id="@+id/MedicineList"/>
+        android:fillViewport="true">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/MedicineList"/>
+
+    </ScrollView>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
