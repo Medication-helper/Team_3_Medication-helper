@@ -13,7 +13,7 @@
         android:id="@+id/V_name"
         android:text = "이름"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="25dp"
         android:textSize="30dp"
         android:textStyle="bold">
     </TextView>
@@ -24,7 +24,7 @@
         android:id="@+id/E_name"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:ems = "7">
     </EditText>
 
@@ -32,22 +32,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/V_age"
-        android:text = "나이"
+        android:text = "생년월일"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="25dp"
         android:textSize="30dp"
         android:textStyle="bold">
+        
     </TextView>
 
-    <EditText
+    <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/E_age"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:ems = "7">
-    </EditText>
+        android:id="@+id/Birth"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:layout_gravity="center">s
+    </DatePicker>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,7 +56,6 @@
         android:id="@+id/V_sex"
         android:text = "성별"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
         android:textSize="30dp"
         android:textStyle="bold">
     </TextView>
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/RG"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
     <RadioButton
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Btn"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:text="설정 완료"
         android:textSize="30dp"
