@@ -13,6 +13,7 @@ public class userList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list);
+        setTitle("Medication Helper");
 
         Button button1 = findViewById(R.id.btn1);
         button1.setOnClickListener(new View.OnClickListener() {

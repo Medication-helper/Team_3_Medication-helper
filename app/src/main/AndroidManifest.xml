@@ -20,6 +20,9 @@
         </activity>
         <activity android:name=".userRegister"/>
         <activity android:name=".userList"/>
+        <activity android:name=".medicRegister" />
+        <activity android:name=".medicCheck" />
+        <activity android:name=".dateRegister" />
     </application>
 
 </manifest>

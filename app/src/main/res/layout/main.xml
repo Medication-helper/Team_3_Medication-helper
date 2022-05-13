@@ -26,6 +26,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUserReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="사용자 등록"
@@ -36,6 +37,7 @@
             android:layout_marginRight="80dp"
             android:layout_marginTop="75dp" />
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUserDel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="사용자 선택/삭제"
@@ -61,6 +63,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMediReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="복약 정보 등록"
@@ -72,6 +75,7 @@
             android:layout_marginTop="75dp"
             />
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMediCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="복약 정보 조회"
@@ -87,6 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="194dp">
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAlarm"
             android:layout_width="155dp"
             android:layout_height="155dp"
             android:layout_margin="15dp"
@@ -95,6 +100,7 @@
             android:background="@drawable/green_box"
             android:layout_gravity="left|bottom" />
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPage"
             android:layout_width="155dp"
             android:layout_height="155dp"
             android:layout_margin="15dp"
