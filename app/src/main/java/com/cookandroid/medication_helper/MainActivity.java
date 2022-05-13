@@ -2,7 +2,11 @@ package com.cookandroid.medication_helper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,5 +14,67 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        setTitle("Medication Helper");
+
+        Button btnUserReg = findViewById(R.id.btnUserReg);
+        Button btnUserDel = findViewById(R.id.btnUserDel);
+        Button btnMediReg = findViewById(R.id.btnMediReg);
+        Button btnMediCheck = findViewById(R.id.btnMediCheck);
+        Button btnAlarm = findViewById(R.id.btnAlarm);
+        Button btnPage = findViewById(R.id.btnPage);
+
+        btnUserReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userRegIntent = new Intent(MainActivity.this, userRegister.class);
+                startActivity(userRegIntent);
+                finish();
+            }
+        });
+
+        btnUserDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent delIntent = new Intent(MainActivity.this, userList.class);
+                startActivity(delIntent);
+                finish();
+            }
+        });
+
+        btnMediReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mediRegIntent = new Intent(MainActivity.this, medicRegister.class);
+                startActivity(mediRegIntent);
+                finish();
+            }
+        });
+
+        btnMediCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mediCheckIntent = new Intent(MainActivity.this, medicCheck.class);
+                startActivity(mediCheckIntent);
+                finish();
+            }
+        });
+
+        btnAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent alarmIntent = new Intent(MainActivity.this, dateRegister.class);
+                startActivity(alarmIntent);
+                finish();
+            }
+        });
+
+        btnPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pageIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hira.or.kr"));
+                startActivity(pageIntent);
+                finish();
+            }
+        });
     }
 }
