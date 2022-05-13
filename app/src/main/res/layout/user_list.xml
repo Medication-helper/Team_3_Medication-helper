@@ -20,8 +20,7 @@
         android:id="@+id/scrView"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:fillViewport="true"
-        android:background="@drawable/scrollview_outline">
+        android:fillViewport="true">
 
         <ListView
             android:layout_width="200dp"
