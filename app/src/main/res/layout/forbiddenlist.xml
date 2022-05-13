@@ -74,7 +74,9 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="50dp"
                         android:text="약 목록 전체 삭제" />
+
                     <Button
+                        android:id="@+id/combtabclose"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginLeft="250dp"
@@ -137,6 +139,7 @@
                         android:layout_marginLeft="50dp"
                         android:text="약 목록 전체 삭제" />
                     <Button
+                        android:id="@+id/pregtabclose"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginLeft="250dp"
@@ -200,6 +203,7 @@
                         android:layout_marginLeft="50dp"
                         android:text="약 목록 전체 삭제" />
                     <Button
+                        android:id="@+id/agetabclose"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginLeft="250dp"
