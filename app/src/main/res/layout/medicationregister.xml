@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,60 +7,72 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:text="처방전의 약 목록을 사진으로 찍어주세요"
-        android:textSize="15dp"
-        android:textColor="#000000"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/imageView"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="18dp"
-        android:text="사진 촬영"
-        android:id="@+id/takePicture"/>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:fillViewport="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:text="처방전의 약 목록을 사진으로 찍어주세요"
+            android:textSize="15dp"
+            android:textColor="#000000"/>
 
-        <ListView
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/MedicineList"/>
-
-    </ScrollView>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        >
+            android:layout_height="200dp"
+            android:id="@+id/imageView"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_gravity="center"
             android:textSize="18dp"
-            android:text="약 목록 추출"/>
+            android:text="사진 촬영"
+            android:id="@+id/takePicture"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:fillViewport="true">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/MedicineList"/>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:textSize="18dp"
+                android:text="약 목록 추출"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200dp"
+                android:text="복약 목록 등록"
+                android:textSize="18dp"
+                android:id="@+id/medicregister"/>
+
+        </RelativeLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
-            android:text="복약 목록 등록"
+            android:id="@+id/btnBack_medicRegister"
+            android:text="메인으로"
             android:textSize="18dp"
-            android:id="@+id/medicregister"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
 
-    </RelativeLayout>
-
-
-
-</LinearLayout>
+</ScrollView>

@@ -12,18 +12,19 @@ public class userRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.userinfo);
+        setContentView(R.layout.userregister);
         setTitle("Medication Helper");
 
-        Button button = findViewById(R.id.Btn);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button btnComplete = (Button) findViewById(R.id.BtnComplete);
+        Button btnBack_userRegister = (Button) findViewById(R.id.BtnBack_userRegister);
+
+        btnBack_userRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(userRegister.this, hompage.class);
-                startActivity(myIntent);
+                Intent BackToMain = new Intent(userRegister.this, MainActivity.class);
+                startActivity(BackToMain);
                 finish();
             }
         });
-
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,37 +7,50 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Textview"
-        android:layout_gravity="center"
-        android:text="복약 시작 시간"
-        android:textSize="30dp"
-        android:layout_marginTop="100dp"
-        android:textStyle="bold">
-    </TextView>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <TimePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Timepicker"
-        android:layout_marginTop="30dp"
-        android:timePickerMode="spinner"
-        android:layout_gravity="center">
-    </TimePicker>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Textview"
+            android:layout_gravity="center"
+            android:text="복약 시작 시간"
+            android:textSize="30dp"
+            android:layout_marginTop="100dp"
+            android:textStyle="bold">
+        </TextView>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Btn"
-        android:layout_marginTop="80dp"
-        android:layout_gravity="center"
-        android:text="설정 완료"
-        android:textSize="30dp"
-        android:backgroundTint="#c8c8c8">
-    </Button>
+        <TimePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Timepicker"
+            android:layout_marginTop="30dp"
+            android:timePickerMode="spinner"
+            android:layout_gravity="center">
+        </TimePicker>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnStarttimeComplete"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
+            android:text="설정 완료"
+            android:textSize="30dp"
+            android:backgroundTint="#c8c8c8">
+        </Button>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnBack_medicStartTime"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:text="메인으로"
+            android:textSize="30dp" />
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

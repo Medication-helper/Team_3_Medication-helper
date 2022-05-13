@@ -15,14 +15,14 @@ public class medicRegister extends AppCompatActivity {
         setContentView(R.layout.medicationregister);
         setTitle("Medication Helper");
 
+        Button registerButton = (Button) findViewById(R.id.medicregister);
+        Button btnBack_medicRegister = (Button) findViewById(R.id.btnBack_medicRegister);
 
-        Button registerButton=findViewById(R.id.medicregister);
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        btnBack_medicRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent regMedic=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(regMedic);
+                Intent BackToMain = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(BackToMain);
             }
         });
     }

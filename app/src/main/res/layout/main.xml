@@ -1,112 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="현재 사용자:"
-        android:textSize="30sp"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_margin="30dp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
-            android:layout_width="290dp"
-            android:layout_height="180dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/green_box"
-            android:padding="10dp"
-            android:text="사용자"
-            android:layout_margin="25dp"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnUserReg"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="사용자 등록"
-            android:textSize="17sp"
-            android:background="@drawable/white_button"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginTop="75dp" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnUserDel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="사용자 선택/삭제"
-            android:textSize="17sp"
-            android:background="@drawable/white_button"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginTop="135dp" />
-    </FrameLayout>
+            android:text="현재 사용자:"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="30dp" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="290dp"
-            android:layout_height="180dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/green_box"
-            android:padding="10dp"
-            android:layout_marginTop="25dp"
-            android:text="복약 정보"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMediReg"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="복약 정보 등록"
-            android:textSize="17sp"
-            android:background="@drawable/white_button"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginTop="75dp"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMediCheck"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="복약 정보 조회"
-            android:textSize="17sp"
-            android:background="@drawable/white_button"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginTop="135dp" />
-    </FrameLayout>
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="290dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/green_box"
+                android:padding="10dp"
+                android:text="사용자"
+                android:layout_margin="25dp"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUserReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사용자 등록"
+                android:textSize="17sp"
+                android:background="@drawable/white_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="75dp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUserDel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사용자 선택/삭제"
+                android:textSize="17sp"
+                android:background="@drawable/white_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="135dp" />
+        </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="194dp">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAlarm"
-            android:layout_width="155dp"
-            android:layout_height="155dp"
-            android:layout_margin="15dp"
-            android:text="알람 설정"
-            android:textSize="17sp"
-            android:background="@drawable/green_box"
-            android:layout_gravity="left|bottom" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnPage"
-            android:layout_width="155dp"
-            android:layout_height="155dp"
-            android:layout_margin="15dp"
-            android:text="심평원 홈페이지 접속"
-            android:textSize="17sp"
-            android:background="@drawable/green_box"
-            android:layout_gravity="right|bottom"/>
-    </FrameLayout>
-</LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="290dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/green_box"
+                android:padding="10dp"
+                android:layout_marginTop="25dp"
+                android:text="복약 정보"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMediReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="복약 정보 등록"
+                android:textSize="17sp"
+                android:background="@drawable/white_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="75dp"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMediCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="복약 정보 조회"
+                android:textSize="17sp"
+                android:background="@drawable/white_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="135dp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="194dp">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAlarm"
+                android:layout_width="155dp"
+                android:layout_height="155dp"
+                android:layout_margin="15dp"
+                android:text="알람 설정"
+                android:textSize="17sp"
+                android:background="@drawable/green_box"
+                android:layout_gravity="left|bottom" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPage"
+                android:layout_width="155dp"
+                android:layout_height="155dp"
+                android:layout_margin="15dp"
+                android:text="심평원 홈페이지 접속"
+                android:textSize="17sp"
+                android:background="@drawable/green_box"
+                android:layout_gravity="right|bottom"/>
+        </FrameLayout>
+    </LinearLayout>
+</ScrollView>
