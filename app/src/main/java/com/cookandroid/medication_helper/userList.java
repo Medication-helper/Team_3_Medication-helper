@@ -12,7 +12,7 @@ public class userList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.userinfo);
+        setContentView(R.layout.user_list);
 
         Button button1 = findViewById(R.id.btn1);
         button1.setOnClickListener(new View.OnClickListener() {
