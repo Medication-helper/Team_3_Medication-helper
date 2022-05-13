@@ -55,8 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
+            android:text="복약 목록 등록"
             android:textSize="18dp"
-            android:text="복약 목록 등록"/>
+            android:id="@+id/medicregister"/>
 
     </RelativeLayout>
 
