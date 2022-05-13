@@ -42,7 +42,8 @@
             android:layout_marginLeft="110dp"
             android:background="#dddddd"
             android:text="선택"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/btn1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -50,7 +51,8 @@
             android:layout_marginLeft="25dp"
             android:background="#dddddd"
             android:text="삭제"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/btn2"/>
     </LinearLayout>
 
 </LinearLayout>
