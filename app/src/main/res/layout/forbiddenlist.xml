@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:text="같이 복용하면 안됩니다!"
+                    android:text="병용하지 말 것"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
                 <ScrollView
@@ -69,6 +69,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     >
+
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
@@ -89,7 +90,7 @@
 
             <!--임부 금기 부분-->
             <LinearLayout
-                android:id="@+id/tabPreg"
+                android:id="@+id/TABPREG"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -115,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:text="임산부는 복용하면 안됩니다!"
+                    android:text="임산부는 복용하지 말 것"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
                 <ScrollView
@@ -152,7 +153,7 @@
 
             <!--연령 금기 부분-->
             <LinearLayout
-                android:id="@+id/tabAge"
+                android:id="@+id/TABAGE"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -178,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:text="사용자 연령에 복용하면 안됩니다!"
+                    android:text="사용자 연령에 복용시 위험"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
                 <ScrollView
