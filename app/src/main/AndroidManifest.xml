@@ -23,6 +23,7 @@
         <activity android:name=".medicRegister" />
         <activity android:name=".medicCheck" />
         <activity android:name=".dateRegister" />
+        <activity android:name=".timeRegister"/>
     </application>
 
 </manifest>

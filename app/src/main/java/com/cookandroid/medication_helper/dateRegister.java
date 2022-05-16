@@ -16,7 +16,17 @@ public class dateRegister extends AppCompatActivity {
 
         AppCompatButton btnNextStep = (AppCompatButton) findViewById(R.id.btnNextStep);
         AppCompatButton btnBack_medicInedate = (AppCompatButton) findViewById(R.id.btnBack_medicInedate);
+        
+        //날짜 설정
+        btnNextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent NextStep=new Intent(dateRegister.this,timeRegister.class);
+                startActivity(NextStep);
+            }
+        });
 
+        //메인화면으로
         btnBack_medicInedate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
