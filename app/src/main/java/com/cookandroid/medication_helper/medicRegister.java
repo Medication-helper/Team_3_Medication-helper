@@ -8,6 +8,14 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class medicRegister extends AppCompatActivity {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent BackToMain = new Intent(medicRegister.this, MainActivity.class);
+        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(BackToMain);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

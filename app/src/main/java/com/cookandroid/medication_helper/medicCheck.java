@@ -13,6 +13,14 @@ import com.google.android.material.tabs.TabLayout;
 
 @SuppressWarnings("deprecation")
 public class medicCheck extends TabActivity {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent BackToMain = new Intent(medicCheck.this, MainActivity.class);
+        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(BackToMain);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

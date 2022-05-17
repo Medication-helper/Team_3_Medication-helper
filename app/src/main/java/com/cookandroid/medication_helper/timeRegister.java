@@ -9,6 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class timeRegister extends AppCompatActivity {
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent BackToMain = new Intent(timeRegister.this, MainActivity.class);
+        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(BackToMain);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medicationstarttime);
