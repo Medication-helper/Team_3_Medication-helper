@@ -41,34 +41,5 @@ public class medicCheck extends TabActivity {
         TabHost.TabSpec tabSpecAge=tabHost.newTabSpec("AGE").setIndicator("연령 금기");
         tabSpecAge.setContent(R.id.TABAGE);
         tabHost.addTab(tabSpecAge);
-
-        Button combbacktoMain=findViewById(R.id.combtabclose);
-        Button pregbacktoMain=findViewById(R.id.pregtabclose);
-        Button agebacktoMain=findViewById(R.id.agetabclose);
-
-        combbacktoMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent combtoMain=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(combtoMain);
-            }
-        });
-
-        pregbacktoMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent pregtoMain=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(pregtoMain);
-            }
-        });
-
-        agebacktoMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent agetoMain=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(agetoMain);
-            }
-        });
-
     }
 }

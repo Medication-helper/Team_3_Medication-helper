@@ -13,30 +13,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="현재 사용자:"
-            android:textSize="25sp"
+            android:textColor="#036635"
+            android:textSize="30sp"
             android:layout_gravity="center_horizontal|top"
             android:layout_margin="30dp" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="290dp"
-                android:layout_height="180dp"
+                android:layout_height="464dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_margin="25dp"
                 android:background="@drawable/green_box"
                 android:padding="10dp"
                 android:text="사용자"
-                android:layout_margin="25dp"
-                android:textColor="#000000"
+                android:textColor="#036635"
                 android:textSize="20sp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnUserReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="사용자 등록"
+                android:textColor="#036635"
                 android:textSize="17sp"
-                android:background="@drawable/white_button"
+                android:background="@drawable/green_box"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="80dp"
                 android:layout_marginRight="80dp"
@@ -46,64 +50,79 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="사용자 선택/삭제"
+                android:textColor="#036635"
                 android:textSize="17sp"
-                android:background="@drawable/white_button"
+                android:background="@drawable/green_box"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="80dp"
                 android:layout_marginRight="80dp"
                 android:layout_marginTop="135dp" />
-        </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <TextView
-                android:layout_width="290dp"
-                android:layout_height="180dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/green_box"
-                android:padding="10dp"
-                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="210dp"
+                android:layout_marginLeft="70dp"
                 android:text="복약 정보"
-                android:textColor="#000000"
+                android:textColor="#036635"
                 android:textSize="20sp" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnMediReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="복약 정보 등록"
+                android:textColor="#036635"
                 android:textSize="17sp"
-                android:background="@drawable/white_button"
+                android:background="@drawable/green_box"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="80dp"
                 android:layout_marginRight="80dp"
-                android:layout_marginTop="75dp"
-                />
+                android:layout_marginTop="250dp" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnMediCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="복약 정보 조회"
+                android:textColor="#036635"
                 android:textSize="17sp"
-                android:background="@drawable/white_button"
+                android:background="@drawable/green_box"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="80dp"
                 android:layout_marginRight="80dp"
-                android:layout_marginTop="135dp" />
-        </FrameLayout>
+                android:layout_marginTop="310dp" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="194dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="홈페이지 접속"
+                android:textSize="20sp"
+                android:textColor="#036635"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="100dp"
+                android:layout_marginLeft="70dp"/>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPage"
-                android:layout_width="250dp"
+                android:layout_width="251dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="45dp"
-                android:text="심평원 홈페이지 접속"
-                android:textSize="17sp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="80dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/green_box"
-                android:layout_gravity="center_horizontal"/>
+                android:text="심평원 홈페이지 접속"
+                android:textColor="#036635"
+                android:textSize="17sp" />
         </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:drawableStart="@drawable/drawablesize"
+            android:text="3분카레 약국"
+            android:textColor="#036635"
+            android:textSize="25sp"
+            android:drawablePadding="5dp"
+            android:layout_margin="30dp"/>
     </LinearLayout>
 </ScrollView>
