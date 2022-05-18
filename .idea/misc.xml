@@ -42,8 +42,13 @@
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/white_button.xml" value="0.193" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/main.xml" value="0.35280797101449274" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.24954710144927536" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.35280797101449274" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicationstarttime.xml" value="0.24954710144927536" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicinedate.xml" value="0.33" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/userlist.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/userregister.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/web.xml" value="0.358695652173913" />
       </map>
     </option>
   </component>
