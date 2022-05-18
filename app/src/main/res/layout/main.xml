@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="현재 사용자:"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:layout_gravity="center_horizontal|top"
             android:layout_margin="30dp" />
 
@@ -96,23 +96,14 @@
             android:layout_width="match_parent"
             android:layout_height="194dp">
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnAlarm"
-                android:layout_width="155dp"
-                android:layout_height="155dp"
-                android:layout_margin="15dp"
-                android:text="알람 설정"
-                android:textSize="17sp"
-                android:background="@drawable/green_box"
-                android:layout_gravity="left|bottom" />
-            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPage"
-                android:layout_width="155dp"
-                android:layout_height="155dp"
-                android:layout_margin="15dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="45dp"
                 android:text="심평원 홈페이지 접속"
                 android:textSize="17sp"
                 android:background="@drawable/green_box"
-                android:layout_gravity="right|bottom"/>
+                android:layout_gravity="center_horizontal"/>
         </FrameLayout>
     </LinearLayout>
 </ScrollView>

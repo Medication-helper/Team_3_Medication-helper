@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         Button btnUserDel = findViewById(R.id.btnUserDel);
         Button btnMediReg = findViewById(R.id.btnMediReg);
         Button btnMediCheck = findViewById(R.id.btnMediCheck);
-        Button btnAlarm = findViewById(R.id.btnAlarm);
         Button btnPage = findViewById(R.id.btnPage);
 
 
@@ -94,19 +93,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent alarmIntent = new Intent(MainActivity.this, dateRegister.class);
-                startActivity(alarmIntent);
-                finish();
-            }
-        });
-
         btnPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent pageIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hira.or.kr"));
+                Intent pageIntent = new Intent(MainActivity.this, hompage.class);
                 startActivity(pageIntent);
                 finish();
             }
