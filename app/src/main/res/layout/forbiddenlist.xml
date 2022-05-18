@@ -14,7 +14,8 @@
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@drawable/tablayout">
         </TabWidget>
 
         <FrameLayout
@@ -35,7 +36,7 @@
                     android:layout_gravity="center"
                     android:text="약 목록 조회"
                     android:textSize="15dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="#036635"/>
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                     android:layout_gravity="center"
                     android:text="병용하지 말 것"
                     android:textSize="15dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="#036635"/>
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
@@ -71,20 +72,27 @@
                     >
 
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="251dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="50dp"
-                        android:text="약 목록 전체 삭제" />
-
-                    <Button
-                        android:id="@+id/combtabclose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="250dp"
-                        android:text="돌아가기" />
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginBottom="0dp"
+                        android:background="@drawable/green_box"
+                        android:text="약 목록 전체 삭제"
+                        android:textColor="#036635" />
 
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:drawableStart="@drawable/drawablesize"
+                    android:text="3분카레 약국"
+                    android:textColor="#036635"
+                    android:textSize="25sp"
+                    android:drawablePadding="5dp"
+                    android:layout_margin="29dp"/>
 
             </LinearLayout>
 
@@ -101,7 +109,7 @@
                     android:layout_gravity="center"
                     android:text="약 목록 조회"
                     android:textSize="15dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="#036635"/>
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
@@ -118,7 +126,7 @@
                     android:layout_gravity="center"
                     android:text="임산부는 복용하지 말 것"
                     android:textSize="15dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="#036635"/>
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
@@ -135,19 +143,24 @@
                     android:layout_gravity="center"
                     >
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="251dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="50dp"
-                        android:text="약 목록 전체 삭제" />
-                    <Button
-                        android:id="@+id/pregtabclose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="250dp"
-                        android:text="돌아가기" />
-
+                        android:layout_marginLeft="80dp"
+                        android:text="약 목록 전체 삭제"
+                        android:textColor="#036635"
+                        android:background="@drawable/green_box"/>
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:drawableStart="@drawable/drawablesize"
+                    android:text="3분카레 약국"
+                    android:textColor="#036635"
+                    android:textSize="25sp"
+                    android:drawablePadding="5dp"
+                    android:layout_margin="29dp"/>
 
             </LinearLayout>
 
@@ -164,7 +177,7 @@
                     android:layout_gravity="center"
                     android:text="약 목록 조회"
                     android:textSize="15dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="#036635"/>
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
@@ -181,7 +194,7 @@
                     android:layout_gravity="center"
                     android:text="사용자 연령에 복용시 위험"
                     android:textSize="15dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="#036635"/>
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
@@ -199,18 +212,25 @@
                     android:layout_gravity="center"
                     >
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="251dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="50dp"
-                        android:text="약 목록 전체 삭제" />
-                    <Button
-                        android:id="@+id/agetabclose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="250dp"
-                        android:text="돌아가기" />
+                        android:layout_marginLeft="80dp"
+                        android:text="약 목록 전체 삭제"
+                        android:textColor="#036635"
+                        android:background="@drawable/green_box"/>
 
                 </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:drawableStart="@drawable/drawablesize"
+                    android:text="3분카레 약국"
+                    android:textColor="#036635"
+                    android:textSize="25sp"
+                    android:drawablePadding="5dp"
+                    android:layout_margin="29dp"/>
 
             </LinearLayout>
 
