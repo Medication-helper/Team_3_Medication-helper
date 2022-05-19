@@ -1,5 +1,6 @@
 package com.cookandroid.medication_helper;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnMediReg = findViewById(R.id.btnMediReg);
         Button btnMediCheck = findViewById(R.id.btnMediCheck);
         Button btnPage = findViewById(R.id.btnPage);
-
-
+        Button btnAlarmSet = findViewById(R.id.btnAlarmset);
 
         btnUserReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent mediCheckIntent = new Intent(MainActivity.this, medicCheck.class);
                 startActivity(mediCheckIntent);
+                finish();
+            }
+        });
+
+        btnAlarmSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent alarmSetIntent=new Intent(MainActivity.this,dateRegister.class);
+                startActivity(alarmSetIntent);
                 finish();
             }
         });
