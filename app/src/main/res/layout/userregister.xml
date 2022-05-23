@@ -44,16 +44,16 @@
             android:textStyle="bold">
 
         </TextView>
-
-        <DatePicker
+        
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Birth"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            android:layout_gravity="center">s
-        </DatePicker>
-
+            android:id="@+id/BtnBirthChoose"
+            android:text="선택"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,6 +61,7 @@
             android:id="@+id/V_sex"
             android:text = "성별"
             android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:textSize="30dp"
             android:textStyle="bold">
         </TextView>
@@ -98,17 +99,16 @@
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:text="설정 완료"
-            android:textSize="30dp"
-            android:backgroundTint="#c8c8c8">
+            android:textSize="30dp">
         </Button>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/BtnBack_userRegister"
+            android:id="@+id/BtnInit"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="메인으로"
+            android:text="초기화"
             android:textSize="30dp">
         </Button>
     </LinearLayout>
