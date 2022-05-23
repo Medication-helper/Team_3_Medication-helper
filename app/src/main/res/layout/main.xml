@@ -138,8 +138,8 @@
             android:drawableStart="@drawable/drawablesize"
             android:text="3분카레 약국"
             android:textColor="#036635"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:drawablePadding="5dp"
-            android:layout_margin="30dp"/>
+            android:layout_margin="10dp"/>
     </LinearLayout>
 </ScrollView>
