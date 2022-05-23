@@ -29,10 +29,12 @@ public class medicRegister extends AppCompatActivity {
         setContentView(R.layout.medicationregister);
         setTitle("Medication Helper");
 
-        ListView mediclist=(ListView)findViewById(R.id.MedicineList);
-        EditText medicName=(EditText) findViewById(R.id.medicedittext);
-        Button mediceditbtn = (Button) findViewById(R.id.editmedicbtn);
-        Button btnBack_medicRegister = (Button) findViewById(R.id.btnBack_medicRegister);
+        ListView mediclist=(ListView)findViewById(R.id.MedicineList);//목록 출력
+        EditText medicName=(EditText) findViewById(R.id.medicedittext);//약을 입력하는 부분
+        Button medicaddbtn = (Button) findViewById(R.id.addmedicbtn);//입력버튼
+        Button medicdelbtn =(Button) findViewById(R.id.delmedicbtn);//삭제버튼
+        Button backbtn = (Button) findViewById(R.id.backtoMain);//메인메뉴버튼
+        Button medicregibtn=(Button) findViewById(R.id.regimedicbtn);//약 목록 등록 버튼
 
         //약 목록 데이터를 가지는 String 배열 medicinelist
         List<String> medicinelist=new ArrayList<>();
@@ -43,11 +45,11 @@ public class medicRegister extends AppCompatActivity {
         //리스트뷰와 어댑터 연결
         mediclist.setAdapter(adpater);
 
-        //하나의 항목을 설정할 수 있도록 설정
+        //하나의 항목을 선택할 수 있도록 설정
         mediclist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         //메인메뉴 복귀 버튼
-        btnBack_medicRegister.setOnClickListener(new View.OnClickListener() {
+        backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent BackToMain = new Intent(getApplicationContext(),MainActivity.class);
@@ -56,7 +58,7 @@ public class medicRegister extends AppCompatActivity {
         });
         
         //약을 목록에 추가하는 버튼
-        mediceditbtn.setOnClickListener(new View.OnClickListener() {
+        medicaddbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -65,6 +67,18 @@ public class medicRegister extends AppCompatActivity {
                 adpater.notifyDataSetChanged();
                 medicName.setText("");
 
+            }
+        });
+    
+        //선택한 약을 목록에서 삭제하는 버튼
+        medicdelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos=mediclist.getCheckedItemPosition();
+
+                medicinelist.remove(pos);
+                adpater.notifyDataSetChanged();
+                mediclist.clearChoices();
             }
         });
     }
