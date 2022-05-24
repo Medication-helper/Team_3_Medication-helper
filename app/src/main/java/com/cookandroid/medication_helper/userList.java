@@ -1,13 +1,20 @@
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class userList extends AppCompatActivity {
+
+    ListView userView;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -27,6 +34,8 @@ public class userList extends AppCompatActivity {
         Button BtnDelete = (Button) findViewById(R.id.btnDelete);
         Button BtnBack_userList = (Button) findViewById(R.id.btnBack_userList);
 
+        userView = (ListView)findViewById(R.id.userView);
+
         BtnBack_userList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,5 +45,27 @@ public class userList extends AppCompatActivity {
             }
         });
 
+
+
+        displayList();
     }
+
+    void displayList(){
+
+        myDBHelper helper = new myDBHelper(this);
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM userTBL",null);
+
+        ListViewAdapter adapter = new ListViewAdapter();
+
+        while(cursor.moveToNext()){
+            adapter.addItemToList(cursor.getString(0),cursor.getString(1),cursor.getString(2));
+        }
+
+        userView.setAdapter(adapter);
+
+    }
+
+
 }

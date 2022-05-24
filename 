@@ -1,0 +1,253 @@
+warning: LF will be replaced by CRLF in app/src/main/res/layout/item_listview.xml.
+The file will have its original line endings in your working directory
+[1mdiff --git a/.idea/misc.xml b/.idea/misc.xml[m
+[1mindex 6947115..8b78eb7 100644[m
+[1m--- a/.idea/misc.xml[m
+[1m+++ b/.idea/misc.xml[m
+[36m@@ -4,6 +4,7 @@[m
+     <option name="filePathToZoomLevelMap">[m
+       <map>[m
+         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.25364583333333335" />[m
+[32m+[m[32m        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.1453804347826087" />[m
+         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/main.xml" value="0.25364583333333335" />[m
+         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.25364583333333335" />[m
+         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.25364583333333335" />[m
+[1mdiff --git a/app/src/main/java/com/cookandroid/medication_helper/ListViewAdapter.java b/app/src/main/java/com/cookandroid/medication_helper/ListViewAdapter.java[m
+[1mindex 0fa79fb..3f9b76f 100644[m
+[1m--- a/app/src/main/java/com/cookandroid/medication_helper/ListViewAdapter.java[m
+[1m+++ b/app/src/main/java/com/cookandroid/medication_helper/ListViewAdapter.java[m
+[36m@@ -1,2 +1,65 @@[m
+[31m-package com.cookandroid.medication_helper;public class ListViewAdapter {[m
+[32m+[m[32mpackage com.cookandroid.medication_helper;[m
+[32m+[m
+[32m+[m[32mimport android.content.Context;[m
+[32m+[m[32mimport android.view.LayoutInflater;[m
+[32m+[m[32mimport android.view.View;[m
+[32m+[m[32mimport android.view.ViewGroup;[m
+[32m+[m[32mimport android.widget.BaseAdapter;[m
+[32m+[m[32mimport android.widget.TextView;[m
+[32m+[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m
+[32m+[m
+[32m+[m[32mpublic class ListViewAdapter extends BaseAdapter {[m
+[32m+[m
+[32m+[m[32m    ArrayList<listViewAdapterData> list = new ArrayList<listViewAdapterData>();[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public int getCount(){[m
+[32m+[m[32m        return list.size();[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public Object getItem(int i){[m
+[32m+[m[32m        return list.get(i);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public long getItemId(int i){[m
+[32m+[m[32m        return i;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public View getView(int i, View view, ViewGroup viewGroup){[m
+[32m+[m
+[32m+[m[32m        final Context context = viewGroup.getContext();[m
+[32m+[m
+[32m+[m[32m        if(view == null){[m
+[32m+[m[32m            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);[m
+[32m+[m[32m            view = inflater.inflate(R.layout.item_listview,viewGroup,false);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        TextView tvName = (TextView) view.findViewById(R.id.item_name);[m
+[32m+[m[32m        TextView tvBirth = (TextView) view.findViewById(R.id.item_birth);[m
+[32m+[m[32m        TextView tvGender = (TextView) view.findViewById(R.id.item_gender);[m
+[32m+[m
+[32m+[m[32m        listViewAdapterData listdata = list.get(i);[m
+[32m+[m
+[32m+[m[32m        tvName.setText(listdata.getuName());[m
+[32m+[m[32m        tvName.setText(listdata.getuBirth());[m
+[32m+[m[32m        tvName.setText(listdata.getuGender());[m
+[32m+[m
+[32m+[m[32m        return view;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void addItemToList(String uName, String uBirth, String uGender){[m
+[32m+[m[32m        listViewAdapterData listdata = new listViewAdapterData();[m
+[32m+[m
+[32m+[m[32m        listdata.setuName(uName);[m
+[32m+[m[32m        listdata.setuBirth(uBirth);[m
+[32m+[m[32m        listdata.setuGender(uGender);[m
+[32m+[m
+[32m+[m[32m        list.add(listdata);[m
+[32m+[m[32m    }[m
+[32m+[m
+ }[m
+[1mdiff --git a/app/src/main/java/com/cookandroid/medication_helper/listViewAdapterData.java b/app/src/main/java/com/cookandroid/medication_helper/listViewAdapterData.java[m
+[1mindex e7e32ff..a342464 100644[m
+[1m--- a/app/src/main/java/com/cookandroid/medication_helper/listViewAdapterData.java[m
+[1m+++ b/app/src/main/java/com/cookandroid/medication_helper/listViewAdapterData.java[m
+[36m@@ -1,2 +1,19 @@[m
+[31m-package com.cookandroid.medication_helper;public class listViewAdapterData {[m
+[32m+[m[32mpackage com.cookandroid.medication_helper;[m
+[32m+[m
+[32m+[m[32mpublic class listViewAdapterData {[m
+[32m+[m
+[32m+[m[32m    private String uName;[m
+[32m+[m[32m    private String uBirth;[m
+[32m+[m[32m    private String uGender;[m
+[32m+[m
+[32m+[m[32m    public void setuName(String uName){this.uName = uName;}[m
+[32m+[m[32m    public void setuBirth(String uBirth){this.uBirth = uBirth;}[m
+[32m+[m[32m    public void setuGender(String uGender){this.uGender = uGender;}[m
+[32m+[m
+[32m+[m[32m    public String getuName(){return this.uName;}[m
+[32m+[m[32m    public String getuBirth(){return this.uBirth;}[m
+[32m+[m[32m    public String getuGender(){return this.uGender;}[m
+[32m+[m
+[32m+[m
+[32m+[m
+ }[m
+[1mdiff --git a/app/src/main/java/com/cookandroid/medication_helper/myDBHelper.java b/app/src/main/java/com/cookandroid/medication_helper/myDBHelper.java[m
+[1mindex 49e8041..e528a0c 100644[m
+[1m--- a/app/src/main/java/com/cookandroid/medication_helper/myDBHelper.java[m
+[1m+++ b/app/src/main/java/com/cookandroid/medication_helper/myDBHelper.java[m
+[36m@@ -11,12 +11,19 @@[m [mpublic class myDBHelper extends SQLiteOpenHelper {[m
+ [m
+     @Override[m
+     public void onCreate(SQLiteDatabase db) {[m
+[31m-        db.execSQL("CREATE TABLE userTBL ( uName CHAR(20) PRIMARY KEY, uBirth CHAR(20), uGender CHAR(5));");[m
+[32m+[m[32m        String qry = "CREATE TABLE userTBL ( uName CHAR(20) PRIMARY KEY, uBirth CHAR(20), uGender CHAR(5))";[m[41m[m
+[32m+[m[32m        db.execSQL(qry);[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+     }[m
+ [m
+     @Override[m
+     public void onUpgrade(SQLiteDatabase db, int i, int i1) {[m
+[31m-        db.execSQL("DROP TABLE IF EXISTS userTBL");[m
+[32m+[m[41m[m
+[32m+[m[32m        String qry = "DROP TABLE IF EXISTS userTBL";[m[41m[m
+[32m+[m[32m        db.execSQL(qry);[m[41m[m
+         onCreate(db);[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/java/com/cookandroid/medication_helper/userList.java b/app/src/main/java/com/cookandroid/medication_helper/userList.java[m
+[1mindex 31b4d38..5093aa8 100644[m
+[1m--- a/app/src/main/java/com/cookandroid/medication_helper/userList.java[m
+[1m+++ b/app/src/main/java/com/cookandroid/medication_helper/userList.java[m
+[36m@@ -1,13 +1,20 @@[m
+ package com.cookandroid.medication_helper;[m
+ [m
+ import android.content.Intent;[m
+[32m+[m[32mimport android.database.Cursor;[m
+[32m+[m[32mimport android.database.sqlite.SQLiteDatabase;[m
+ import android.os.Bundle;[m
+ import android.view.View;[m
+ import android.widget.Button;[m
+[32m+[m[32mimport android.widget.EditText;[m
+[32m+[m[32mimport android.widget.ListView;[m
+ [m
+ import androidx.appcompat.app.AppCompatActivity;[m
+ [m
+ public class userList extends AppCompatActivity {[m
+[32m+[m
+[32m+[m[32m    ListView userView;[m
+[32m+[m
+     @Override[m
+     public void onBackPressed() {[m
+         super.onBackPressed();[m
+[36m@@ -27,6 +34,8 @@[m [mpublic class userList extends AppCompatActivity {[m
+         Button BtnDelete = (Button) findViewById(R.id.btnDelete);[m
+         Button BtnBack_userList = (Button) findViewById(R.id.btnBack_userList);[m
+ [m
+[32m+[m[32m        userView = (ListView)findViewById(R.id.userView);[m
+[32m+[m
+         BtnBack_userList.setOnClickListener(new View.OnClickListener() {[m
+             @Override[m
+             public void onClick(View v) {[m
+[36m@@ -36,5 +45,27 @@[m [mpublic class userList extends AppCompatActivity {[m
+             }[m
+         });[m
+ [m
+[32m+[m
+[32m+[m
+[32m+[m[32m        displayList();[m
+     }[m
+[32m+[m
+[32m+[m[32m    void displayList(){[m
+[32m+[m
+[32m+[m[32m        myDBHelper helper = new myDBHelper(this);[m
+[32m+[m[32m        SQLiteDatabase db = helper.getReadableDatabase();[m
+[32m+[m
+[32m+[m[32m        Cursor cursor = db.rawQuery("SELECT * FROM userTBL",null);[m
+[32m+[m
+[32m+[m[32m        ListViewAdapter adapter = new ListViewAdapter();[m
+[32m+[m
+[32m+[m[32m        while(cursor.moveToNext()){[m
+[32m+[m[32m            adapter.addItemToList(cursor.getString(0),cursor.getString(1),cursor.getString(2));[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        userView.setAdapter(adapter);[m
+[32m+[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m
+ }[m
+[1mdiff --git a/app/src/main/java/com/cookandroid/medication_helper/userRegister.java b/app/src/main/java/com/cookandroid/medication_helper/userRegister.java[m
+[1mindex 7da4f97..77e8ca3 100644[m
+[1m--- a/app/src/main/java/com/cookandroid/medication_helper/userRegister.java[m
+[1m+++ b/app/src/main/java/com/cookandroid/medication_helper/userRegister.java[m
+[36m@@ -101,6 +101,8 @@[m [mpublic class userRegister extends AppCompatActivity {[m
+                         Toast.makeText(getApplicationContext(), "성별이 선택되지 않았습니다.", Toast.LENGTH_SHORT).show();[m
+                         break;[m
+                 }[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+             }[m
+         });[m
+     }[m
+[1mdiff --git a/app/src/main/res/layout/item_listview.xml b/app/src/main/res/layout/item_listview.xml[m
+[1mindex 41d2ef1..036371d 100644[m
+[1m--- a/app/src/main/res/layout/item_listview.xml[m
+[1m+++ b/app/src/main/res/layout/item_listview.xml[m
+[36m@@ -1,6 +1,31 @@[m
+ <?xml version="1.0" encoding="utf-8"?>[m
+[31m-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"[m
+[32m+[m[32m<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"[m
+     android:layout_width="match_parent"[m
+[31m-    android:layout_height="match_parent">[m
+[32m+[m[32m    android:layout_height="wrap_content"[m
+[32m+[m[32m    android:elevation="7dp"[m
+[32m+[m[32m    android:padding="10dp">[m
+ [m
+[31m-</LinearLayout>[m
+\ No newline at end of file[m
+[32m+[m[32m    <RelativeLayout[m
+[32m+[m[32m        android:layout_width="match_parent"[m
+[32m+[m[32m        android:layout_height="wrap_content"[m
+[32m+[m[32m        android:padding="10dp">[m
+[32m+[m[32m        <TextView[m
+[32m+[m[32m            android:layout_width="wrap_content"[m
+[32m+[m[32m            android:layout_height="wrap_content"[m
+[32m+[m[32m            android:id="@+id/item_name"[m
+[32m+[m[32m            android:layout_marginLeft="10dp"[m
+[32m+[m[32m            android:textSize="20dp"/>[m
+[32m+[m[32m        <TextView[m
+[32m+[m[32m            android:layout_width="wrap_content"[m
+[32m+[m[32m            android:layout_height="wrap_content"[m
+[32m+[m[32m            android:id="@+id/item_birth"[m
+[32m+[m[32m            android:layout_marginLeft="10dp"[m
+[32m+[m[32m            android:textSize="20dp"/>[m
+[32m+[m[32m        <TextView[m
+[32m+[m[32m            android:layout_width="wrap_content"[m
+[32m+[m[32m            android:layout_height="wrap_content"[m
+[32m+[m[32m            android:id="@+id/item_gender"[m
+[32m+[m[32m            android:layout_marginLeft="10dp"[m
+[32m+[m[32m            android:textSize="20dp"/>[m
+[32m+[m[32m    </RelativeLayout>[m
+[32m+[m[32m</RelativeLayout>[m
+\ No newline at end of file[m
