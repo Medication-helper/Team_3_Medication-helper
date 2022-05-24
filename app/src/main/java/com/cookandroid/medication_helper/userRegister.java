@@ -101,6 +101,8 @@ public class userRegister extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "성별이 선택되지 않았습니다.", Toast.LENGTH_SHORT).show();
                         break;
                 }
+
+
             }
         });
     }
