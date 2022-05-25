@@ -52,7 +52,7 @@ public class userList extends AppCompatActivity {
 
     void displayList(){
 
-        myDBHelper helper = new myDBHelper(this);
+        userDBHelper helper = new userDBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM userTBL",null);
