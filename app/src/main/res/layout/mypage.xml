@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원 정보"
+            android:textColor="#036635"
+            android:textSize="40sp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디 : "
+            android:textColor="#036635"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="생년월일 : "
+            android:textColor="#036635"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="성별 : "
+            android:textColor="#036635"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="30dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/green_box"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:text="회원탈퇴"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:drawableStart="@drawable/drawablesize"
+            android:text="3분카레 약국"
+            android:textColor="#036635"
+            android:textSize="30sp"
+            android:drawablePadding="5dp"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>
