@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookandroid.medication_helper">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -22,6 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.cookandroid.cameraocr.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
         <activity android:name=".userRegister"/>
         <activity android:name=".userList"/>
         <activity android:name=".medicRegister" />
