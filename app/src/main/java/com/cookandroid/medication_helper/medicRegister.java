@@ -24,12 +24,18 @@ import androidx.core.content.FileProvider;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,15 +48,22 @@ public class medicRegister extends AppCompatActivity {
     String datapath="";//언어데이터가 있는 경로
 
     Button btnCamera;
-    ImageView imageView;
 
     Button btnOCR;
-    TextView Stringcheck;
+    TextView OCRTextView;
 
     Uri photoUri;
     String OCRresult;
+
+    Button btnRegister;
+
     private String imageFilePath;
     static final int REQUEST_IMAGE_CAPTURE = 672;
+
+    String[] EdiCodearray;
+    String[] medicList;//OpenAPI를 이용해 받아온 의약품 이름 목록을 저장하는 배열
+
+    String data;
 
     /*스마트폰의 뒤로가기 버튼에 대한 뒤로가기 동작 구현*/
     @Override
@@ -70,9 +83,9 @@ public class medicRegister extends AppCompatActivity {
 
         btnCamera=(Button) findViewById(R.id.btnPicture);
         btnOCR=(Button)findViewById(R.id.btnOCR);
+        btnRegister=(Button)findViewById(R.id.regimedicbtn);
 
         Button backbtn = (Button) findViewById(R.id.backtoMain);//메인메뉴버튼
-        Button medicregibtn=(Button) findViewById(R.id.regimedicbtn);//약 목록 등록 버튼
 
         datapath=getFilesDir()+"/tessaract/";
 
@@ -90,6 +103,8 @@ public class medicRegister extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendTakePhotoIntent();
+                ((ImageView)findViewById(R.id.CameraPicture)).setVisibility(View.VISIBLE);
+                OCRTextView.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -104,11 +119,36 @@ public class medicRegister extends AppCompatActivity {
                 mTess.setImage(image);
 
                 OCRresult=mTess.getUTF8Text();
-                TextView OCRTextView=(TextView) findViewById(R.id.OCRTextResult);
+                OCRTextView=(TextView) findViewById(R.id.OCRTextResult);
                 OCRTextView.setText(OCRresult);
 
                 /*String array에 줄 단위로 저장 -> 이걸로 약 데이터 생성하면 됨*/
-                String[] array=OCRresult.split("\n");
+                EdiCodearray=OCRresult.split("\n");
+
+                //api를 통해 받아온 약 목록을 저장
+                medicList=new String[EdiCodearray.length];
+
+                OCRTextView.setVisibility(View.VISIBLE);
+                ((ImageView)findViewById(R.id.CameraPicture)).setVisibility(View.INVISIBLE);
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch(view.getId()){
+                    case R.id.regimedicbtn:
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(int i=0;i<EdiCodearray.length;i++){
+                                    data=getXmlData(EdiCodearray[i]);//줄에 edicode로 약품명 받아오기
+                                    medicList[i]=data;//약 품목 리스트에 저장
+                                }
+                            }
+                        }).start();
+                        break;
+                }
             }
         });
 
@@ -121,6 +161,70 @@ public class medicRegister extends AppCompatActivity {
                 startActivity(BackToMain);
             }
         });
+    }
+
+    /*public void mOnClick(View v){
+        switch(v.getId()){
+            case R.id.regimedicbtn:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(int i=0;i<EdiCodearray.length;i++){
+                            data=getXmlData(EdiCodearray[i]);
+                            medicList[i]=data;
+                        }
+                    }
+                }).start();
+                break;
+        }
+    }*/
+
+    String getXmlData(String edicode){
+        StringBuffer buffer=new StringBuffer();
+        String str=edicode;
+        String medicName= URLEncoder.encode(str);
+
+
+        String queryUrl="http://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService02/getDrugPrdtPrmsnDtlInq01?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&pageNo=1&numOfRows=3&type=xml&edi_code="+medicName;
+        try {
+            URL url=new URL(queryUrl);
+            InputStream is=url.openStream();
+
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            XmlPullParser xpp=factory.newPullParser();
+            xpp.setInput(new InputStreamReader(is,"UTF-8"));
+
+            String tag;
+
+            xpp.next();
+            int eventType=xpp.getEventType();
+
+            while(eventType != XmlPullParser.END_DOCUMENT){
+                switch (eventType){
+
+                    case XmlPullParser.START_TAG:
+                        tag=xpp.getName();
+
+                        if(tag.equals("item"));
+                        else if(tag.equals("ITEM_NAME")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                            buffer.append("\n");
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        break;
+                    case XmlPullParser.END_TAG:
+                        tag=xpp.getName();
+
+                        if(tag.equals("item"))buffer.append("\n");
+                }
+                eventType=xpp.next();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return buffer.toString();
     }
 
     private int exifOrientationToDegrees(int exifOrientation) {

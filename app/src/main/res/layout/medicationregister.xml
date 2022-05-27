@@ -25,15 +25,23 @@
             android:layout_height="500dp"
             android:background="@drawable/green_box">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:id="@+id/CameraPicture"
+                android:visibility="invisible">
+            </ImageView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:id="@+id/OCRTextResult"
+                android:text="이 곳에 사진과 목록이 표시됩니다"
+                android:textAlignment="center"
+                android:visibility="visible"
                 android:textSize="25dp"></TextView>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:id="@+id/CameraPicture"></ImageView>
+
+
+
         </FrameLayout>
 
         <RelativeLayout
