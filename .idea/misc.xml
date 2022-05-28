@@ -3,14 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/ageforbiddenlist.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/comforbiddenlist.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/home.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/login.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicCheck.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicationstarttime.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicinedate.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/pregnantforbiddenlist.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/user_list.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userinfo.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userregister.xml" value="0.12335359675785208" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/green_box.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1955" />
