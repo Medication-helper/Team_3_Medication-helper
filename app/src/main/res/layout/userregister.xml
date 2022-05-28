@@ -16,9 +16,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
+            android:text="회원 가입"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="#036635"
+            android:drawableStart="@drawable/drawablesize"
+            android:drawableEnd="@drawable/drawablesize">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
             android:text="ID (20자 이내)"
-            android:textSize="50dp"
-            android:textStyle="bold">
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#036635">
         </TextView>
 
         <EditText
@@ -27,7 +41,8 @@
             android:id="@+id/E_ID"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:ems = "7">
         </EditText>
 
         <TextView
@@ -36,8 +51,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:text="비밀번호"
-            android:textSize="50dp"
-            android:textStyle="bold">
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#036635">
         </TextView>
 
         <EditText
@@ -46,7 +62,8 @@
             android:id="@+id/E_Pass"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:ems = "7">
         </EditText>
 
         <TextView
@@ -56,7 +73,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:textSize="30dp"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            android:textColor="#036635">
         </TextView>
 
         <EditText
@@ -76,19 +94,23 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:textSize="30dp"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            android:textColor="#036635">
 
         </TextView>
-        
-        <Button
-            android:layout_width="wrap_content"
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/BtnBirthChoose"
             android:text="선택"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:layout_marginTop="30dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:background="@drawable/green_box"
+            android:backgroundTint="@android:color/holo_green_light"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -126,25 +148,31 @@
 
         </RadioGroup>
 
-        <Button
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/BtnComplete"
             android:layout_marginTop="30dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
             android:layout_gravity="center"
             android:text="설정 완료"
-            android:textSize="30dp">
-        </Button>
+            android:textSize="30dp"
+            android:background="@drawable/green_box"
+            android:backgroundTint="@android:color/holo_green_light">
+        </androidx.appcompat.widget.AppCompatButton>
 
-        <Button
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/BtnInit"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:text="초기화"
-            android:textSize="30dp">
-        </Button>
+            android:layout_gravity="center|bottom"
+            android:drawableStart="@drawable/drawablesize"
+            android:text="3분카레 약국"
+            android:textColor="#036635"
+            android:textSize="30sp"
+            android:drawablePadding="5dp"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 
 </ScrollView>

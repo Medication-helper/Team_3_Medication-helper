@@ -4,7 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.1453804347826087" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.2" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/login.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/main.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.25364583333333335" />
@@ -14,6 +14,8 @@
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/mypage.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/user_list.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userinfo.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userregister.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/web.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/drawablesize.xml" value="0.353" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/green_box.xml" value="0.1955" />
