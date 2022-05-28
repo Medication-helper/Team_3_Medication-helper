@@ -2,37 +2,30 @@ package com.cookandroid.medication_helper;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.DownloadListener;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-public class hompage extends AppCompatActivity {
+import com.cookandroid.medication_helper.R;
 
+public class webpageFragment extends Fragment {
+
+    @Nullable
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent BackToMain = new Intent(hompage.this, MainActivity.class);
-        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(BackToMain);
-        finish();
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        View view = inflater.inflate(R.layout.web, container, false);
+        WebView webView;
 
-    private String Tag = hompage.class.getSimpleName();
-    private WebView webView = null;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.web);
-        setTitle("Medication Helper");
-        setContentView(R.layout.web);
-
-        webView = (WebView) findViewById(R.id.web);
+        webView = (WebView) view.findViewById(R.id.web);
 
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
@@ -45,5 +38,12 @@ public class hompage extends AppCompatActivity {
         webView.getSettings().setSupportMultipleWindows(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.loadUrl("https://www.hira.or.kr");
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

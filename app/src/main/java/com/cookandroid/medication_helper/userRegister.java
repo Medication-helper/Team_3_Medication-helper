@@ -50,8 +50,7 @@ public class userRegister extends AppCompatActivity {
         RB_Woman = (RadioButton) findViewById(R.id.RB_woman);
         btnBirthChoose = (Button) findViewById(R.id.BtnBirthChoose);
         btnComplete = (Button) findViewById(R.id.BtnComplete);
-        btnInit = (Button) findViewById(R.id.BtnInit);
-
+        
         InputFilter filterAlphaNumber = new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {

@@ -1,16 +1,17 @@
 package com.cookandroid.medication_helper;
 
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,70 +45,30 @@ public class MainActivity extends AppCompatActivity {
         exitDialog.show();
     }
 
+    private BottomNavigationView bottomNav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
         setTitle("Medication Helper");
 
-        Button btnUserReg = findViewById(R.id.btnUserReg);
-        Button btnUserDel = findViewById(R.id.btnUserDel);
-        Button btnMediReg = findViewById(R.id.btnMediReg);
-        Button btnMediCheck = findViewById(R.id.btnMediCheck);
-        Button btnPage = findViewById(R.id.btnPage);
-        Button btnAlarmSet = findViewById(R.id.btnAlarmset);
-
-        btnUserReg.setOnClickListener(new View.OnClickListener() {
+        bottomNav = findViewById(R.id.bottomNav);
+        //처음 화면
+        getSupportFragmentManager().beginTransaction().add(R.id.content_layout, new homeFragment()).commit();
+        //바텀 네비게이션 뷰 안의 아이템 설정
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent userRegIntent = new Intent(MainActivity.this, userRegister.class);
-                startActivity(userRegIntent);
-                finish();
-            }
-        });
-
-        btnUserDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent delIntent = new Intent(MainActivity.this, userList.class);
-                startActivity(delIntent);
-                finish();
-            }
-        });
-
-        btnMediReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mediRegIntent = new Intent(MainActivity.this, medicRegister.class);
-                startActivity(mediRegIntent);
-                finish();
-            }
-        });
-
-        btnMediCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mediCheckIntent = new Intent(MainActivity.this, medicCheck.class);
-                startActivity(mediCheckIntent);
-                finish();
-            }
-        });
-
-        btnAlarmSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent alarmSetIntent=new Intent(MainActivity.this,dateRegister.class);
-                startActivity(alarmSetIntent);
-                finish();
-            }
-        });
-
-        btnPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent pageIntent = new Intent(MainActivity.this, hompage.class);
-                startActivity(pageIntent);
-                finish();
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.homeNav:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, new homeFragment()).commit();
+                }
+                switch (item.getItemId()){
+                    case R.id.pageNav:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, new webpageFragment()).commit();
+                }
+                return true;
             }
         });
     }

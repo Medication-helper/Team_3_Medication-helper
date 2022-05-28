@@ -4,34 +4,24 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.2" />
-        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/login.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/main.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicationstarttime.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicinedate.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/mypage.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/user_list.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userinfo.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userregister.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/Shin Yoon Ho/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/web.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1955" />
-        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/drawablesize.xml" value="0.353" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/green_box.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/white_button.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/login.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/main.xml" value="0.358695652173913" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicationStartTime.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.22" />
-        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicationstarttime.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicinedate.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/mypage.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/userInfo.xml" value="0.358695652173913" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/user_list.xml" value="0.358695652173913" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/userinfo.xml" value="0.1875" />
@@ -47,18 +37,30 @@
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userinfo.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userregister.xml" value="0.33" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2985" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/box.xml" value="0.295" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/drawablesize.xml" value="0.2985" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/green_box.xml" value="0.193" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/navcolor.xml" value="0.2985" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/tablayout.xml" value="0.2985" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/tabstyle.xml" value="0.194" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/white_button.xml" value="0.193" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.35280797101449274" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/fragment_web.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/home.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/login.xml" value="0.3515625" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/main.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.24954710144927536" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicationstarttime.xml" value="0.24954710144927536" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/medicinedate.xml" value="0.33" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/mypage.xml" value="0.3515625" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/userlist.xml" value="0.358695652173913" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/userregister.xml" value="0.358695652173913" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/web.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/menu/mainnav.xml" value="0.3515625" />
       </map>
     </option>
   </component>
