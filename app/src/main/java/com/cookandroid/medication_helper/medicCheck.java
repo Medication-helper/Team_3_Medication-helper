@@ -31,7 +31,7 @@ public class medicCheck extends TabActivity {
         btnMedilist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(medicCheck.this, medicCheck.class);
+                Intent intent = new Intent(medicCheck.this, medicinelist.class);
                 startActivity(intent);
                 finish();
             }

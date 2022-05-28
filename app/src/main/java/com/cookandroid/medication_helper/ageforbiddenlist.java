@@ -24,9 +24,9 @@ public class ageforbiddenlist extends AppCompatActivity {
         setContentView(R.layout.ageforbiddenlist);
         setTitle("Medication Helper");
 
-        Button btnOCR = findViewById(R.id.btnOCR);
+        Button btnBack = findViewById(R.id.btnback3);
 
-        btnOCR.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ageforbiddenlist.this, medicCheck.class);
