@@ -14,8 +14,9 @@
             android:layout_height="wrap_content"
             android:text="일일 복약 횟수"
             android:layout_gravity="center"
-            android:textSize="20dp"
-            android:layout_marginTop="100dp" />
+            android:textSize="30dp"
+            android:layout_marginTop="80dp"
+            android:textColor="#036635"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,14 +29,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtFrequency"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:ems="3"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회"
-                android:textSize="20dp"
-                android:layout_gravity="center" />
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:textColor="#036635"/>
         </LinearLayout>
 
         <TextView
@@ -43,8 +46,9 @@
             android:layout_height="wrap_content"
             android:text="복약 간격"
             android:layout_gravity="center"
-            android:textSize="20dp"
-            android:layout_marginTop="100dp" />
+            android:textSize="30dp"
+            android:layout_marginTop="100dp"
+            android:textColor="#036635"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,48 +61,71 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtHour"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:ems="2"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="시간"
-                android:textSize="20dp"
-                android:layout_gravity="center" />
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:textColor="#036635"/>
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:id="@+id/edtMinute"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:ems="2"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분"
-                android:textSize="20dp"
-                android:layout_gravity="center" />
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:textColor="#036635"/>
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnNext"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:backgroundTint="#c8c8c8"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginBottom="20dp"
             android:text="다음 단계"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:background="@drawable/green_box"
+            android:backgroundTint="@android:color/holo_green_light"/>
 
-        <Button
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnBack_medicFrequency"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginBottom="20dp"
             android:text="메인으로"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:background="@drawable/green_box"
+            android:backgroundTint="@android:color/holo_green_light" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:drawableStart="@drawable/drawablesize"
+            android:text="3분카레 약국"
+            android:textColor="#036635"
+            android:textSize="30sp"
+            android:drawablePadding="5dp"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 
 </ScrollView>
