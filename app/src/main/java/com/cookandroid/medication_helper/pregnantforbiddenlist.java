@@ -24,9 +24,9 @@ public class pregnantforbiddenlist extends AppCompatActivity {
         setContentView(R.layout.pregnantforbiddenlist);
         setTitle("Medication Helper");
 
-        Button btnOCR = findViewById(R.id.btnOCR);
+        Button btnBack = findViewById(R.id.btnback4);
 
-        btnOCR.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(pregnantforbiddenlist.this, medicCheck.class);
