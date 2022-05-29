@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:authorities="com.cookandroid.cameraocr.fileprovider"
+            android:authorities="com.cookandroid.medication_helper.fileprovider"
             android:name="androidx.core.content.FileProvider"
             android:grantUriPermissions="true"
             android:exported="false">
