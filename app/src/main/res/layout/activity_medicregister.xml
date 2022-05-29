@@ -23,7 +23,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:background="@drawable/green_box">
+            android:background="@drawable/green_border">
 
             <TextView
                 android:id="@+id/OCRTextResult"
@@ -59,7 +59,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="60dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="사진 찍기"
                 android:textColor="#036635"
                 android:textSize="20dp"/>
@@ -71,7 +71,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="220dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="코드 추출"
                 android:textColor="#036635"
                 android:textSize="20dp"/>
@@ -90,7 +90,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="100dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="메인으로"
                 android:textColor="#036635"
                 android:textSize="18dp" />
@@ -102,7 +102,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="약 목록 등록"
                 android:textColor="#036635"
                 android:textSize="18dp" />

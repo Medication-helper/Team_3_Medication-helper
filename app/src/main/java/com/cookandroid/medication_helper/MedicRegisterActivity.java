@@ -12,11 +12,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,11 +35,9 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class medicRegister extends AppCompatActivity {
+public class MedicRegisterActivity extends AppCompatActivity {
 
     Bitmap image;//사용되는 이미지
     private TessBaseAPI mTess;//Tess API REference
@@ -71,7 +66,7 @@ public class medicRegister extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(medicRegister.this, MainActivity.class);
+        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainActivity.class);
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(BackToMain);
         finish();
@@ -80,7 +75,7 @@ public class medicRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.medicationregister);
+        setContentView(R.layout.activity_medicregister);
         setTitle("Medication Helper");
 
         btnCamera=(Button) findViewById(R.id.btnPicture);
@@ -93,6 +88,7 @@ public class medicRegister extends AppCompatActivity {
 
         datapath=getFilesDir()+"/tessaract/";
 
+        checkFile(new File(datapath+"tessdata/"),"kor");
         checkFile(new File(datapath+"tessdata/"),"eng");
 
         String lang="eng";
@@ -102,7 +98,7 @@ public class medicRegister extends AppCompatActivity {
         mTess.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, ".,!?@#$%&*()<>_-+=/:;'\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
         mTess.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789");
 
-        
+
         //카메라에 접근해 사진 찍는 버튼
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override

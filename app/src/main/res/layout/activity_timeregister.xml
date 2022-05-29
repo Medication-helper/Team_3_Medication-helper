@@ -43,27 +43,14 @@
             android:layout_gravity="center"
             android:text="설정 완료"
             android:textSize="30dp"
-            android:background="@drawable/green_box"
+            android:background="@drawable/green_border"
             android:backgroundTint="@android:color/holo_green_light"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnBack_medicStartTime"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginRight="130dp"
-            android:layout_marginBottom="40dp"
-            android:layout_gravity="center"
-            android:text="메인으로"
-            android:textSize="30dp"
-            android:background="@drawable/green_box"
-            android:backgroundTint="@android:color/holo_green_light"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
-            android:drawableStart="@drawable/drawablesize"
+            android:drawableStart="@drawable/green_cross_size"
             android:text="3분카레 약국"
             android:textColor="#036635"
             android:textSize="30sp"

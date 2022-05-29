@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 @SuppressWarnings("deprecation")
-public class medicCheck extends TabActivity {
+public class MedicCheckActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(medicCheck.this, MainActivity.class);
+        Intent BackToMain = new Intent(MedicCheckActivity.this, MainActivity.class);
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(BackToMain);
         finish();
@@ -20,7 +22,7 @@ public class medicCheck extends TabActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mediccheck);
+        setContentView(R.layout.activity_mediccheck);
         setTitle("Medication Helper");
 
         Button btnMedilist = findViewById(R.id.btnMedilist);
@@ -31,7 +33,7 @@ public class medicCheck extends TabActivity {
         btnMedilist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(medicCheck.this, medicinelist.class);
+                Intent intent = new Intent(MedicCheckActivity.this, MedicineListActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -39,7 +41,7 @@ public class medicCheck extends TabActivity {
         btnFBcom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(medicCheck.this, comforbiddenlist.class);
+                Intent intent = new Intent(MedicCheckActivity.this, ComForbiddenListActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -47,7 +49,7 @@ public class medicCheck extends TabActivity {
         btnFBpreg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(medicCheck.this, pregnantforbiddenlist.class);
+                Intent intent = new Intent(MedicCheckActivity.this, PregnantForbiddenListActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -55,7 +57,7 @@ public class medicCheck extends TabActivity {
         btnFBage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(medicCheck.this, ageforbiddenlist.class);
+                Intent intent = new Intent(MedicCheckActivity.this, AgeForbiddenListActivity.class);
                 startActivity(intent);
                 finish();
             }

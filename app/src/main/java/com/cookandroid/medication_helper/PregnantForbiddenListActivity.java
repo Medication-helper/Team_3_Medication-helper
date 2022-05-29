@@ -7,12 +7,12 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class comforbiddenlist extends AppCompatActivity {
+public class PregnantForbiddenListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent Back = new Intent(comforbiddenlist.this, medicCheck.class);
+        Intent Back = new Intent(PregnantForbiddenListActivity.this, MedicCheckActivity.class);
         Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(Back);
         finish();
@@ -21,15 +21,15 @@ public class comforbiddenlist extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.comforbiddenlist);
+        setContentView(R.layout.activity_pregnantforbiddenlist);
         setTitle("Medication Helper");
 
-        Button btnback = findViewById(R.id.btnback2);
+        Button btnBack = findViewById(R.id.btnback4);
 
-        btnback.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(comforbiddenlist.this, medicCheck.class);
+                Intent intent = new Intent(PregnantForbiddenListActivity.this, MedicCheckActivity.class);
                 startActivity(intent);
                 finish();
             }

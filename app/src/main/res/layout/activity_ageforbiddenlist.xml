@@ -22,7 +22,7 @@
             android:id="@+id/combinationXList"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:background="@drawable/green_box"
+            android:background="@drawable/green_border"
             android:layout_marginBottom="5dp"/>
         <TextView
             android:text=" 금기 성분"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:textSize="50dp"
-            android:background="@drawable/green_box"/>
+            android:background="@drawable/green_border"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="220dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="뒤로 가기"
                 android:textColor="#036635"
                 android:textSize="20dp"/>

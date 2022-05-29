@@ -18,7 +18,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="25dp"
                 android:gravity="center_horizontal"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:padding="10dp"
                 android:text="알람 설정"
                 android:textColor="#036635"
@@ -33,7 +33,6 @@
                     android:layout_height="210dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="110dp"
-                    android:background="@drawable/white_button"
                     android:paddingLeft="72.5dp"
                     android:paddingTop="20dp"
                     android:text="복약 시작 날짜"
@@ -51,7 +50,6 @@
                     android:layout_height="210dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="360dp"
-                    android:background="@drawable/white_button"
                     android:paddingLeft="72.5dp"
                     android:paddingTop="20dp"
                     android:text="복약 종료 날짜"
@@ -74,21 +72,8 @@
                     android:layout_marginLeft="80dp"
                     android:layout_marginRight="80dp"
                     android:layout_marginTop="610dp"
-                    android:background="@drawable/green_box"
+                    android:background="@drawable/green_border"
                     android:backgroundTint="@android:color/holo_green_light"/>
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnBack_medicInedate"
-                    android:text="메인으로"
-                    android:textSize="17sp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginRight="80dp"
-                    android:layout_marginTop="700dp"
-                    android:background="@drawable/green_box"
-                    android:backgroundTint="@android:color/holo_green_light"/>
-
             </FrameLayout>
 
         </FrameLayout>

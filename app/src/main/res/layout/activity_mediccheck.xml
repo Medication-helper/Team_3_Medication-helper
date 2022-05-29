@@ -29,7 +29,7 @@
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_marginTop="70dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="약 목록 조회"
                 android:textColor="#036635"
                 android:textSize="20sp" />
@@ -40,7 +40,7 @@
                 android:layout_toRightOf="@+id/btnMedilist"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="70dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="병용 금지\n약물 조회"
                 android:textColor="#036635"
                 android:textSize="20sp" />
@@ -50,7 +50,7 @@
                 android:layout_height="140dp"
                 android:layout_below="@+id/btnMedilist"
                 android:layout_marginTop="70dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="임부 금지\n약물 조회"
                 android:textColor="#036635"
                 android:textSize="20sp" />
@@ -61,7 +61,7 @@
                 android:layout_toRightOf="@+id/btnFBpreg"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="280dp"
-                android:background="@drawable/green_box"
+                android:background="@drawable/green_border"
                 android:text="연령 금지\n약물 조회"
                 android:textColor="#036635"
                 android:textSize="20sp" />
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
-            android:drawableStart="@drawable/drawablesize"
+            android:drawableStart="@drawable/green_cross_size"
             android:text="3분카레 약국"
             android:textColor="#036635"
             android:textSize="30sp"
