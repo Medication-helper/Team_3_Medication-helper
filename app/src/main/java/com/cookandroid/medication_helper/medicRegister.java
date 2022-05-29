@@ -93,13 +93,14 @@ public class medicRegister extends AppCompatActivity {
 
         datapath=getFilesDir()+"/tessaract/";
 
-        checkFile(new File(datapath+"tessdata/"),"kor");
         checkFile(new File(datapath+"tessdata/"),"eng");
 
-        String lang="kor+eng";
+        String lang="eng";
 
         mTess=new TessBaseAPI();
         mTess.init(datapath,lang);
+        mTess.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, ".,!?@#$%&*()<>_-+=/:;'\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+        mTess.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789");
 
         
         //카메라에 접근해 사진 찍는 버튼
