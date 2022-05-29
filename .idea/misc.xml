@@ -24,10 +24,11 @@
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/green_box.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1955" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/drawable/white_button.xml" value="0.1955" />
-        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/ageforbiddenlist.xml" value="0.30833333333333335" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/comforbiddenlist.xml" value="0.27853260869565216" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/home.xml" value="0.33" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/item_listview.xml" value="0.358695652173913" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/main.xml" value="0.358695652173913" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicCheck.xml" value="0.358695652173913" />
@@ -35,6 +36,7 @@
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicationStartTime.xml" value="0.358695652173913" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicationregister.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicationstarttime.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/mediccheck.xml" value="0.1875" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicinedate.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/medicinelist.xml" value="0.25" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/mypage.xml" value="0.358695652173913" />

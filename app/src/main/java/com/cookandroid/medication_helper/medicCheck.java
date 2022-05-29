@@ -20,7 +20,7 @@ public class medicCheck extends TabActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.medicCheck);
+        setContentView(R.layout.mediccheck);
         setTitle("Medication Helper");
 
         Button btnMedilist = findViewById(R.id.btnMedilist);
