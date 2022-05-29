@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicationHelper"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".UserData">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UserRegisterActivity"/>
+        <activity android:name=".MedicCheckActivity" />
+        <activity android:name=".MedicineListActivity" />
+        <activity android:name=".MedicRegisterActivity" />
+        <activity android:name=".ComForbiddenListActivity"/>
+        <activity android:name=".TimeRegisterActivity"/>
+        <activity android:name=".AgeForbiddenListActivity" />
+        <activity android:name=".PregnantForbiddenListActivity" />
+        <activity android:name=".DateRegisterActivity" />
         <provider
             android:authorities="com.cookandroid.medication_helper.fileprovider"
             android:name="androidx.core.content.FileProvider"
@@ -32,11 +41,5 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
-        <activity android:name=".userRegister"/>
-        <activity android:name=".medicRegister" />
-        <activity android:name=".medicCheck" />
-        <activity android:name=".dateRegister" />
-        <activity android:name=".timeRegister"/>
     </application>
-
 </manifest>

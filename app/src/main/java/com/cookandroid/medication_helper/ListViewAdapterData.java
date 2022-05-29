@@ -1,6 +1,6 @@
 package com.cookandroid.medication_helper;
 
-public class listViewAdapterData {
+public class ListViewAdapterData {
 
     private String uName;
     private String uBirth;

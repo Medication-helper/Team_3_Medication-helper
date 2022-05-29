@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MyPageFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,7 +54,7 @@
             android:layout_marginRight="130dp"
             android:layout_marginTop="150dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/green_box"
+            android:background="@drawable/green_border"
             android:backgroundTint="@android:color/holo_green_light"
             android:text="회원탈퇴"
             android:textColor="@color/black"
@@ -60,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
-            android:drawableStart="@drawable/drawablesize"
+            android:drawableStart="@drawable/green_cross_size"
             android:text="3분카레 약국"
             android:textColor="#036635"
             android:textSize="30sp"
@@ -68,6 +71,5 @@
             android:layout_margin="10dp"/>
 
     </LinearLayout>
-
 
 </FrameLayout>

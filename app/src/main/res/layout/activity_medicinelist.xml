@@ -12,32 +12,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="임산부 금기 약물"
+            android:text="처방약 목록"
             android:textColor="#036635"
             android:textSize="30sp"
             android:layout_gravity="center_horizontal|top"
             android:layout_margin="10dp" />
 
         <ListView
-            android:id="@+id/combinationXList"
+            android:id="@+id/medicationlist"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:background="@drawable/green_box"
+            android:layout_height="600dp"
+            android:background="@drawable/green_border"
             android:layout_marginBottom="5dp"/>
-        <TextView
-            android:text=" 금기 성분"
-            android:textColor="#036635"
-            android:textSize="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginBottom="5dp"
-            />
-        <TextView
-            android:id="@+id/fobiddenIngredeint"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="50dp"
-            android:background="@drawable/green_box"/>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,16 +32,16 @@
             android:layout_gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnback4"
+                android:id="@+id/btndelete"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="220dp"
+                android:layout_marginLeft="80dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/green_box"
-                android:text="뒤로 가기"
+                android:background="@drawable/green_border"
+                android:text="목록 삭제"
                 android:textColor="#036635"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
         </RelativeLayout>
     </LinearLayout>

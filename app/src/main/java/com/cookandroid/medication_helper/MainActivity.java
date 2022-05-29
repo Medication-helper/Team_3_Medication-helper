@@ -1,15 +1,14 @@
 package com.cookandroid.medication_helper;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -45,28 +44,29 @@ public class MainActivity extends AppCompatActivity {
         exitDialog.show();
     }
 
-    private BottomNavigationView bottomNav;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Medication Helper");
 
-        bottomNav = findViewById(R.id.bottomNav);
-        //처음 화면
-        getSupportFragmentManager().beginTransaction().add(R.id.content_layout, new homeFragment()).commit();
+
+        final BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         //바텀 네비게이션 뷰 안의 아이템 설정
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.homeNav:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, new homeFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main, new HomeFragment()).commit();
                 }
                 switch (item.getItemId()){
                     case R.id.pageNav:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, new webpageFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main, new WebFragment()).commit();
+                }
+                switch (item.getItemId()){
+                    case R.id.userNav:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main, new MyPageFragment()).commit();
                 }
                 return true;
             }
