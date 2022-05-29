@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -48,6 +49,7 @@ public class medicRegister extends AppCompatActivity {
     String datapath="";//언어데이터가 있는 경로
 
     Button btnCamera;
+    ImageView pictureImage;
 
     Button btnOCR;
     TextView OCRTextView;
@@ -84,6 +86,8 @@ public class medicRegister extends AppCompatActivity {
         btnCamera=(Button) findViewById(R.id.btnPicture);
         btnOCR=(Button)findViewById(R.id.btnOCR);
         btnRegister=(Button)findViewById(R.id.regimedicbtn);
+        OCRTextView=(TextView) findViewById(R.id.OCRTextResult);
+        pictureImage=(ImageView)findViewById(R.id.CameraPicture);
 
         Button backbtn = (Button) findViewById(R.id.backtoMain);//메인메뉴버튼
 
@@ -119,7 +123,7 @@ public class medicRegister extends AppCompatActivity {
                 mTess.setImage(image);
 
                 OCRresult=mTess.getUTF8Text();
-                OCRTextView=(TextView) findViewById(R.id.OCRTextResult);
+
                 OCRTextView.setText(OCRresult);
 
                 /*String array에 줄 단위로 저장 -> 이걸로 약 데이터 생성하면 됨*/
@@ -129,7 +133,7 @@ public class medicRegister extends AppCompatActivity {
                 medicList=new String[EdiCodearray.length];
 
                 OCRTextView.setVisibility(View.VISIBLE);
-                ((ImageView)findViewById(R.id.CameraPicture)).setVisibility(View.INVISIBLE);
+                pictureImage.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -149,6 +153,8 @@ public class medicRegister extends AppCompatActivity {
                         }).start();
                         break;
                 }
+
+                Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -162,22 +168,6 @@ public class medicRegister extends AppCompatActivity {
             }
         });
     }
-
-    /*public void mOnClick(View v){
-        switch(v.getId()){
-            case R.id.regimedicbtn:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for(int i=0;i<EdiCodearray.length;i++){
-                            data=getXmlData(EdiCodearray[i]);
-                            medicList[i]=data;
-                        }
-                    }
-                }).start();
-                break;
-        }
-    }*/
 
     String getXmlData(String edicode){
         StringBuffer buffer=new StringBuffer();
@@ -286,7 +276,7 @@ public class medicRegister extends AppCompatActivity {
             }else{
                 exifDegree=0;
             }
-            ((ImageView)findViewById(R.id.CameraPicture)).setImageBitmap(rotate(bitmap,exifDegree));
+            pictureImage.setImageBitmap(rotate(bitmap,exifDegree));
         }
     }
 
