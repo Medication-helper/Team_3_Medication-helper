@@ -25,20 +25,23 @@
             android:layout_height="500dp"
             android:background="@drawable/green_box">
 
+            <TextView
+                android:id="@+id/OCRTextResult"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:text="이 곳에 사진과 목록이 표시됩니다"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:visibility="visible">
+            </TextView>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:id="@+id/CameraPicture"
-                android:visibility="invisible">
+                android:visibility="visible">
             </ImageView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:id="@+id/OCRTextResult"
-                android:text="이 곳에 사진과 목록이 표시됩니다"
-                android:textAlignment="center"
-                android:visibility="visible"
-                android:textSize="25dp"></TextView>
+
 
 
 
