@@ -54,15 +54,16 @@
                 android:text="임부 금지\n약물 조회"
                 android:textColor="#036635"
                 android:textSize="20sp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFBage"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                android:layout_toRightOf="@+id/btnFBpreg"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="53dp"
                 android:layout_marginTop="280dp"
+                android:layout_toRightOf="@+id/btnFBpreg"
                 android:background="@drawable/green_border"
-                android:text="연령 금지\n약물 조회"
+                android:text="효능 중복\n약물 조회"
                 android:textColor="#036635"
                 android:textSize="20sp" />
 
