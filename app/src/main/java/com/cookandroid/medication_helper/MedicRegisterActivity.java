@@ -147,6 +147,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sqlDB = myHelper.getWritableDatabase();
                 Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL;", null);
+
                 switch(view.getId()){
                     case R.id.regimedicbtn:
                         new Thread(new Runnable() {
@@ -161,21 +162,19 @@ public class MedicRegisterActivity extends AppCompatActivity {
                         break;
                 }
 
-                // DB 리스트, 마지막줄 userData.getUserPassWord는 금기를 여기서 삽입할 수가 없어서 임시로 유저 비밀번호를 추가하는 것으로 설정함.
-                // 나중에 금기를 추출할 수 있을 경우 카톡주세요
                 int count = cursor.getCount() + 1;
                 for (int i = 0; i < medicList.length; i++) {
                     sqlDB.execSQL("INSERT INTO medicTBL VALUES ("
                             + count + i + ", '"
                             + userData.getUserID() + "', '"
-                            + medicList[i] + "', '"
-                            + userData.getUserPassWord() + "');");
+                            + medicList[i] + "');");
                 }
 
                 Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();
+                cursor.close();
+                sqlDB.close();
             }
         });
-
 
         //메인메뉴 복귀 버튼
         backbtn.setOnClickListener(new View.OnClickListener() {

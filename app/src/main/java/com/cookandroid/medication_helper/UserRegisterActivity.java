@@ -121,6 +121,7 @@ public class UserRegisterActivity extends AppCompatActivity{
                         Toast.makeText(getApplicationContext(), "성별이 선택되지 않았습니다.", Toast.LENGTH_SHORT).show();
                         break;
                 }
+                sqlDB.close();
                 //이거 일단은 넘어가게 제가 intent로 설정은 해놨지만 나중에 손봐야 될 거 같아요 그냥 버튼 누르면 넘어갑니다 지금은
                 Intent completeIntent = new Intent(UserRegisterActivity.this, LoginActivity.class);
                 startActivity(completeIntent);

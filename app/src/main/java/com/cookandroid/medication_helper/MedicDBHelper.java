@@ -11,7 +11,7 @@ public class MedicDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String qry = "CREATE TABLE medicTBL (serialNo INTEGER PRIMARY KEY, uID char(20), mName char(50), uForbidden char(50))";
+        String qry = "CREATE TABLE medicTBL (serialNo INTEGER PRIMARY KEY, uID char(20), mName char(50))";
         db.execSQL(qry);
     }
 
