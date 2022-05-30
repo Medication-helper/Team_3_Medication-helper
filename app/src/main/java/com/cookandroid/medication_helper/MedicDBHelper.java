@@ -4,21 +4,20 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class UserDBHelper extends SQLiteOpenHelper {
-    public UserDBHelper(Context context) {
-        super(context, "userTBL", null, 1);
+public class MedicDBHelper extends SQLiteOpenHelper {
+    public MedicDBHelper(Context context) {
+        super(context, "medicTBL", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String qry = "CREATE TABLE userTBL ( uID char(20) PRIMARY KEY, uPassword char(20), uName CHAR(10), uBirth CHAR(20), uGender CHAR(5))";
+        String qry = "CREATE TABLE medicTBL (serialNo INTEGER PRIMARY KEY, uID char(20), mName char(50), uForbidden char(50))";
         db.execSQL(qry);
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        String qry = "DROP TABLE IF EXISTS userTBL";
+        String qry = "DROP TABLE IF EXISTS medicTBL";
         db.execSQL(qry);
         onCreate(db);
     }

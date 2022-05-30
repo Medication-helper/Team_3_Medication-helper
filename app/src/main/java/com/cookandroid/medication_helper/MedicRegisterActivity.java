@@ -2,6 +2,8 @@ package com.cookandroid.medication_helper;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -62,6 +64,10 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
     String data;
 
+    UserData userData;
+    MedicDBHelper myHelper;
+    SQLiteDatabase sqlDB;
+
     /*스마트폰의 뒤로가기 버튼에 대한 뒤로가기 동작 구현*/
     @Override
     public void onBackPressed() {
@@ -78,6 +84,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medicregister);
         setTitle("Medication Helper");
 
+        userData = (UserData)getApplicationContext();
+        myHelper = new MedicDBHelper(this);
         btnCamera=(Button) findViewById(R.id.btnPicture);
         btnOCR=(Button)findViewById(R.id.btnOCR);
         btnRegister=(Button)findViewById(R.id.regimedicbtn);
@@ -123,7 +131,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                 OCRTextView.setText(OCRresult);
 
-                /*String array에 줄 단위로 저장 -> 이걸로 약 데이터 생성하면 됨*/
+                //String array에 줄 단위로 저장 -> 이걸로 약 데이터 생성하면 됨
                 EdiCodearray=OCRresult.split("\n");
 
                 //api를 통해 받아온 약 목록을 저장
@@ -137,6 +145,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sqlDB = myHelper.getWritableDatabase();
+                Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL;", null);
                 switch(view.getId()){
                     case R.id.regimedicbtn:
                         new Thread(new Runnable() {
@@ -149,6 +159,17 @@ public class MedicRegisterActivity extends AppCompatActivity {
                             }
                         }).start();
                         break;
+                }
+
+                // DB 리스트, 마지막줄 userData.getUserPassWord는 금기를 여기서 삽입할 수가 없어서 임시로 유저 비밀번호를 추가하는 것으로 설정함.
+                // 나중에 금기를 추출할 수 있을 경우 카톡주세요
+                int count = cursor.getCount() + 1;
+                for (int i = 0; i < medicList.length; i++) {
+                    sqlDB.execSQL("INSERT INTO medicTBL VALUES ("
+                            + count + i + ", '"
+                            + userData.getUserID() + "', '"
+                            + medicList[i] + "', '"
+                            + userData.getUserPassWord() + "');");
                 }
 
                 Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();

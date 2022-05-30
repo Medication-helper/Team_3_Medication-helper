@@ -2,11 +2,14 @@ package com.cookandroid.medication_helper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,43 +64,44 @@ public class LoginActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                sqlDB = myHelper.getReadableDatabase();
-//                Cursor cursor;
-//                cursor = sqlDB.rawQuery("SELECT * FROM userTBL;", null);
-//                Boolean checkID = false;
-//                Boolean checkPW = false;
-//                int position = 0;
-//
-//                while (cursor.moveToNext()) {
-//                    if ((cursor.getString(0)).equals(edtID.getText().toString())) {
-//                        checkID = true;
-//                        if ((cursor.getString(1)).equals(edtPW.getText().toString())){
-//                            checkPW = true;
-//                            break;
-//                        }
-//                        break;
-//                    }
-//                    position++;
-//                }
-//
-//                if (checkID == false) {
-//                    Toast.makeText(getApplicationContext(), "등록된 ID가 없습니다.", Toast.LENGTH_SHORT).show();
-//                }
-//                else if (checkPW == false) {
-//                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    cursor.moveToPosition(position);
-//                    userData.setUserID(cursor.getString(0));
-//                    userData.setUserPassWord(cursor.getString(1));
-//                    userData.setUserNickName(cursor.getString(2));
-//                    userData.setUserBirth(cursor.getString(3));
-//                    userData.setUserGender(cursor.getString(4));
-                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                sqlDB = myHelper.getReadableDatabase();
+                Cursor cursor;
+                cursor = sqlDB.rawQuery("SELECT * FROM userTBL;", null);
+                Boolean checkID = false;
+                Boolean checkPW = false;
+                int position = 0;
+
+                while (cursor.moveToNext()) {
+                    if ((cursor.getString(0)).equals(edtID.getText().toString())) {
+                        checkID = true;
+                        if ((cursor.getString(1)).equals(edtPW.getText().toString())){
+                            checkPW = true;
+                            break;
+                        }
+                        break;
+                    }
+                    position++;
+                }
+
+                if (checkID == false) {
+                    Toast.makeText(getApplicationContext(), "등록된 ID가 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else if (checkPW == false) {
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "로그인 완료", Toast.LENGTH_SHORT).show();
+                    cursor.moveToPosition(position);
+                    userData.setUserID(cursor.getString(0));
+                    userData.setUserPassWord(cursor.getString(1));
+                    userData.setUserNickName(cursor.getString(2));
+                    userData.setUserBirth(cursor.getString(3));
+                    userData.setUserGender(cursor.getString(4));
+                    Intent mainIntent = new Intent(LoginActivity.this, MedicRegisterActivity.class);
                     startActivity(mainIntent);
                     finish();
                 }
-//            }
+            }
         });
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override

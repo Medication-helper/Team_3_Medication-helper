@@ -24,7 +24,7 @@ public class UserRegisterActivity extends AppCompatActivity{
     EditText E_ID, E_Pass, E_Name;
     RadioGroup RG;
     RadioButton RB_Man, RB_Woman;
-    Button btnBirthChoose,  btnComplete, btnInit;
+    Button btnBirthChoose, btnComplete, btnInit;
     SQLiteDatabase sqlDB;
 
     @Override
