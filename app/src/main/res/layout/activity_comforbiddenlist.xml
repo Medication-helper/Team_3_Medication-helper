@@ -47,8 +47,17 @@
             android:layout_height="70dp"
             android:layout_gravity="center">
 
-            //여기 버튼이 있었던거 같은데 제가 없어 버렸네여 나중에 추가하도록
-            //하겠습니다
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnback2"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/green_border"
+                android:text="뒤로 가기"
+                android:textColor="#036635"
+                android:textSize="20dp"/>
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>
