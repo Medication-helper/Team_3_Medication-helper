@@ -1,6 +1,5 @@
 package com.cookandroid.medication_helper;
 
-import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -57,7 +56,7 @@ public class MedicCheckActivity extends AppCompatActivity {
         btnFBage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MedicCheckActivity.this, AgeForbiddenListActivity.class);
+                Intent intent = new Intent(MedicCheckActivity.this, DuplicateListActivity.class);
                 startActivity(intent);
                 finish();
             }
