@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -136,6 +137,16 @@ public class ComForbiddenListActivity extends AppCompatActivity {
             }
         }).start();
 
+        Button btnBack = findViewById(R.id.btnback2);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ComForbiddenListActivity.this, MedicCheckActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     String getXmlData(String medicname) {
