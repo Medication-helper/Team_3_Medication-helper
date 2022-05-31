@@ -19,24 +19,26 @@
             android:layout_margin="10dp" />
 
         <ListView
-            android:id="@+id/combinationXList"
+            android:id="@+id/duplicateList"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:background="@drawable/green_border"
             android:layout_marginBottom="5dp"/>
         <TextView
-            android:text=" 중복 성분"
+            android:text="중복 성분"
             android:textColor="#036635"
             android:textSize="30dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginBottom="5dp"
             />
         <TextView
-            android:id="@+id/fobiddenIngredeint"
+            android:id="@+id/duplicateIng"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textSize="50dp"
+            android:textSize="40dp"
+            android:text="약 선택하면 성분 표시"
             android:background="@drawable/green_border"/>
 
         <RelativeLayout

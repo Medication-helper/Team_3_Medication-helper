@@ -32,7 +32,7 @@
         <activity android:name=".MedicRegisterActivity" />
         <activity android:name=".ComForbiddenListActivity"/>
         <activity android:name=".TimeRegisterActivity"/>
-        <activity android:name=".AgeForbiddenListActivity" />
+        <activity android:name=".DuplicateListActivity" />
         <activity android:name=".PregnantForbiddenListActivity" />
         <activity android:name=".DateRegisterActivity" />
         <provider
