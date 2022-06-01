@@ -14,18 +14,8 @@
         android:theme="@style/Theme.MedicationHelper"
         android:usesCleartextTraffic="true"
         android:name=".UserData">
-        <activity
-            android:name=".LoginActivity"
+        <activity android:name=".LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".UserRegisterActivity"
-            android:exported="true">
-
         </activity>
         <activity android:name=".MedicCheckActivity" />
         <activity android:name=".MedicineListActivity" />
@@ -35,6 +25,9 @@
         <activity android:name=".DuplicateListActivity" />
         <activity android:name=".PregnantForbiddenListActivity" />
         <activity android:name=".DateRegisterActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".WebActivity" />
+        <activity android:name=".MyPageActivity" />
         <provider
             android:authorities="com.cookandroid.medication_helper.fileprovider"
             android:name="androidx.core.content.FileProvider"

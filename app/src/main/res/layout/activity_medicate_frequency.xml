@@ -111,7 +111,7 @@
             android:textColor="#036635"
             android:textSize="30sp"
             android:drawablePadding="5dp"
-            android:layout_margin="10dp"/>
+            android:layout_margin="100dp"/>
     </LinearLayout>
 
 </ScrollView>

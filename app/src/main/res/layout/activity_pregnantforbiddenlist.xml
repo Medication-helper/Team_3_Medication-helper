@@ -49,10 +49,10 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnback4"
-                android:layout_width="120dp"
+                android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="220dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/green_border"
                 android:text="뒤로 가기"
