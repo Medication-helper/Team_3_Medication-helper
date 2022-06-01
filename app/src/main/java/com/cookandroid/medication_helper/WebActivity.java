@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.webkit.DownloadListener;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -14,12 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
-
+public class WebActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(WebActivity.this);
         exitDialogBuilder
                 .setTitle("프로그램 종료")
                 .setMessage("종료하시겠습니까?")
@@ -49,24 +51,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_web);
         setTitle("Medication Helper");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
-        Button btnMediReg = findViewById(R.id.btnMediReg);
-        Button btnMediCheck = findViewById(R.id.btnMediCheck);
+        WebView webView = findViewById(R.id.web);
 
-        bottomNavigationView.setSelectedItemId(R.id.homeNav);
+        bottomNavigationView.setSelectedItemId(R.id.pageNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.pageNav:
-                        startActivity(new Intent(getApplicationContext(), WebActivity.class));
-                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.homeNav:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.userNav:
@@ -77,21 +78,16 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        btnMediReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mediRegIntent = new Intent(MainActivity.this, MedicRegisterActivity.class);
-                startActivity(mediRegIntent);
-            }
-        });
-
-        btnMediCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mediCheckIntent = new Intent(MainActivity.this, MedicCheckActivity.class);
-                startActivity(mediCheckIntent);
-            }
-        });
-        
+        webView.loadUrl("https://www.hira.or.kr/main1.do");
+        webView.setWebViewClient(new WebViewClient());  // 새 창 띄우기 않기
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.getSettings().setLoadWithOverviewMode(true);  // WebView 화면크기에 맞추도록 설정 - setUseWideViewPort 와 같이 써야함
+        webView.getSettings().setUseWideViewPort(true);  // wide viewport 설정 - setLoadWithOverviewMode 와 같이 써야함
+        webView.getSettings().setSupportZoom(false);  // 줌 설정 여부
+        webView.getSettings().setBuiltInZoomControls(false);  // 줌 확대/축소 버튼 여부
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true); // javascript가 window.open()을 사용할 수 있도록 설정
+        webView.getSettings().setSupportMultipleWindows(true); // 멀티 윈도우 사용 여부
+        webView.getSettings().setDomStorageEnabled(true);
     }
 }

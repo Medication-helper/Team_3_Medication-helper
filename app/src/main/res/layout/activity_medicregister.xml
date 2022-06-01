@@ -10,8 +10,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,9 +40,6 @@
                 android:id="@+id/CameraPicture"
                 android:visibility="visible">
             </ImageView>
-
-
-
 
         </FrameLayout>
 
@@ -84,23 +80,11 @@
             android:layout_gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/backtoMain"
-                android:layout_width="wrap_content"
+                android:id="@+id/regimedicbtn"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="100dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/green_border"
-                android:text="메인으로"
-                android:textColor="#036635"
-                android:textSize="18dp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/regimedicbtn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="200dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/green_border"
                 android:text="약 목록 등록"

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyPageFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MyPageActivity">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -52,7 +53,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="130dp"
             android:layout_marginRight="130dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/green_border"
             android:backgroundTint="@android:color/holo_green_light"
@@ -68,8 +69,17 @@
             android:textColor="#036635"
             android:textSize="30sp"
             android:drawablePadding="5dp"
-            android:layout_margin="10dp"/>
-
+            android:layout_margin="60dp"/>
     </LinearLayout>
-
-</FrameLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/navcolor"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/nav" />
+</RelativeLayout>

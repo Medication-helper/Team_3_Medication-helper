@@ -1,42 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".MainActivity">
 
     <FrameLayout
-        android:id="@+id/content_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/main">
-        </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:drawableStart="@drawable/green_cross_size"
+            android:drawablePadding="3dp"
+            android:text="3분카레 약국"
+            android:textColor="#036635"
+            android:textSize="30sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/fragment">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-        </RelativeLayout>
+            <TextView
+                android:layout_width="400dp"
+                android:layout_height="250dp"
+                android:background="@drawable/green_border"
+                android:padding="10dp"
+                android:text="복약 정보"
+                android:textColor="#036635"
+                android:textSize="20sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMediReg"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="200px"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/green_border"
+                android:text="복약 정보 등록"
+                android:textColor="#036635"
+                android:textSize="17sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMediCheck"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="400px"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/green_border"
+                android:text="복약 정보 조회"
+                android:textColor="#036635"
+                android:textSize="17sp" />
+
+        </FrameLayout>
     </FrameLayout>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:labelVisibilityMode="unlabeled"
-        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:itemIconTint="@drawable/navcolor"
+        android:background="@color/white"
         app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/navcolor"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/nav" />
-</LinearLayout>
+</RelativeLayout>

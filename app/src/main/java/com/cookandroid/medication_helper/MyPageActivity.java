@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -14,12 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MyPageActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MyPageActivity.this);
         exitDialogBuilder
                 .setTitle("프로그램 종료")
                 .setMessage("종료하시겠습니까?")
@@ -49,14 +47,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_page);
         setTitle("Medication Helper");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
-        Button btnMediReg = findViewById(R.id.btnMediReg);
-        Button btnMediCheck = findViewById(R.id.btnMediCheck);
-
-        bottomNavigationView.setSelectedItemId(R.id.homeNav);
+        bottomNavigationView.setSelectedItemId(R.id.userNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,31 +62,15 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.homeNav:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.userNav:
-                        startActivity(new Intent(getApplicationContext(), MyPageActivity.class));
-                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
             }
         });
-        btnMediReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mediRegIntent = new Intent(MainActivity.this, MedicRegisterActivity.class);
-                startActivity(mediRegIntent);
-            }
-        });
-
-        btnMediCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mediCheckIntent = new Intent(MainActivity.this, MedicCheckActivity.class);
-                startActivity(mediCheckIntent);
-            }
-        });
-        
     }
 }

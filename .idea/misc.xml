@@ -63,15 +63,18 @@
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_ageforbiddenlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_comforbiddenlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_dateregister.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_duplicatelist.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_login.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_medicate_frequency.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_mediccheck.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_medicinelist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_medicregister.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_my_page.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_pregnantforbiddenlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_timeregister.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_userregister.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/activity_web.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/ageforbiddenlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/comforbiddenlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.35280797101449274" />
@@ -98,6 +101,7 @@
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/userregister.xml" value="0.358695652173913" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/layout/web.xml" value="0.358695652173913" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/menu/mainnav.xml" value="0.3515625" />
+        <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/menu/nav.xml" value="0.36614583333333334" />
       </map>
     </option>
   </component>

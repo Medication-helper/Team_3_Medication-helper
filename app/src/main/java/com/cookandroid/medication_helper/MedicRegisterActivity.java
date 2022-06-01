@@ -92,8 +92,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
         OCRTextView=(TextView) findViewById(R.id.OCRTextResult);
         pictureImage=(ImageView)findViewById(R.id.CameraPicture);
 
-        Button backbtn = (Button) findViewById(R.id.backtoMain);//메인메뉴버튼
-
         datapath=getFilesDir()+"/tessaract/";
 
         checkFile(new File(datapath+"tessdata/"),"kor");
@@ -173,15 +171,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();
                 cursor.close();
                 sqlDB.close();
-            }
-        });
-
-        //메인메뉴 복귀 버튼
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent BackToMain = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(BackToMain);
             }
         });
     }
