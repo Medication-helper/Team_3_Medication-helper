@@ -42,24 +42,16 @@
             android:text="약 선택하면 성분 표시"
             android:background="@drawable/green_border"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_gravity="center">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnback4"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/green_border"
-                android:text="뒤로 가기"
-                android:textColor="#036635"
-                android:textSize="20dp" />
-
-        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnback4"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/green_border"
+            android:text="뒤로 가기"
+            android:textColor="#036635"
+            android:textSize="30dp" />
     </LinearLayout>
 
 </ScrollView>
