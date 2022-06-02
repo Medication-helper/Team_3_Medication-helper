@@ -82,7 +82,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                     medicNameINGList[i][1]=data;
                 }
 
-                //효능 중복 성분이 있는 약들만 보관할 배열들의 크기를 구한다.
+                //효능 중복이 있는 약들만 보관할 배열들의 크기를 구한다.
                 for(int i=0;i<size;i++){
                     String str=medicNameINGList[i][1];
                     if(TextUtils.isEmpty(str)==false){
@@ -101,7 +101,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                     }
                 }
 
-                //효능중복 약물에 해당하는 약물들의 성분만 저장하는 배열
+                //효능중복 약물에 해당하는 약물들의 효능만 저장하는 배열
                 String[] DuplicateIngredientList=new String[forbiddenlistSize];
 
                 index=0;
@@ -127,7 +127,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                         //화면에 효능 중복 대상 약품 이름 목록 표시
                         DuplicateList.setAdapter(DuplicateNameAdapter);
 
-                        //약품 리스트뷰에서 항목을 선택했을 때 성분을 Textview에 표시
+                        //약품 리스트뷰에서 항목을 선택했을 때 효능을 Textview에 표시
                         DuplicateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -175,7 +175,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                         tag=xpp.getName();
 
                         if(tag.equals("item"));
-                        else if(tag.equals("INGR_NAME")){
+                        else if(tag.equals("EFFECT_NAME")){
                             xpp.next();
                             buffer.append(xpp.getText());
                         }

@@ -25,7 +25,7 @@
             android:background="@drawable/green_border"
             android:layout_marginBottom="5dp"/>
         <TextView
-            android:text="중복 성분"
+            android:text="약물 효능"
             android:textColor="#036635"
             android:textSize="30dp"
             android:layout_margin="10dp"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:textSize="40dp"
-            android:text="약 선택하면 성분 표시"
+            android:text="약 선택하면 효능 표시"
             android:background="@drawable/green_border"/>
 
         <androidx.appcompat.widget.AppCompatButton
