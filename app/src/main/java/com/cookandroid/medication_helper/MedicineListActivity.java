@@ -19,12 +19,15 @@ import java.util.List;
 
 public class MedicineListActivity extends AppCompatActivity {
     Button delBtn;
+    Button delselectBtn;
     ListView medicationListView;
     Button btnBack;
 
     UserData userData;
     MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
+    
+    String nametoDel;
 
 
     @Override
@@ -48,7 +51,8 @@ public class MedicineListActivity extends AppCompatActivity {
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);
 
         medicationListView=(ListView)findViewById(R.id.medicationlist);
-        delBtn=(Button)findViewById(R.id.btndelete);
+        delBtn=(Button)findViewById(R.id.btnalldelete);
+        delselectBtn=(Button)findViewById(R.id.btnselectdel);
         btnBack=(Button)findViewById(R.id.back);
 
         ArrayList<String> medicineArraylist=new ArrayList<>();
@@ -60,9 +64,9 @@ public class MedicineListActivity extends AppCompatActivity {
             serialNo++;
         }
 
-        for (int i = 0; i < cursor.getCount(); i++) {
-            Toast.makeText(getApplicationContext(), medicineArray[i], Toast.LENGTH_SHORT).show();
-        }
+//        for (int i = 0; i < cursor.getCount(); i++) {
+//            Toast.makeText(getApplicationContext(), medicineArray[i], Toast.LENGTH_SHORT).show();
+//        }
 
         ArrayList<String> mediclist=new ArrayList<>(Arrays.asList(medicineArray));
 
@@ -83,30 +87,32 @@ public class MedicineListActivity extends AppCompatActivity {
             }
         });
 
-        //목록에서 약을 누르면 해당하는 약을 목록에서 삭제하고 DB에서도 삭제
-        medicationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int count=adapter.getCount();
-
-                if(count>0){
-                    int checkpositon=medicationListView.getCheckedItemPosition();
-
-                    //목록에서 삭제하려는 약의 이름을 저장하는 변수
-                    String selectToDelete=(String) adapterView.getAdapter().getItem(i);
-
-                    if(checkpositon>-1 && checkpositon<count){
-                        mediclist.remove(checkpositon);
-                        medicationListView.clearChoices();
-                        adapter.notifyDataSetChanged();
-
-                        //이곳에 약 목록 DB를 삭제하는 걸 구현하면 됩니다.
-
-                    }
-                }
-
-            }
-        });
+//        //목록에서 약을 누르면 가져와서 저장 -> DB에서 삭제할 때 쓰일 거임
+//        medicationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                nametoDel=(String) adapterView.getAdapter().getItem(i);
+//            }
+//        });
+//
+//        delselectBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               int count=adapter.getCount();
+//
+//                if(count>0) {
+//                    int checkposition = medicationListView.getCheckedItemPosition();
+//
+//                    if (checkposition > -1 && checkposition < count) {
+//                        mediclist.remove(checkposition);
+//                        medicationListView.clearChoices();
+//                        adapter.notifyDataSetChanged();
+//
+//                        //여기서 DB 삭제 과정 구현
+//                   }
+//                                  }
+//            }
+//        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

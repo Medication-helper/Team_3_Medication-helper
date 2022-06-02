@@ -155,22 +155,31 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                     data=getXmlData(EdiCodearray[i]);//줄에 edicode로 약품명 받아오기
                                     medicList[i]=data;//약 품목 리스트에 저장
                                 }
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        for(int i=0;i<medicList.length;i++){
+                                            System.out.println(medicList[i]);
+                                        }
+
+                                        int count = cursor.getCount() + 1;
+                                        for (int i = 0; i < medicList.length; i++) {
+                                            sqlDB.execSQL("INSERT INTO medicTBL VALUES ("
+                                                    + count + i + ", '"
+                                                    + userData.getUserID() + "', '"
+                                                    + medicList[i] + "');");
+                                        }
+
+                                        Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();
+                                        cursor.close();
+                                        sqlDB.close();
+                                    }
+                                });
                             }
                         }).start();
                         break;
                 }
-
-                int count = cursor.getCount() + 1;
-                for (int i = 0; i < medicList.length; i++) {
-                    sqlDB.execSQL("INSERT INTO medicTBL VALUES ("
-                            + count + i + ", '"
-                            + userData.getUserID() + "', '"
-                            + medicList[i] + "');");
-                }
-
-                Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();
-                cursor.close();
-                sqlDB.close();
             }
         });
     }
