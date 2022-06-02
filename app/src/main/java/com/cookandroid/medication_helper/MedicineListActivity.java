@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MedicineListActivity extends AppCompatActivity {
     Button delBtn;
     ListView medicationListView;
+    Button btnBack;
 
     UserData userData;
     MedicDBHelper myHelper;
@@ -47,6 +49,7 @@ public class MedicineListActivity extends AppCompatActivity {
 
         medicationListView=(ListView)findViewById(R.id.medicationlist);
         delBtn=(Button)findViewById(R.id.btndelete);
+        btnBack=(Button)findViewById(R.id.back);
 
         ArrayList<String> medicineArraylist=new ArrayList<>();
         String[] medicineArray = new String[cursor.getCount()];//DB에서 받아온 처방약 목록을 저장하는 String 배열
@@ -63,7 +66,7 @@ public class MedicineListActivity extends AppCompatActivity {
 
         ArrayList<String> mediclist=new ArrayList<>(Arrays.asList(medicineArray));
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,mediclist);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,mediclist);
 
         medicationListView.setAdapter(adapter);
 
@@ -77,6 +80,40 @@ public class MedicineListActivity extends AppCompatActivity {
                 sqlDB = myHelper.getWritableDatabase();
                 String sql = "DELETE FROM medicTBL WHERE uID = '" + userData.getUserID() + "';";
                 sqlDB.execSQL(sql);
+            }
+        });
+
+        //목록에서 약을 누르면 해당하는 약을 목록에서 삭제하고 DB에서도 삭제
+        medicationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int count=adapter.getCount();
+
+                if(count>0){
+                    int checkpositon=medicationListView.getCheckedItemPosition();
+
+                    //목록에서 삭제하려는 약의 이름을 저장하는 변수
+                    String selectToDelete=(String) adapterView.getAdapter().getItem(i);
+
+                    if(checkpositon>-1 && checkpositon<count){
+                        mediclist.remove(checkpositon);
+                        medicationListView.clearChoices();
+                        adapter.notifyDataSetChanged();
+
+                        //이곳에 약 목록 DB를 삭제하는 걸 구현하면 됩니다.
+
+                    }
+                }
+
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MedicineListActivity.this, MedicCheckActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
