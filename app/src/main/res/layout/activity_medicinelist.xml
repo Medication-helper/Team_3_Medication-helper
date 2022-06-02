@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="약을 선택하면 목록에서 삭제됩니다"
+            android:text="약을 선택하여 삭제할 수 있습니다"
             android:textColor="#036635"
             android:textSize="25dp"
             android:layout_gravity="center_horizontal|top"
@@ -41,29 +41,41 @@
             android:layout_gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btndelete"
-                android:layout_width="160dp"
+                android:id="@+id/btnalldelete"
+                android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/green_border"
-                android:text="전체 삭제"
+                android:text="약 전부 삭제"
                 android:textColor="#036635"
                 android:textSize="30dp" />
 
+            <!--
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/back"
-                android:layout_width="160dp"
+                android:id="@+id/btnselectdel"
+                android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/green_border"
-                android:text="뒤로 가기"
+                android:text="선택한 약 삭제"
                 android:textColor="#036635"
                 android:textSize="30dp" />
-
+                -->
         </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/green_border"
+            android:text="뒤로 가기"
+            android:textColor="#036635"
+            android:textSize="30dp" />
     </LinearLayout>
 
 </ScrollView>
