@@ -28,6 +28,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".WebActivity" />
         <activity android:name=".MyPageActivity" />
+        <activity android:name=".UserRegisterActivity"/>
         <provider
             android:authorities="com.cookandroid.medication_helper.fileprovider"
             android:name="androidx.core.content.FileProvider"
