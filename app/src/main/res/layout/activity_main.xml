@@ -30,7 +30,7 @@
 
             <TextView
                 android:layout_width="400dp"
-                android:layout_height="250dp"
+                android:layout_height="600dp"
                 android:background="@drawable/green_border"
                 android:padding="10dp"
                 android:text="복약 정보"
@@ -39,11 +39,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnMediReg"
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="200px"
+                android:layout_width="200dp"
+                android:layout_height="140dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginRight="80dp"
                 android:background="@drawable/green_border"
                 android:text="복약 정보 등록"
@@ -52,12 +52,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnMediCheck"
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="400px"
-                android:layout_marginRight="80dp"
+                android:layout_width="200dp"
+                android:layout_height="140dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="350dp"
+                android:layout_marginRight="100dp"
                 android:background="@drawable/green_border"
                 android:text="복약 정보 조회"
                 android:textColor="#036635"
