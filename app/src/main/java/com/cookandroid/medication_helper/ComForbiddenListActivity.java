@@ -3,6 +3,7 @@ package com.cookandroid.medication_helper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -130,6 +131,14 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                                         break;
                                     }
                                 }
+                            }
+                        });
+
+                        comXList.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                comXList.requestDisallowInterceptTouchEvent(true);
+                                return false;
                             }
                         });
                     }

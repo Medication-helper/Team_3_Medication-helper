@@ -20,17 +20,20 @@
             android:text="약 이름 옆 숫자 코드 목록을 찍어주세요"/>
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="500dp"
+            android:layout_gravity="center"
             android:background="@drawable/green_border">
 
             <TextView
                 android:id="@+id/OCRTextResult"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:text="이 곳에 사진과 목록이 표시됩니다"
+                android:text="이 곳에\n 사진과 목록이\n 표시됩니다"
+                android:gravity="center"
                 android:textAlignment="center"
-                android:textSize="25dp"
+                android:textSize="40dp"
+                android:textColor="@color/black"
                 android:visibility="visible">
             </TextView>
 
@@ -40,8 +43,18 @@
                 android:id="@+id/CameraPicture"
                 android:visibility="visible">
             </ImageView>
-
         </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="코드 추출 버튼을 누른 후\n화면에 뜬 코드와 처방전에 있는 코드가\n일치하는지
+확인해주세요"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            />
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -74,23 +87,26 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="약 등록 버튼을 누른 후 \n등록 완료 알람이 뜰 때까지 기다리세요"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/regimedicbtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/green_border"
-                android:text="약 목록 등록"
-                android:textColor="#036635"
-                android:textSize="18dp" />
-        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/regimedicbtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/green_border"
+            android:text="약 목록 등록"
+            android:textColor="#036635"
+            android:textSize="18dp" />
+
 
     </LinearLayout>
 
