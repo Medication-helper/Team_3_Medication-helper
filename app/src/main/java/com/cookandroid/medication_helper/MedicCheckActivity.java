@@ -12,7 +12,7 @@ public class MedicCheckActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(MedicCheckActivity.this, MainActivity.class);
+        Intent BackToMain = new Intent(MedicCheckActivity.this, MainPageActivity.class);
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(BackToMain);
         finish();
@@ -28,6 +28,7 @@ public class MedicCheckActivity extends AppCompatActivity {
         Button btnFBcom = findViewById(R.id.btnFBcom);
         Button btnFBpreg = findViewById(R.id.btnFBpreg);
         Button btnFBage = findViewById(R.id.btnFBage);
+        Button btnMainPage= findViewById(R.id.btnback5);
 
         btnMedilist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +60,15 @@ public class MedicCheckActivity extends AppCompatActivity {
                 Intent intent = new Intent(MedicCheckActivity.this, DuplicateListActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        btnMainPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent BackToMain = new Intent(MedicCheckActivity.this, MainPageActivity.class);
+                BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(BackToMain);
             }
         });
 

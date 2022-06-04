@@ -55,6 +55,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
     String OCRresult;
 
     Button btnRegister;
+    Button btnBacktoMain;
 
     private String imageFilePath;
     static final int REQUEST_IMAGE_CAPTURE = 672;
@@ -73,7 +74,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainActivity.class);
+        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainPageActivity.class);
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(BackToMain);
         finish();
@@ -92,6 +93,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnRegister=(Button)findViewById(R.id.regimedicbtn);
         OCRTextView=(TextView) findViewById(R.id.OCRTextResult);
         pictureImage=(ImageView)findViewById(R.id.CameraPicture);
+        btnBacktoMain=(Button)findViewById(R.id.btnback6);
+
 
         datapath=getFilesDir()+"/tessaract/";
 
@@ -145,6 +148,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 sqlDB = myHelper.getWritableDatabase();
                 Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL;", null);
 
@@ -161,9 +165,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        for(int i=0;i<medicList.length;i++){
-                                            System.out.println(medicList[i]);
-                                        }
 
                                         int count = cursor.getCount() + 1;
                                         for (int i = 0; i < medicList.length; i++) {
@@ -173,7 +174,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                     + medicList[i] + "');");
                                         }
 
-                                        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainActivity.class);
+                                        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainPageActivity.class);
                                         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(BackToMain);
 
@@ -188,6 +189,15 @@ public class MedicRegisterActivity extends AppCompatActivity {
                         }).start();
                         break;
                 }
+            }
+        });
+
+        btnBacktoMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MedicRegisterActivity.this, MainPageActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

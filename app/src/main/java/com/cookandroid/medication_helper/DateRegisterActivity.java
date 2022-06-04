@@ -11,7 +11,7 @@ public class DateRegisterActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(DateRegisterActivity.this, MainActivity.class);
+        Intent BackToMain = new Intent(DateRegisterActivity.this, MainPageActivity.class);
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(BackToMain);
         finish();

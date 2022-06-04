@@ -62,7 +62,7 @@ public class MedicineListActivity extends AppCompatActivity {
 
         ArrayList<String> mediclist=new ArrayList<>(Arrays.asList(medicineArray));
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,mediclist);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,mediclist);
 
         medicationListView.setAdapter(adapter);
 

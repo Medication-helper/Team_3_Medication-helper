@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 public class UserRegisterActivity extends AppCompatActivity{
     UserDBHelper myHelper;
@@ -36,7 +33,7 @@ public class UserRegisterActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(UserRegisterActivity.this, LoginActivity.class);
+        Intent BackToMain = new Intent(UserRegisterActivity.this, MainActivity.class);
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(BackToMain);
         finish();
@@ -122,7 +119,7 @@ public class UserRegisterActivity extends AppCompatActivity{
         btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent completeIntent = new Intent(UserRegisterActivity.this, LoginActivity.class);
+                Intent completeIntent = new Intent(UserRegisterActivity.this, MainActivity.class);
                 sqlDB = myHelper.getWritableDatabase();
                 Cursor cursor = sqlDB.rawQuery("SELECT * FROM userTBL", null);
                     while (cursor.moveToNext()) {
