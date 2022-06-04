@@ -60,6 +60,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 672;
 
     String[] EdiCodearray;
+
     String[] medicList;//OpenAPI를 이용해 받아온 의약품 이름 목록을 저장하는 배열
 
     String data;
@@ -114,6 +115,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                 OCRTextView.setVisibility(View.INVISIBLE);
             }
         });
+
 
         //OCR로 EDI_Code 추출하는 버튼
         btnOCR.setOnClickListener(new View.OnClickListener() {

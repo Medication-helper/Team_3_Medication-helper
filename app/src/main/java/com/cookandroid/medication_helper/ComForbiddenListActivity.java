@@ -1,6 +1,8 @@
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -26,6 +28,9 @@ import java.util.Arrays;
 public class ComForbiddenListActivity extends AppCompatActivity {
 
     String data;
+    UserData userData;
+    MedicDBHelper myHelper;
+    SQLiteDatabase sqlDB;
 
     @Override
     public void onBackPressed() {
@@ -45,8 +50,19 @@ public class ComForbiddenListActivity extends AppCompatActivity {
         ListView comXList=(ListView)findViewById(R.id.combinationXList);
         TextView comXtextView=(TextView)findViewById(R.id.combinationXIng);
 
+        userData = (UserData) getApplicationContext();
+        myHelper = new MedicDBHelper(this);
+        sqlDB = myHelper.getReadableDatabase();
+        Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);
+
         //약 목록을 저장하는 배열
-        String[] medicineList={"스포라녹스액(이트라코나졸)","안텐스정(에날라프릴말레산염)","아클론정(아세클로페낙)","알락티스정","가스디알정50밀리그램(디메크로틴산마그네슘)","에이펙스정(아세클로페낙)","올린코정"};
+        String[] medicineList = new String[cursor.getCount()];
+        int serialNo = 0;
+
+        while (cursor.moveToNext()) {
+            medicineList[serialNo] = cursor.getString(2);
+            serialNo++;
+        }
 
         //약 목록이 저장되어 있는 배열의 길이
         int size=medicineList.length;

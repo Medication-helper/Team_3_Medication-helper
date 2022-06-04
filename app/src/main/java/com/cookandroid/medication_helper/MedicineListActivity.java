@@ -52,7 +52,6 @@ public class MedicineListActivity extends AppCompatActivity {
         //delselectBtn=(Button)findViewById(R.id.btnselectdel);
         btnBack=(Button)findViewById(R.id.back);
 
-        ArrayList<String> medicineArraylist=new ArrayList<>();
         String[] medicineArray = new String[cursor.getCount()];//DB에서 받아온 처방약 목록을 저장하는 String 배열
         int serialNo = 0;
 
