@@ -2,14 +2,11 @@ package com.cookandroid.medication_helper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,7 +89,7 @@ public class MyPageActivity extends AppCompatActivity{
                 userData.setUserBirth("");
                 userData.setUserGender("");
                 Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
@@ -107,7 +104,7 @@ public class MyPageActivity extends AppCompatActivity{
                 userData.setUserBirth("");
                 userData.setUserGender("");
                 Toast.makeText(getApplicationContext(), "회원탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
@@ -123,7 +120,7 @@ public class MyPageActivity extends AppCompatActivity{
                         return true;
 
                     case R.id.homeNav:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
 
