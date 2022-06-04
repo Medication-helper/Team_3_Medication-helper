@@ -171,7 +171,13 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                     + medicList[i] + "');");
                                         }
 
+                                        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainActivity.class);
+                                        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(BackToMain);
+
                                         Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();
+
+
                                         cursor.close();
                                         sqlDB.close();
                                     }

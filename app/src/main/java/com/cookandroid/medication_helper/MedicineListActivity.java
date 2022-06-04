@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,16 +20,12 @@ import java.util.List;
 
 public class MedicineListActivity extends AppCompatActivity {
     Button delBtn;
-    Button delselectBtn;
     ListView medicationListView;
     Button btnBack;
 
     UserData userData;
     MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
-    
-    String nametoDel;
-
 
     @Override
     public void onBackPressed() {
@@ -64,15 +61,19 @@ public class MedicineListActivity extends AppCompatActivity {
             serialNo++;
         }
 
-//        for (int i = 0; i < cursor.getCount(); i++) {
-//            Toast.makeText(getApplicationContext(), medicineArray[i], Toast.LENGTH_SHORT).show();
-//        }
-
         ArrayList<String> mediclist=new ArrayList<>(Arrays.asList(medicineArray));
 
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,mediclist);
 
         medicationListView.setAdapter(adapter);
+
+        medicationListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                medicationListView.requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,32 +88,6 @@ public class MedicineListActivity extends AppCompatActivity {
             }
         });
 
-//        //목록에서 약을 누르면 가져와서 저장 -> DB에서 삭제할 때 쓰일 거임
-//        medicationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                nametoDel=(String) adapterView.getAdapter().getItem(i);
-//            }
-//        });
-//
-//        delselectBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//               int count=adapter.getCount();
-//
-//                if(count>0) {
-//                    int checkposition = medicationListView.getCheckedItemPosition();
-//
-//                    if (checkposition > -1 && checkposition < count) {
-//                        mediclist.remove(checkposition);
-//                        medicationListView.clearChoices();
-//                        adapter.notifyDataSetChanged();
-//
-//                        //여기서 DB 삭제 과정 구현
-//                   }
-//                                  }
-//            }
-//        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
