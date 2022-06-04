@@ -17,7 +17,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class UserRegisterActivity extends AppCompatActivity{
@@ -27,6 +30,7 @@ public class UserRegisterActivity extends AppCompatActivity{
     RadioGroup RG;
     RadioButton RB_Man, RB_Woman;
     Button btnDupCheck, btnBirthChoose, btnComplete, btnInit;
+    int dateCheckCounter = 0;
     int dupCheckCounter = 0;
 
     @Override
@@ -55,6 +59,15 @@ public class UserRegisterActivity extends AppCompatActivity{
         btnComplete = (Button) findViewById(R.id.BtnComplete);
 
         myHelper = new UserDBHelper(this);
+        long now = System.currentTimeMillis();
+
+        Date todayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
+        int todayYear = Integer.parseInt(yearFormat.format(todayDate));
+        int todayMonth = Integer.parseInt(monthFormat.format(todayDate));
+        int todayDay = Integer.parseInt(dayFormat.format(todayDate));
 
         Calendar calendar = Calendar.getInstance();
         int mYear = calendar.get(Calendar.YEAR);
@@ -64,7 +77,26 @@ public class UserRegisterActivity extends AppCompatActivity{
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                btnBirthChoose.setText(dayOfMonth+"/" + (month+1) + "/" + year);
+                if (year > todayYear) {
+                    dateCheckCounter = 1;
+                }
+                else if (year == todayYear) {
+                    if ((month+1) > todayMonth) {
+                        dateCheckCounter = 1;
+                    }
+                    else if ((month+1) == todayMonth) {
+                        if (dayOfMonth > todayDay) {
+                            dateCheckCounter = 1;
+                        }
+                    }
+                }
+
+                if (dateCheckCounter == 1) {
+                    Toast.makeText(getApplicationContext(), "미래시입니다.", Toast.LENGTH_SHORT).show();
+                    dateCheckCounter = 0;
+                }
+                else
+                    btnBirthChoose.setText(dayOfMonth +"/" + (month + 1) + "/" + year);
             }
         }, mYear, mMonth, mDay);
 
@@ -159,7 +191,6 @@ public class UserRegisterActivity extends AppCompatActivity{
                             break;
                     }
                 }
-                //이거 일단은 넘어가게 제가 intent로 설정은 해놨지만 나중에 손봐야 될 거 같아요 그냥 버튼 누르면 넘어갑니다 지금은
             }
         });
     }
