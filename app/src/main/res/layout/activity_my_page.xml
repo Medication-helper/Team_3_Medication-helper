@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아이디 : "
+            android:id="@+id/tvName"
             android:textColor="#036635"
             android:textSize="30sp"
             android:layout_gravity="center_horizontal|top"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="생년월일 : "
+            android:id="@+id/tvBirth"
             android:textColor="#036635"
             android:textSize="30sp"
             android:layout_gravity="center_horizontal|top"
@@ -40,12 +40,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="성별 : "
+            android:id="@+id/tvGender"
             android:textColor="#036635"
             android:textSize="30sp"
             android:layout_gravity="center_horizontal|top"
             android:layout_margin="30dp" />
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/green_border"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:text="로그아웃"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDel"
             android:layout_width="match_parent"
@@ -53,7 +66,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="130dp"
             android:layout_marginRight="130dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/green_border"
             android:backgroundTint="@android:color/holo_green_light"

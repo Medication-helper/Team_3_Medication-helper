@@ -52,7 +52,7 @@ public class MedicineListActivity extends AppCompatActivity {
 
         medicationListView=(ListView)findViewById(R.id.medicationlist);
         delBtn=(Button)findViewById(R.id.btnalldelete);
-        delselectBtn=(Button)findViewById(R.id.btnselectdel);
+        //delselectBtn=(Button)findViewById(R.id.btnselectdel);
         btnBack=(Button)findViewById(R.id.back);
 
         ArrayList<String> medicineArraylist=new ArrayList<>();
