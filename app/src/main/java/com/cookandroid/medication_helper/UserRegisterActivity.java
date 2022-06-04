@@ -29,7 +29,7 @@ public class UserRegisterActivity extends AppCompatActivity{
     EditText E_ID, E_Pass, E_Name;
     RadioGroup RG;
     RadioButton RB_Man, RB_Woman;
-    Button btnDupCheck, btnBirthChoose, btnComplete, btnInit;
+    Button btnBirthChoose, btnComplete, btnInit;
     int dateCheckCounter = 0;
     int dupCheckCounter = 0;
 
@@ -54,7 +54,6 @@ public class UserRegisterActivity extends AppCompatActivity{
         RG = (RadioGroup) findViewById(R.id.RG);
         RB_Man = (RadioButton) findViewById(R.id.RB_man);
         RB_Woman = (RadioButton) findViewById(R.id.RB_woman);
-        btnDupCheck = (Button) findViewById(R.id.BtnDupCheck);
         btnBirthChoose = (Button) findViewById(R.id.BtnBirthChoose);
         btnComplete = (Button) findViewById(R.id.BtnComplete);
 
@@ -100,28 +99,6 @@ public class UserRegisterActivity extends AppCompatActivity{
             }
         }, mYear, mMonth, mDay);
 
-        btnDupCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sqlDB = myHelper.getReadableDatabase();
-                Cursor cursor = sqlDB.rawQuery("SELECT * FROM userTBL", null);
-                if (E_ID.getText().toString().length() == 0) {
-                    Toast.makeText(getApplicationContext(), "ID가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    while (cursor.moveToNext()) {
-                        if (cursor.getString(0).equals(E_ID.getText().toString())) {
-                            Toast.makeText(getApplicationContext(), "이미 등록된 ID입니다.", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        Toast.makeText(getApplicationContext(), "사용 가능한 ID입니다.", Toast.LENGTH_SHORT).show();
-                        dupCheckCounter = 1;
-                        break;
-                    }
-                }
-            }
-        });
-
         btnBirthChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,11 +124,18 @@ public class UserRegisterActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent completeIntent = new Intent(UserRegisterActivity.this, LoginActivity.class);
                 sqlDB = myHelper.getWritableDatabase();
+                Cursor cursor = sqlDB.rawQuery("SELECT * FROM userTBL", null);
+                    while (cursor.moveToNext()) {
+                        if (cursor.getString(0).equals(E_ID.getText().toString())) {
+                            dupCheckCounter = 1;
+                        }
+                    }
                 if (E_ID.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(), "ID가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 }
-                else if (dupCheckCounter == 0) {
-                    Toast.makeText(getApplicationContext(), "ID 중복확인을 해 주세요.", Toast.LENGTH_SHORT).show();
+                else if (dupCheckCounter == 1) {
+                    Toast.makeText(getApplicationContext(), "이미 등록된 ID입니다.", Toast.LENGTH_SHORT).show();
+                    dupCheckCounter = 0;
                 }
                 else if (E_Pass.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(), "비밀번호가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
