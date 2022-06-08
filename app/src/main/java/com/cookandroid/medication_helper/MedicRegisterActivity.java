@@ -149,6 +149,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Toast.makeText(getApplicationContext(), "등록 중입니다. 잠시만 기다려주세요", Toast.LENGTH_LONG).show();
+
                 sqlDB = myHelper.getWritableDatabase();
                 Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL;", null);
 
@@ -178,7 +180,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(BackToMain);
 
-                                        Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_LONG).show();
 
 
                                         cursor.close();

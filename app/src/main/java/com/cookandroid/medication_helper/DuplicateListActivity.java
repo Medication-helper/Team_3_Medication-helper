@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -53,6 +54,8 @@ public class DuplicateListActivity extends AppCompatActivity {
         myHelper = new MedicDBHelper(this);
         sqlDB = myHelper.getReadableDatabase();
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);
+
+        Toast.makeText(getApplicationContext(), "조회 중입니다. 잠시만 기다려주세요", Toast.LENGTH_LONG).show();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
