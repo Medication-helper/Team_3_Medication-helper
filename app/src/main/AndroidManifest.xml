@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true" android:xlargeScreens="true"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/green_cross"

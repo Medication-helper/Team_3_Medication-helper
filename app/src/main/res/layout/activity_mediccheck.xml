@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
@@ -28,18 +28,19 @@
                 android:id="@+id/btnMedilist"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/green_border"
                 android:text="약 목록 조회"
                 android:textColor="#036635"
                 android:textSize="20sp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFBcom"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                android:layout_toRightOf="@+id/btnMedilist"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@+id/btnMedilist"
                 android:background="@drawable/green_border"
                 android:text="병용 금지\n약물 조회"
                 android:textColor="#036635"
@@ -60,7 +61,7 @@
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_marginLeft="53dp"
-                android:layout_marginTop="280dp"
+                android:layout_marginTop="240dp"
                 android:layout_toRightOf="@+id/btnFBpreg"
                 android:background="@drawable/green_border"
                 android:text="효능 중복\n약물 조회"
@@ -92,4 +93,4 @@
             android:layout_marginTop="20dp"/>
     </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>
