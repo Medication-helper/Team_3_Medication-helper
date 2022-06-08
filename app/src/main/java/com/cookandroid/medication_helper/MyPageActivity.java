@@ -30,32 +30,11 @@ public class MyPageActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MyPageActivity.this);
-        exitDialogBuilder
-                .setTitle("프로그램 종료")
-                .setMessage("종료하시겠습니까?")
-                .setCancelable(false)
-                .setPositiveButton("네",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                int pid = android.os.Process.myPid();
-                                android.os.Process.killProcess(pid);
-                                finish();
-                            }
-                        })
-                .setNegativeButton("아니오",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-
-        AlertDialog exitDialog = exitDialogBuilder.create();
-
-        exitDialog.show();
+        super.onBackPressed();
+        Intent Back = new Intent(MyPageActivity.this, MainPageActivity.class);
+        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(Back);
+        finish();
     }
 
     @Override
