@@ -17,32 +17,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class WebActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(WebActivity.this);
-        exitDialogBuilder
-                .setTitle("프로그램 종료")
-                .setMessage("종료하시겠습니까?")
-                .setCancelable(false)
-                .setPositiveButton("네",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                int pid = android.os.Process.myPid();
-                                android.os.Process.killProcess(pid);
-                                finish();
-                            }
-                        })
-                .setNegativeButton("아니오",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-
-        AlertDialog exitDialog = exitDialogBuilder.create();
-
-        exitDialog.show();
+        super.onBackPressed();
+        Intent Back = new Intent(WebActivity.this, MainPageActivity.class);
+        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(Back);
+        finish();
     }
 
     @Override
