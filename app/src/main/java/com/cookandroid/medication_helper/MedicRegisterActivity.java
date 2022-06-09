@@ -42,7 +42,7 @@ import java.util.Date;
 public class MedicRegisterActivity extends AppCompatActivity {
 
     Bitmap image;//사용되는 이미지
-    private TessBaseAPI mTess;//Tess API REference
+    private TessBaseAPI mTess;//Tess API Reference
     String datapath="";//언어데이터가 있는 경로
 
     Button btnCamera;
@@ -142,6 +142,9 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                 OCRTextView.setVisibility(View.VISIBLE);
                 pictureImage.setVisibility(View.INVISIBLE);
+
+                Toast.makeText(getApplicationContext(), "화면의 코드와 처방전의 코드가 일치하는지 확인해주세요", Toast.LENGTH_LONG).show();
+
             }
         });
 
