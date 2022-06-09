@@ -38,10 +38,8 @@
         <activity android:name=".MedicineListActivity" />
         <activity android:name=".MedicRegisterActivity" />
         <activity android:name=".ComForbiddenListActivity" />
-        <activity android:name=".TimeRegisterActivity" />
         <activity android:name=".DuplicateListActivity" />
         <activity android:name=".PregnantForbiddenListActivity" />
-        <activity android:name=".DateRegisterActivity" />
         <activity android:name=".MainPageActivity" />
         <activity android:name=".WebActivity" />
         <activity android:name=".MyPageActivity" />
