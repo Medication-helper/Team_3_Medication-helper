@@ -69,6 +69,7 @@ public class MyPageActivity extends AppCompatActivity{
                 userData.setUserGender("");
                 Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         });
 
@@ -84,6 +85,7 @@ public class MyPageActivity extends AppCompatActivity{
                 userData.setUserGender("");
                 Toast.makeText(getApplicationContext(), "회원탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         });
 
@@ -96,11 +98,13 @@ public class MyPageActivity extends AppCompatActivity{
                     case R.id.pageNav:
                         startActivity(new Intent(getApplicationContext(), WebActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                         return true;
 
                     case R.id.homeNav:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                         return true;
 
                     case R.id.userNav:

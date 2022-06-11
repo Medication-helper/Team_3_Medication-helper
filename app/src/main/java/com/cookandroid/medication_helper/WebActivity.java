@@ -44,11 +44,13 @@ public class WebActivity extends AppCompatActivity {
                     case R.id.homeNav:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                         return true;
 
                     case R.id.userNav:
                         startActivity(new Intent(getApplicationContext(), MyPageActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                         return true;
                 }
                 return false;
