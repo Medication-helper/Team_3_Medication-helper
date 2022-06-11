@@ -63,6 +63,7 @@ public class MainPageActivity extends AppCompatActivity {
                     case R.id.pageNav:
                         startActivity(new Intent(getApplicationContext(), WebActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                         return true;
 
                     case R.id.homeNav:
@@ -71,6 +72,7 @@ public class MainPageActivity extends AppCompatActivity {
                     case R.id.userNav:
                         startActivity(new Intent(getApplicationContext(), MyPageActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                         return true;
                 }
                 return false;
