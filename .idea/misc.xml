@@ -45,10 +45,17 @@
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/userinfo.xml" value="0.1875" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/userlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/USER/Desktop/Team_3_Medication-helper/app/src/main/res/layout/userregister.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_comforbiddenlist.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_duplicatelist.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_mediccheck.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_medicinelist.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_medicregister.xml" value="0.23291139240506328" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_my_page.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_pregnantforbiddenlist.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_splash.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_userregister.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/activity_web.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/forbiddenlist.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/main.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/medicate_frequency.xml" value="0.17806484295845998" />
@@ -59,6 +66,8 @@
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userinfo.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/layout/userregister.xml" value="0.33" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/menu/nav.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/an183/AndroidStudioProjects/Team_3_Medication-helper/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2985" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2985" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/box.xml" value="0.295" />
         <entry key="..\:/Users/lab/Desktop/Medication-helper/app/src/main/res/drawable/drawablesize.xml" value="0.2985" />

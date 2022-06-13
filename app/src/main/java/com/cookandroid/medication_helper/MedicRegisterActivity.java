@@ -66,6 +66,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
     String data;
 
+    /* 의약품 DB를 사용하기 위한 변수들 */
     UserData userData;
     MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
@@ -154,7 +155,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "등록 중입니다. 잠시만 기다려주세요", Toast.LENGTH_LONG).show();
 
-                sqlDB = myHelper.getWritableDatabase();
+                sqlDB = myHelper.getWritableDatabase(); // 의약품 저장 DB를 쓰기 가능으로 불러옴
                 Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL;", null);
 
                 switch(view.getId()){
@@ -170,7 +171,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-
+                                        /* 읽어들인 약품을 의약품 DB에 저장 */
                                         int count = cursor.getCount() + 1;
                                         for (int i = 0; i < medicList.length; i++) {
                                             sqlDB.execSQL("INSERT INTO medicTBL VALUES ("
@@ -179,12 +180,11 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                     + medicList[i] + "');");
                                         }
 
-                                        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainPageActivity.class);
-                                        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(BackToMain);
+                                        Intent BackToMain = new Intent(MedicRegisterActivity.this, MainPageActivity.class); // 메인화면으로 돌아가는 기능
+                                        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 백그라운드에서 실행되지 않도록 플래그 삭제
+                                        startActivity(BackToMain); // 실행
 
                                         Toast.makeText(getApplicationContext(), "처방약이 등록되었습니다", Toast.LENGTH_LONG).show();
-
 
                                         cursor.close();
                                         sqlDB.close();
