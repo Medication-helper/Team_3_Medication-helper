@@ -23,10 +23,12 @@ public class MedicineListActivity extends AppCompatActivity {
     ListView medicationListView;
     Button btnBack;
 
+    /* 의약품 DB를 사용하기 위한 변수들 */
     UserData userData;
     MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
 
+    /*스마트폰의 뒤로가기 버튼에 대한 뒤로가기 동작 구현*/
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -44,7 +46,8 @@ public class MedicineListActivity extends AppCompatActivity {
 
         userData = (UserData) getApplicationContext();
         myHelper = new MedicDBHelper(this);
-        sqlDB = myHelper.getReadableDatabase();
+        sqlDB = myHelper.getReadableDatabase(); // 의약품 DB를 읽기 전용으로 불러옴
+        // 현재 로그인중인 사용자가 복용중인 의약품의 DB를 읽어들임
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);
 
         medicationListView=(ListView)findViewById(R.id.medicationlist);
@@ -55,7 +58,7 @@ public class MedicineListActivity extends AppCompatActivity {
         String[] medicineArray = new String[cursor.getCount()];//DB에서 받아온 처방약 목록을 저장하는 String 배열
         int serialNo = 0;
 
-        while (cursor.moveToNext()) {
+        while (cursor.moveToNext()) { // DB에서 받아온 처방약 목록을 상단의 배열에 저장
             medicineArray[serialNo] = cursor.getString(2);
             serialNo++;
         }
@@ -81,19 +84,20 @@ public class MedicineListActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 medicationListView.setAdapter(adapter);
 
-                sqlDB = myHelper.getWritableDatabase();
+                sqlDB = myHelper.getWritableDatabase(); // 의약품 DB를 쓰기 가능으로 불러옴
+                /* 로그인한 사용자의 정보를 담고 있는 행을 삭제 */
                 String sql = "DELETE FROM medicTBL WHERE uID = '" + userData.getUserID() + "';";
                 sqlDB.execSQL(sql);
             }
         });
 
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로 가기 버튼을 눌렀을 경우
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MedicineListActivity.this, MedicCheckActivity.class);
-                startActivity(intent);
-                finish();
+                Intent intent = new Intent(MedicineListActivity.this, MedicCheckActivity.class); // 이전 화면으로 돌아가는 기능
+                startActivity(intent); // 실행
+                finish(); // Progress 완전 종료
             }
         });
 

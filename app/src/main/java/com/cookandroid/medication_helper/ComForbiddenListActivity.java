@@ -28,18 +28,19 @@ import java.util.Arrays;
 
 public class ComForbiddenListActivity extends AppCompatActivity {
 
+    /* 의약품DB를 사용하기 위한 변수들 */
     String data;
     UserData userData;
     MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
 
-    @Override
+    @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
         super.onBackPressed();
-        Intent Back = new Intent(ComForbiddenListActivity.this, MedicCheckActivity.class);
-        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(Back);
-        finish();
+        Intent Back = new Intent(ComForbiddenListActivity.this, MedicCheckActivity.class); // 메인화면으로 돌아가는 기능
+        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 병용금지 페이지가 백그라운드에서 돌아가지 않도록 완전종료
+        startActivity(Back); // 실행
+        finish(); // Progress 완전 종료
     }
 
     @Override
@@ -53,7 +54,8 @@ public class ComForbiddenListActivity extends AppCompatActivity {
 
         userData = (UserData) getApplicationContext();
         myHelper = new MedicDBHelper(this);
-        sqlDB = myHelper.getReadableDatabase();
+        sqlDB = myHelper.getReadableDatabase(); // 복용의약품 DB를 읽기 전용으로 불러옴
+        // 현재 로그인중인 사용자가 복용중인 의약품의 DB를 읽어들임
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);
 
         Toast.makeText(getApplicationContext(), "조회 중입니다. 잠시만 기다려주세요", Toast.LENGTH_LONG).show();
@@ -62,7 +64,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
         String[] medicineList = new String[cursor.getCount()];
         int serialNo = 0;
 
-        while (cursor.moveToNext()) {
+        while (cursor.moveToNext()) { // DB에서 받아온 처방약 목록을 상단의 배열에 저장
             medicineList[serialNo] = cursor.getString(2);
             serialNo++;
         }
@@ -167,12 +169,12 @@ public class ComForbiddenListActivity extends AppCompatActivity {
 
         Button btnBack = findViewById(R.id.btnback2);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로가기 버튼을 눌렀을 경우
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ComForbiddenListActivity.this, MedicCheckActivity.class);
-                startActivity(intent);
-                finish();
+                Intent intent = new Intent(ComForbiddenListActivity.this, MedicCheckActivity.class); // 이전 화면으로 돌아가는 동작
+                startActivity(intent); // 동작 시행
+                finish(); // Progress 종료
             }
         });
     }
