@@ -30,21 +30,21 @@ public class WebActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
         WebView webView = findViewById(R.id.web);
-
         bottomNavigationView.setSelectedItemId(R.id.pageNav);
+        //바텀네비게이션을 나타나게 해주는 함수
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
+                    //현재 페이지에서 보여주는 액티비티
                     case R.id.pageNav:
                         return true;
-
+                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.homeNav:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
-                        return true;
-
+                        return true;//user버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.userNav:
                         startActivity(new Intent(getApplicationContext(), MyPageActivity.class));
                         overridePendingTransition(0, 0);
@@ -54,7 +54,7 @@ public class WebActivity extends AppCompatActivity {
                 return false;
             }
         });
-        webView.loadUrl("https://www.hira.or.kr/main1.do");
+        webView.loadUrl("https://www.hira.or.kr/main1.do"); // url로 가게 해준다
         webView.setWebViewClient(new WebViewClient());  // 새 창 띄우기 않기
         webView.setWebChromeClient(new WebChromeClient());
         webView.getSettings().setLoadWithOverviewMode(true);  // WebView 화면크기에 맞추도록 설정 - setUseWideViewPort 와 같이 써야함

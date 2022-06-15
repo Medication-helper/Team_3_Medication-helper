@@ -26,6 +26,7 @@ public class MyPageActivity extends AppCompatActivity{
     MedicDBHelper medicDBHelper;
     SQLiteDatabase sqlUserDB, sqlMedicDB;
 
+    //뒤로가기 버튼을 누르면 스택에 쌓여있는 전 액티비티로 돌아가게 하는 함수
     @Override
     public void onBackPressed() { // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
         super.onBackPressed();
@@ -83,22 +84,24 @@ public class MyPageActivity extends AppCompatActivity{
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setSelectedItemId(R.id.userNav);
+        //바텀네비게이션을 나타나게 해주는 함수
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
+                    //page버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.pageNav:
                         startActivity(new Intent(getApplicationContext(), WebActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-
+                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.homeNav:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-
+                    //현재 페이지에서 보여주는 액티비티
                     case R.id.userNav:
                         return true;
                 }

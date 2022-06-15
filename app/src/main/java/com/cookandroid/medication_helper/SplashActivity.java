@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
+        //로딩화면을 띄우고 다음 화면으로 넘어가게 하는 함수
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

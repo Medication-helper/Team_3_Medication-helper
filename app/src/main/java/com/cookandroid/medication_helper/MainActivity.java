@@ -18,15 +18,17 @@ public class MainActivity extends FragmentActivity {
     SQLiteDatabase sqlDB;
     UserData userData;
 
+    //뒤로가기 누르면 앱종료시키는 함수
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        //다이어로그를 화면에 나타냄
         AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         exitDialogBuilder
                 .setTitle("프로그램 종료")
                 .setMessage("종료하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("네",
+                        //네를 누르면 앱 종료
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -35,6 +37,7 @@ public class MainActivity extends FragmentActivity {
                                 finish();
                             }
                         })
+                //아니오 누르면 다이어로그를 종료
                 .setNegativeButton("아니오",
                         new DialogInterface.OnClickListener() {
                             @Override
