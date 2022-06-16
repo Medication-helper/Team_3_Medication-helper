@@ -1,3 +1,9 @@
+/****************************
+ MedicRegisterActivity.java
+ 작성 팀 : 3분카레
+ 주 작성자 : 백인혁
+ 프로그램명 : Medication Helper
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
@@ -45,22 +51,22 @@ public class MedicRegisterActivity extends AppCompatActivity {
     private TessBaseAPI mTess;//Tess API Reference
     String datapath="";//언어데이터가 있는 경로
 
-    Button btnCamera;
-    ImageView pictureImage;
+    Button btnCamera;//카메라버튼
+    ImageView pictureImage;//사진 표시하는 이미지뷰
 
-    Button btnOCR;
-    TextView OCRTextView;
+    Button btnOCR;//OCR버튼
+    TextView OCRTextView;//OCR한 EDI 코드 목록을 표시하는 TextView
 
     Uri photoUri;
     String OCRresult;
 
-    Button btnRegister;
-    Button btnBacktoMain;
+    Button btnRegister;//등록버튼
+    Button btnBacktoMain;//메인화면복귀버튼
 
     private String imageFilePath;
     static final int REQUEST_IMAGE_CAPTURE = 672;
 
-    String[] EdiCodearray;
+    String[] EdiCodearray;//EDI 코드 목록을 저장하는 스트링 배열
 
     String[] medicList;//OpenAPI를 이용해 받아온 의약품 이름 목록을 저장하는 배열
 
@@ -97,15 +103,18 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnBacktoMain=(Button)findViewById(R.id.btnback6);
 
 
+        //언어 파일 경로 설정
         datapath=getFilesDir()+"/tessaract/";
 
-        checkFile(new File(datapath+"tessdata/"),"kor");
+        //언어 파일 존재 여부 확인
         checkFile(new File(datapath+"tessdata/"),"eng");
 
         String lang="eng";
 
-        mTess=new TessBaseAPI();
-        mTess.init(datapath,lang);
+        mTess=new TessBaseAPI();//TessBaseAPI 생성
+        mTess.init(datapath,lang);//초기화
+        
+        //숫자만 인식해서 추출하도록 블랙리스트, 화이트리스트 설정
         mTess.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, ".,!?@#$%&*()<>_-+=/:;'\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
         mTess.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789");
 
@@ -164,7 +173,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 for(int i=0;i<EdiCodearray.length;i++){
-                                    data=getXmlData(EdiCodearray[i]);//줄에 edicode로 약품명 받아오기
+                                    data=getXmlData(EdiCodearray[i]);//줄에 EDI 코드로 약품명 받아오기
                                     medicList[i]=data;//약 품목 리스트에 저장
                                 }
 
@@ -197,6 +206,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
             }
         });
 
+        //메인화면으로 복귀
         btnBacktoMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -207,6 +217,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         });
     }
 
+    //Xml에서 데이터 가져오기
     String getXmlData(String edicode){
         StringBuffer buffer=new StringBuffer();
         String str=edicode;
@@ -255,6 +266,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         return buffer.toString();
     }
 
+    //상수를 받아 각도를 변환
     private int exifOrientationToDegrees(int exifOrientation) {
         if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
             return 90;
@@ -266,12 +278,14 @@ public class MedicRegisterActivity extends AppCompatActivity {
         return 0;
     }
 
+    //비트맵을 각도대로 회전시켜 결과를 반환
     private Bitmap rotate(Bitmap bitmap, float degree) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
+    //카메라로 사진 찍어 이미지 띄우기
     private void sendTakePhotoIntent(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -291,6 +305,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         }
     }
 
+    //intent로 비트맵 이미지 자체를 불러와서 이미지뷰에 출력
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
@@ -318,6 +333,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         }
     }
 
+    //이미지파일 생성
     private File createImageFile() throws IOException{
         String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName="TEST_"+timeStamp+"_";
@@ -332,6 +348,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         return image;
     }
 
+    //스마트폰에 사진 파일 복사
     private void copyFiles(String lang){
         try{
             String filepath=datapath+"/tessdata/"+lang+".traineddata";
@@ -357,6 +374,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         }
     }
 
+    //스마트폰에 파일이 있는 지 확인
     private void checkFile(File dir, String lang){
         if(!dir.exists()&&dir.mkdirs()){
             copyFiles(lang);

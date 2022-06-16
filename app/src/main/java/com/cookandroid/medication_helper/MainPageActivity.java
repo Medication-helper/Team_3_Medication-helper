@@ -1,3 +1,9 @@
+/****************************
+ MainPageActivity.java
+ 작성 팀 : 3분카레
+ 주 작성자 : 송승우
+ 프로그램명 : Medication Helper
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import android.content.DialogInterface;

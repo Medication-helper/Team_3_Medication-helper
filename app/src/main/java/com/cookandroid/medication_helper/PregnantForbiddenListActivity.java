@@ -1,3 +1,9 @@
+/****************************
+ PregnantForbiddenListActivity.java
+ 작성팀 : 3분카레
+ 주 작성자 : 백인혁
+ 프로그램명 : Medication Helper
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
@@ -154,6 +160,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
                             }
                         });
 
+                        //ScrollView 안에서 리스트뷰를 스크롤 할 수 있도록 설정
                         pregXList.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -178,6 +185,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
         });
     }
 
+    //Xml 파싱으로 임부 금기에 해당하는 약과 부작용 원인 성분 알아내기
     String getXmlData(String medicname) {
         StringBuffer buffer=new StringBuffer();
         String str=medicname;
@@ -204,6 +212,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
                         tag=xpp.getName();
 
                         if(tag.equals("item"));
+                        //부작용 원인 약 성분 가져오기
                         else if(tag.equals("INGR_NAME")){
                             xpp.next();
                             buffer.append(xpp.getText());

@@ -1,3 +1,9 @@
+/****************************
+ MedicineListActivity.java
+ 작성 팀 : 3분카레
+ 주 작성자 : 백인혁
+ 프로그램명 : Medication Helper
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
@@ -52,7 +58,6 @@ public class MedicineListActivity extends AppCompatActivity {
 
         medicationListView=(ListView)findViewById(R.id.medicationlist);
         delBtn=(Button)findViewById(R.id.btnalldelete);
-        //delselectBtn=(Button)findViewById(R.id.btnselectdel);
         btnBack=(Button)findViewById(R.id.back);
 
         String[] medicineArray = new String[cursor.getCount()];//DB에서 받아온 처방약 목록을 저장하는 String 배열
@@ -63,12 +68,12 @@ public class MedicineListActivity extends AppCompatActivity {
             serialNo++;
         }
 
+        /*약 목록을 리스트뷰에 출력*/
         ArrayList<String> mediclist=new ArrayList<>(Arrays.asList(medicineArray));
-
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,mediclist);
-
         medicationListView.setAdapter(adapter);
 
+        //ScrollView 안에서 리스트뷰를 스크롤 할 수 있도록 설정
         medicationListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -77,6 +82,7 @@ public class MedicineListActivity extends AppCompatActivity {
             }
         });
 
+        //약 목록 삭제버튼
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,8 +97,8 @@ public class MedicineListActivity extends AppCompatActivity {
             }
         });
 
-
-        btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로 가기 버튼을 눌렀을 경우
+        // 뒤로 가기 버튼을 눌렀을 경우
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MedicineListActivity.this, MedicCheckActivity.class); // 이전 화면으로 돌아가는 기능
