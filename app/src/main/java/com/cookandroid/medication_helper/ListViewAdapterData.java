@@ -1,3 +1,9 @@
+/****************************
+ ListViewAdapterData.java
+ 작성 팀 : 3분카레
+ 주 작성자 : 안현종
+ 프로그램명 : Medication Helper
+ ***************************/
 package com.cookandroid.medication_helper;
 
 public class ListViewAdapterData {

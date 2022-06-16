@@ -1,3 +1,9 @@
+/****************************
+ DuplicateListActivity.java
+ 작성 팀 : 3분카레
+ 주 작성자 : 백인혁
+ 프로그램명 : Medication Helper
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
@@ -59,7 +65,8 @@ public class DuplicateListActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "조회 중입니다. 잠시만 기다려주세요", Toast.LENGTH_LONG).show();
 
-        btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로가기 버튼을 눌렀을 경우
+        // 뒤로가기 버튼을 눌렀을 경우
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DuplicateListActivity.this, MedicCheckActivity.class); // 이전 화면으로 돌아가는 동작
@@ -165,6 +172,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                             }
                         });
 
+                        //ScrollView 안에서 리스트뷰를 스크롤 할 수 있도록 설정
                         DuplicateList.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -179,6 +187,7 @@ public class DuplicateListActivity extends AppCompatActivity {
 
     }
 
+    //Xml 파싱으로 효능중복에 해당하는 약을 찾아내고 효과 알아내어 저장
     String getXmlData(String medicname) {
         StringBuffer buffer=new StringBuffer();
         String str=medicname;
@@ -205,6 +214,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                         tag=xpp.getName();
 
                         if(tag.equals("item"));
+                        //약의 효능을 가져오기
                         else if(tag.equals("EFFECT_NAME")){
                             xpp.next();
                             buffer.append(xpp.getText());

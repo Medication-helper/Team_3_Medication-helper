@@ -1,3 +1,9 @@
+/****************************
+ ComForbiddenListActivity.java
+ 작성 팀 : 3분카레
+ 주 작성자 : 백인혁
+ 프로그램명 : Medication Helper
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
@@ -155,6 +161,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                             }
                         });
 
+                        //ScrollView 안에서 리스트뷰를 스크롤 할 수 있도록 설정
                         comXList.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -179,6 +186,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
         });
     }
 
+    //Xml 파싱으로 병용금기에 해당하는 약과 부작용 원인 성분 알아내기
     String getXmlData(String medicname) {
         StringBuffer buffer=new StringBuffer();
         String str=medicname;
