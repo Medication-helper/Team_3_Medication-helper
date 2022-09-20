@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textColor="#036635"
+            android:text="약 이름 옆 숫자 코드 목록을 촬영"/>
+
+        <FrameLayout
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:background="@drawable/green_border"
+            >
+
+            <androidx.camera.view.PreviewView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:id="@+id/previewView"/>
+
+            <TextView
+                android:id="@+id/OCRTextResult"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:text="이 곳에\n 사진과 목록이\n 표시됩니다"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textSize="40dp"
+                android:textColor="@color/black"
+                android:visibility="visible">
+            </TextView>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCameraStart"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/green_border"
+                android:text="시작하기"
+                android:textColor="#036635"
+                android:textSize="20dp"
+                android:visibility="visible"
+                android:enabled="true"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnPicture"
+                android:text="촬영"
+                android:textSize="20dp"
+                android:textColor="#036635"
+                android:layout_gravity="center"
+                android:background="@drawable/green_border"
+                android:visibility="invisible"
+                android:enabled="false"
+                />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="약 등록 버튼을 누른 후 \n등록 완료 알람이 뜰 때까지 기다리세요"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/regimedicbtn"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/green_border"
+            android:text="약 목록 등록"
+            android:textColor="#036635"
+            android:textSize="20dp" />
+
+</LinearLayout>

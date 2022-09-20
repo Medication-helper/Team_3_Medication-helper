@@ -1,6 +1,6 @@
 /****************************
  DuplicateListActivity.java
- 작성 팀 : 3분카레
+ 작성 팀 : Hello World!
  주 작성자 : 백인혁
  프로그램명 : Medication Helper
  ***************************/
@@ -16,11 +16,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -38,13 +38,13 @@ public class DuplicateListActivity extends AppCompatActivity {
     /* 의약품DB를 사용하기 위한 변수들 */
     String data;
     UserData userData;
-    MedicDBHelper myHelper;
+    com.cookandroid.medication_helper.MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
 
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
         super.onBackPressed();
-        Intent Back = new Intent(DuplicateListActivity.this, MedicCheckActivity.class); // 메인화면으로 돌아가는 기능
+        Intent Back = new Intent(DuplicateListActivity.this, MedicineListActivity.class); // 메인화면으로 돌아가는 기능
         Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 효능중복 페이지가 백그라운드에서 돌아가지 않도록 완전종료
         startActivity(Back); // 실행
         finish(); // Progress 완전 종료
@@ -55,27 +55,17 @@ public class DuplicateListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_duplicatelist);
-        setTitle("Medication Helper");
-
-        Button btnBack = findViewById(R.id.btnback3);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
+        getSupportActionBar().setCustomView(R.layout.duptitlebar_custom); // 커스텀 사용할 파일 위치
 
         userData = (UserData) getApplicationContext();
-        myHelper = new MedicDBHelper(this);
+        myHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);
         sqlDB = myHelper.getReadableDatabase(); // 복용의약품 DB를 읽기 전용으로 불러옴
         // 현재 로그인중인 사용자가 복용중인 의약품의 DB를 읽어들임
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);
 
         Toast.makeText(getApplicationContext(), "조회 중입니다. 잠시만 기다려주세요", Toast.LENGTH_LONG).show();
-
-        // 뒤로가기 버튼을 눌렀을 경우
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DuplicateListActivity.this, MedicCheckActivity.class); // 이전 화면으로 돌아가는 동작
-                startActivity(intent); // 동작 시행
-                finish(); // Progress 종료
-            }
-        });
 
         ListView DuplicateList=(ListView)findViewById(R.id.duplicateList);
         TextView DuplicateTextView=(TextView)findViewById(R.id.duplicateIng);

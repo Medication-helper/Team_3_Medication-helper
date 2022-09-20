@@ -1,6 +1,6 @@
 /****************************
  ComForbiddenListActivity.java
- 작성 팀 : 3분카레
+ 작성 팀 : Hello World!
  주 작성자 : 백인혁
  프로그램명 : Medication Helper
  ***************************/
@@ -16,11 +16,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -44,7 +44,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
         super.onBackPressed();
-        Intent Back = new Intent(ComForbiddenListActivity.this, MedicCheckActivity.class); // 메인화면으로 돌아가는 기능
+        Intent Back = new Intent(ComForbiddenListActivity.this, MedicineListActivity.class); // 메인화면으로 돌아가는 기능
         Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 병용금지 페이지가 백그라운드에서 돌아가지 않도록 완전종료
         startActivity(Back); // 실행
         finish(); // Progress 완전 종료
@@ -55,7 +55,9 @@ public class ComForbiddenListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_comforbiddenlist);
-        setTitle("Medication Helper");
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
+        getSupportActionBar().setCustomView(R.layout.fortitlebar_custom); // 커스텀 사용할 파일 위치
 
         ListView comXList=(ListView)findViewById(R.id.combinationXList);
         TextView comXtextView=(TextView)findViewById(R.id.combinationXIng);
@@ -175,17 +177,6 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                 });
             }
         }).start();
-
-        Button btnBack = findViewById(R.id.btnback2);
-
-        btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로가기 버튼을 눌렀을 경우
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ComForbiddenListActivity.this, MedicCheckActivity.class); // 이전 화면으로 돌아가는 동작
-                startActivity(intent); // 동작 시행
-                finish(); // Progress 종료
-            }
-        });
     }
 
     //Xml 파싱으로 병용금기에 해당하는 약과 부작용 원인 성분 알아내기

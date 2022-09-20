@@ -1,6 +1,6 @@
 /****************************
  PregnantForbiddenListActivity.java
- 작성팀 : 3분카레
+ 작성팀 : Hello World!
  주 작성자 : 백인혁
  프로그램명 : Medication Helper
  ***************************/
@@ -38,7 +38,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
     /* 의약품DB를 사용하기 위한 변수들 */
     String data;
     UserData userData;
-    MedicDBHelper myHelper;
+    com.cookandroid.medication_helper.MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
 
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
@@ -61,7 +61,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
         TextView pregXtextView=(TextView)findViewById(R.id.pregnantXIng);
 
         userData = (UserData) getApplicationContext();
-        myHelper = new MedicDBHelper(this);
+        myHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);
         sqlDB = myHelper.getReadableDatabase(); // 복용의약품 DB를 읽기 전용으로 불러옴
         // 현재 로그인중인 사용자가 복용중인 의약품의 DB를 읽어들임
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);

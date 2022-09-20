@@ -1,6 +1,6 @@
 /****************************
  ListViewAdapterData.java
- 작성 팀 : 3분카레
+ 작성 팀 : Hello World!
  주 작성자 : 안현종
  프로그램명 : Medication Helper
  ***************************/

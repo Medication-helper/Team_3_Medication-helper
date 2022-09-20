@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 activity_comfordbiddenlist.xml
-작성 팀 : 3분 카레
+작성 팀 : Hello World!
 프로그램명 : Medication Helper
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,16 +12,9 @@ activity_comfordbiddenlist.xml
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="병용 금기 약물"
-            android:textColor="#036635"
-            android:textSize="30sp"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_margin="10dp" />
 
         <ListView
             android:id="@+id/combinationXList"
@@ -34,7 +27,7 @@ activity_comfordbiddenlist.xml
         <TextView
             android:text="금기 성분"
             android:textColor="#036635"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -42,21 +35,13 @@ activity_comfordbiddenlist.xml
             />
         <TextView
             android:id="@+id/combinationXIng"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="40dp"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:textSize="30dp"
             android:text="약 선택하면 성분 표시"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
             android:background="@drawable/green_border"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnback2"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/green_border"
-            android:text="뒤로 가기"
-            android:textColor="#036635"
-            android:textSize="30dp" />
     </LinearLayout>
 </ScrollView>
