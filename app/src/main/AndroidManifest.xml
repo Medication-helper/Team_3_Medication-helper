@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookandroid.medication_helper">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <supports-screens
         android:anyDensity="true"
@@ -21,6 +26,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicationHelper"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="25f6ad250f0833e39da5b5f7db6f4d82"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -41,9 +51,10 @@
         <activity android:name=".DuplicateListActivity" />
         <activity android:name=".PregnantForbiddenListActivity" />
         <activity android:name=".MainPageActivity" />
-        <activity android:name=".WebActivity" />
         <activity android:name=".MyPageActivity" />
         <activity android:name=".UserRegisterActivity" />
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-2721080471277714~3179912396"/>
+        <meta-data android:name="android.max_aspect" android:value="2.1" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -53,9 +64,8 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
+            <meta-data android:name="android.max_aspect" android:value="2.1" />
         </provider>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
 </manifest>

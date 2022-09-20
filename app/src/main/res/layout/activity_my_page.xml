@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 activity_my_page.xml
-작성 팀 : 3분 카레
+작성 팀 : Hello World!
 프로그램명 : Medication Helper
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,89 +12,80 @@ activity_my_page.xml
     tools:context=".MyPageActivity">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_margin="20dp"
-            android:text="회원 정보"
-            android:textColor="#036635"
-            android:textSize="40sp" />
+            android:drawableStart="@drawable/ic_baseline_account_circle_80"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="사용자"
+            android:textSize="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원정보"
+            android:textSize="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="150dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#808080"
+            android:layout_marginTop="190dp"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_margin="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="220dp"
             android:textColor="#036635"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvBirth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_margin="10dp"
+            android:layout_marginTop="260dp"
+            android:layout_marginStart="40dp"
             android:textColor="#036635"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_margin="10dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginStart="40dp"
             android:textColor="#036635"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="130dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/green_border"
-            android:backgroundTint="@android:color/holo_green_light"
+            android:layout_marginStart="290dp"
+            android:layout_marginTop="70dp"
             android:text="로그아웃"
-            android:textColor="@color/black"
+            android:textColor="#808080"
             android:textSize="17sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDel"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="130dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/green_border"
-            android:backgroundTint="@android:color/holo_green_light"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="400dp"
             android:text="회원탈퇴"
             android:textColor="@color/black"
             android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_margin="20dp"
-            android:drawableStart="@drawable/green_cross_size"
-            android:drawablePadding="5dp"
-            android:text="3분카레 약국"
-            android:textColor="#036635"
-            android:textSize="30sp" />
-    </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"

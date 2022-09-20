@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 activity_login.xml
-작성 팀 : 3분 카레
+작성 팀 : Hello World!
 프로그램명 : Medication Helper
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,70 +19,72 @@ activity_login.xml
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="회원 로그인"
+            android:layout_marginTop="150dp"
+            android:text="Medication-Helper"
             android:textColor="#036635"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:layout_gravity="center_horizontal|top" />
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="375dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:id="@+id/editID"
             android:layout_gravity="center"
             android:ems="12"
-            android:hint="  아이디"
+            android:drawableStart="@drawable/ic_baseline_person_24"
+            android:hint="아이디"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="20dp"
             android:inputType="textPersonName"
             android:text=""
             android:background="@drawable/green_border"/>
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="375dp"
+            android:layout_height="wrap_content"
             android:id="@+id/editPW"
             android:layout_gravity="center"
             android:ems="12"
-            android:hint="  비밀번호"
+            android:hint="비밀번호"
+            android:drawableStart="@drawable/ic_baseline_vpn_key_24"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
             android:inputType="textPassword"
             android:background="@drawable/green_border"/>
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자동 로그인"
+            android:id="@+id/autoLogin"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnlogin"
-            android:layout_width="match_parent"
+            android:layout_width="375dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="130dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="130dp"
             android:background="@drawable/green_border"
-            android:text="로그인"
-            android:textColor="#036635"
-            android:textSize="17sp" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnsignin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="130dp"
-            android:layout_marginBottom="150dp"
-            android:background="@drawable/green_border"
-            android:text="회원가입"
-            android:textColor="#036635"
+            android:text="로그인 하기"
+            android:backgroundTint="#036635"
+            android:textColor="@color/white"
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/btnsignin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:drawableStart="@drawable/green_cross_size"
-            android:text="3분카레 약국"
-            android:textColor="#036635"
-            android:textSize="30sp"
-            android:drawablePadding="5dp"
-            android:layout_margin="10dp"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="회원가입"
+            android:textColor="#808080"
+            android:textSize="17sp" />
 
     </LinearLayout>
 </ScrollView>

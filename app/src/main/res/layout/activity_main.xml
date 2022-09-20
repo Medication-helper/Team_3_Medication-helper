@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 activity_main.xml
-작성 팀 : 3분 카레
+작성 팀 : Hello World!
 프로그램명 : Medication Helper
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,60 +12,61 @@ activity_main.xml
     android:orientation="vertical"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".MainPageActivity">
-
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:drawableStart="@drawable/green_cross_size"
-            android:drawablePadding="3dp"
-            android:text="3분카레 약국"
-            android:textColor="#036635"
-            android:textSize="30sp" />
+            android:layout_height="match_parent">
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            tools:ignore="MissingClass">
 
             <TextView
-                android:layout_width="400dp"
-                android:layout_height="450dp"
-                android:background="@drawable/green_border"
-                android:padding="10dp"
-                android:text="복약 정보"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:drawablePadding="3dp"
+                android:text="Medication-Helper"
                 android:textColor="#036635"
-                android:textSize="20sp" />
+                android:textSize="30sp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnMediReg"
-                android:layout_width="200dp"
-                android:layout_height="140dp"
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/green_border"
-                android:text="복약 정보 등록"
-                android:textColor="#036635"
-                android:textSize="40sp" />
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnMediCheck"
-                android:layout_width="200dp"
-                android:layout_height="140dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="280dp"
-                android:background="@drawable/green_border"
-                android:text="복약 정보 조회"
-                android:textColor="#036635"
-                android:textSize="40sp" />
 
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/map_view"
+                    android:layout_width="350dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@drawable/green_border"
+                    android:padding="10dp" />
+
+            </FrameLayout>
         </FrameLayout>
-    </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"

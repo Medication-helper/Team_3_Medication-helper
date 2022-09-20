@@ -1,18 +1,18 @@
 /****************************
  SplashActivity.java
- 작성 팀 : 3분카레
+ 작성 팀 : Hello World!
  주 작성자 : 송승우
  프로그램명 : Medication Helper
  ***************************/
 package com.cookandroid.medication_helper;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

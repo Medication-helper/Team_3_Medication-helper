@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 activity_duplicatelist.xml
-작성 팀 : 3분 카레
+작성 팀 : Hello World!
 프로그램명 : Medication Helper
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,14 +14,6 @@ activity_duplicatelist.xml
         android:layout_height="fill_parent"
         android:orientation="vertical"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="효능 중복 약물"
-            android:textColor="#036635"
-            android:textSize="30sp"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_margin="10dp" />
 
         <ListView
             android:id="@+id/duplicateList"
@@ -33,7 +25,7 @@ activity_duplicatelist.xml
         <TextView
             android:text="약물 효능"
             android:textColor="#036635"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -41,22 +33,14 @@ activity_duplicatelist.xml
             />
         <TextView
             android:id="@+id/duplicateIng"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="40dp"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:textSize="30dp"
             android:text="약 선택하면 효능 표시"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
             android:background="@drawable/green_border"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnback3"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/green_border"
-            android:text="뒤로 가기"
-            android:textColor="#036635"
-            android:textSize="30dp" />
     </LinearLayout>
 
 </ScrollView>

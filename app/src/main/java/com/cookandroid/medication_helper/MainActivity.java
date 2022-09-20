@@ -1,29 +1,31 @@
-/****************************
- MainActivity.java
- 작성 팀 : 3분카레
- 주 작성자 : 신윤호
- 프로그램명 : Medication Helper
- ***************************/
+
 package com.cookandroid.medication_helper;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
 public class MainActivity extends FragmentActivity {
-    UserDBHelper myHelper;
-    SQLiteDatabase sqlDB;
-    UserData userData;
+    com.cookandroid.medication_helper.UserData userData;
+    String loginID, loginPW;
 
     //뒤로가기 누르면 앱종료시키는 함수
     @Override
@@ -61,62 +63,71 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_login);
-        setTitle("Medication Helper");
 
-        userData = (UserData)getApplicationContext();
+        userData = (com.cookandroid.medication_helper.UserData) getApplicationContext();
         EditText edtID = findViewById(R.id.editID);
         EditText edtPW = findViewById(R.id.editPW);
 
+        CheckBox checkBox = findViewById(R.id.autoLogin);
         Button btnlogin = findViewById(R.id.btnlogin);
-        Button btnsignin = findViewById(R.id.btnsignin);
+        TextView btnsignin = findViewById(R.id.btnsignin);
 
-        myHelper = new UserDBHelper(this);
+        SharedPreferences auto = getSharedPreferences("autologin", Activity.MODE_PRIVATE);
+
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqlDB = myHelper.getReadableDatabase();
-                Cursor cursor;
-                cursor = sqlDB.rawQuery("SELECT * FROM userTBL;", null);
-                Boolean checkID = false;
-                Boolean checkPW = false;
-                int position = 0;
+                String userID = edtID.getText().toString();
+                String userPassword = edtPW.getText().toString();
 
-                while (cursor.moveToNext()) {
-                    if ((cursor.getString(0)).equals(edtID.getText().toString())) {
-                        checkID = true;
-                        if ((cursor.getString(1)).equals(edtPW.getText().toString())){
-                            checkPW = true;
-                            break;
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try{
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if(success){
+                                Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+
+                                String loginID = jsonResponse.getString("userID");
+                                String loginPassword = jsonResponse.getString("userPassword");
+                                String loginName = jsonResponse.getString("userName");
+                                String loginBirth = jsonResponse.getString("userBirth");
+                                String loginGender = jsonResponse.getString("userGender");
+
+                                userData.setUserID(loginID);
+                                userData.setUserPassWord(loginPassword);
+                                userData.setUserNickName(loginName);
+                                userData.setUserBirth(loginBirth);
+                                userData.setUserGender(loginGender);
+
+                                Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch(Exception e){
+                            e.printStackTrace();
                         }
-                        break;
                     }
-                    position++;
-                }
-
-                if (checkID == false) {
-                    Toast.makeText(getApplicationContext(), "등록된 ID가 없습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else if (checkPW == false) {
-                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "로그인 완료", Toast.LENGTH_SHORT).show();
-                    cursor.moveToPosition(position);
-                    userData.setUserID(cursor.getString(0));
-                    userData.setUserPassWord(cursor.getString(1));
-                    userData.setUserNickName(cursor.getString(2));
-                    userData.setUserBirth(cursor.getString(3));
-                    userData.setUserGender(cursor.getString(4));
-                    Intent mainIntent = new Intent(MainActivity.this, MainPageActivity.class);
-                    startActivity(mainIntent);
-                    finish();
-                }
+                };
+                LoginRequest loginRequest = new LoginRequest(userID, userPassword, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                queue.add(loginRequest);
             }
         });
+
+        // 자동 로그인 구현 부분분
+       if (checkBox.isChecked()) {
+          // autoLoginEdit.commit();
+        }
+
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent userReIntent = new Intent(MainActivity.this, UserRegisterActivity.class);
+                Intent userReIntent = new Intent(MainActivity.this, com.cookandroid.medication_helper.UserRegisterActivity.class);
                 startActivity(userReIntent);
                 finish();
             }
