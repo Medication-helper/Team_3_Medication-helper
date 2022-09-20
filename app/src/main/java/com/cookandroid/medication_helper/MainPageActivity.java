@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -88,9 +89,11 @@ public class MainPageActivity extends AppCompatActivity implements MapView.MapVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -143,8 +146,6 @@ public class MainPageActivity extends AppCompatActivity implements MapView.MapVi
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
-        //Button btnPill = findViewById(R.id.pillbtn);
-        //Button btnJar = findViewById(R.id.jarbtn);
         bottomNavigationView.setSelectedItemId(R.id.homeNav);
 
         //바텀네비게이션을 나타나게 해주는 함수
@@ -217,7 +218,7 @@ public class MainPageActivity extends AppCompatActivity implements MapView.MapVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mapViewContainer.removeAllViews();
+        mapViewContainer.removeView(mapView);
     }
 
 

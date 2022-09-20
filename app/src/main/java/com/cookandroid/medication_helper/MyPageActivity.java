@@ -73,7 +73,7 @@ public class MyPageActivity extends AppCompatActivity{
 
         /* UserData 클래스에서 현재 로그인중인 사용자의 정보를 불러옴 */
         TvName.setText(userData.getUserNickName());
-        TvID.setText("아이디 : " + userData.getUserID());
+        //TvID.setText("아이디 : " + userData.getUserID());
         TvBirth.setText("생년월일 : " + userData.getUserBirth());
         TvGender.setText("성별 : " + userData.getUserGender());
 
