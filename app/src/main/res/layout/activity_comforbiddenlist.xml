@@ -29,13 +29,13 @@ activity_comfordbiddenlist.xml
             android:textColor="#036635"
             android:textSize="20dp"
             android:layout_margin="10dp"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="35dp"
-            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
             />
         <TextView
             android:id="@+id/combinationXIng"
-            android:layout_width="400dp"
+            android:layout_width="300dp"
             android:layout_height="50dp"
             android:textSize="30dp"
             android:text="약 선택하면 성분 표시"
