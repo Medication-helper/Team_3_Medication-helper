@@ -28,7 +28,7 @@ activity_medicinelist.xml
         android:layout_marginTop="420dp"
         android:background="@drawable/green_border"
         android:padding="3dp"
-        android:text="병용 금기 확인하기"
+        android:text="병용 금기"
         android:textSize="17sp" />
 
 
@@ -39,10 +39,10 @@ activity_medicinelist.xml
         android:layout_alignParentEnd="true"
         android:layout_marginStart="215dp"
         android:layout_marginTop="420dp"
-        android:layout_marginEnd="57dp"
+        android:layout_marginEnd="55dp"
         android:background="@drawable/green_border"
         android:padding="3dp"
-        android:text="효능 중복 확인하기"
+        android:text="효능 중복"
         android:textSize="17sp" />
 
 
@@ -57,9 +57,10 @@ activity_medicinelist.xml
         android:layout_marginEnd="52dp"
         android:layout_marginBottom="4dp"
         android:background="#FF0000"
-        android:text="약 전부 삭제"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:text="약 목록 삭제"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"

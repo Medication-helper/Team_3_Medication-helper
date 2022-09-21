@@ -3,24 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable-v24/mysitol_size.xml" value="0.1" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable-v24/navcolor.xml" value="0.1" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable-v24/pill_size.xml" value="0.1" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable/green_border.xml" value="0.1085" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable/green_cross_size.xml" value="0.105" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable/green_cross_splash.xml" value="0.105" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.105" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable/ic_baseline_public_24.xml" value="0.105" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/drawable/navcolor.xml" value="0.105" />
-        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_comforbiddenlist.xml" value="0.10885416666666667" />
-        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_duplicatelist.xml" value="0.10885416666666667" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_comforbiddenlist.xml" value="0.2" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_duplicatelist.xml" value="0.2" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_login.xml" value="0.10885416666666667" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_main.xml" value="0.10885416666666667" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_mediccheck.xml" value="0.10885416666666667" />
-        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_medicinelist.xml" value="0.10885416666666667" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_medicinelist.xml" value="0.264" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_medicregister.xml" value="0.2" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_medicriegister.xml" value="0.2" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_my_page.xml" value="0.2" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_pregnantforbiddenlist.xml" value="0.10885416666666667" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_splash.xml" value="0.10885416666666667" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_userregister.xml" value="0.2" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/activity_web.xml" value="0.10885416666666667" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/medilisttitlebar_custom.xml" value="0.1" />
+        <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/mediregititlebar_custom.xml" value="0.1" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/layout/titlebar_custom.xml" value="0.24947916666666667" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/menu/nav.xml" value="0.1" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.105" />
