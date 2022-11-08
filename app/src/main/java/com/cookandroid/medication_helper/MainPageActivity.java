@@ -13,11 +13,13 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Trace;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,7 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 public class MainPageActivity extends AppCompatActivity{ //implements MapView.MapViewEventListener {
+    TextView TvHelloName;
 
     private AdView mAdview;
     private ListView mListView;
@@ -49,12 +52,14 @@ public class MainPageActivity extends AppCompatActivity{ //implements MapView.Ma
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
 
-    private static final MapPoint DEFAULT_MARKER_POINT1 = MapPoint.mapPointWithGeoCoord(36.627817766042234, 127.49140052015375);
-    private static final MapPoint DEFAULT_MARKER_POINT2 = MapPoint.mapPointWithGeoCoord(36.6166363294552, 127.518193782998);
-    private static final MapPoint DEFAULT_MARKER_POINT3 = MapPoint.mapPointWithGeoCoord(36.626477701126305, 127.49294825679303);
+    //private static final MapPoint DEFAULT_MARKER_POINT1 = MapPoint.mapPointWithGeoCoord(36.627817766042234, 127.49140052015375);
+    //private static final MapPoint DEFAULT_MARKER_POINT2 = MapPoint.mapPointWithGeoCoord(36.6166363294552, 127.518193782998);
+    //private static final MapPoint DEFAULT_MARKER_POINT3 = MapPoint.mapPointWithGeoCoord(36.626477701126305, 127.49294825679303);
 
     private MapPOIItem mDefaultMarker;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+
+    UserData userData;
 
     //뒤로가기 누르면 앱종료시키는 함수
     @Override
@@ -93,6 +98,11 @@ public class MainPageActivity extends AppCompatActivity{ //implements MapView.Ma
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+
+        TvHelloName = (TextView) findViewById(R.id.tvHelloName);
+        userData = (UserData) getApplicationContext();
+
+        TvHelloName.setText("안녕하세요 \n" + userData.getUserNickName() + "님!");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
