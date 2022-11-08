@@ -35,6 +35,7 @@ activity_main.xml
                 android:textColor="#036635"
                 android:textSize="30sp" />
 
+            <!--
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="wrap_content"
@@ -45,13 +46,25 @@ activity_main.xml
                 android:layout_marginTop="80dp"
                 app:adSize="BANNER"
                 app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
-
-
+                -->
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:layout_width="350dp"
+                    android:layout_height="400dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@drawable/green_border"
+                    android:padding="10dp"
+                    android:text="안녕하세요!"
+                    android:textColor="#036635"
+                    android:textSize="50dp"
+                    android:gravity="center"/>
+                <!--
                 <RelativeLayout
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/map_view"
@@ -61,6 +74,7 @@ activity_main.xml
                     android:layout_marginBottom="80dp"
                     android:background="@drawable/green_border"
                     android:padding="10dp" />
+                    -->
 
             </FrameLayout>
         </FrameLayout>

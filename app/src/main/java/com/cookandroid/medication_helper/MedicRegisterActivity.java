@@ -179,11 +179,11 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                                 super.onCaptureSuccess(image);
 
-                                int height=rotatedbitmap.getHeight();
-                                int width=rotatedbitmap.getWidth();
+                                int height = rotatedbitmap.getHeight();
+                                int width = rotatedbitmap.getWidth();
 
                                 //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰 축
-                                Bitmap popupBitmap=Bitmap.createScaledBitmap(rotatedbitmap,1000,height/(width/1000),true);
+                                Bitmap popupBitmap = Bitmap.createScaledBitmap(rotatedbitmap, 1000, height / (width / 1000), true);
 
                                 //카메라 바인딩 사용중단
                                 processCameraProvider.unbindAll();
@@ -192,7 +192,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 capturedimage.setImageBitmap(popupBitmap);
 
                                 //사진 촬영 결과를 AlertDialog로 띄워 사용 여부를 선택한다
-                                AlertDialog.Builder captureComplete=new AlertDialog.Builder(MedicRegisterActivity.this)
+                                AlertDialog.Builder captureComplete = new AlertDialog.Builder(MedicRegisterActivity.this)
                                         .setTitle("촬영 결과")
                                         .setMessage("이 사진을 사용할까요?")
                                         .setView(capturedimage)
@@ -200,18 +200,19 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                         .setPositiveButton("사용", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                String OCRresult=null;
-                                                mTess.setImage(rotatedbitmap);
-                                                OCRresult=mTess.getUTF8Text();
-
-                                                textView.setText(OCRresult);
+//                                                String OCRresult=null;
+//                                                mTess.setImage(rotatedbitmap);
+//                                                OCRresult=mTess.getUTF8Text();
+//
+//                                                textView.setText(OCRresult);
+                                                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
                                             }
                                         })
                                         //재촬영을 선택할 경우 bitmap에 저장된 비트맵 파일을 지우고 다시 카메라 프리뷰를 바인딩함
                                         .setNegativeButton("재촬영", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                bitmap=null;
+                                                bitmap = null;
                                                 bindPreview();
                                                 bindImageCapture();
                                                 textView.setVisibility(View.INVISIBLE);
@@ -229,41 +230,41 @@ public class MedicRegisterActivity extends AppCompatActivity {
         });
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
-        //Button btnPill = findViewById(R.id.pillbtn);
-        //Button btnJar = findViewById(R.id.jarbtn);
-        bottomNavigationView.setSelectedItemId(R.id.cameraNav);
-
-        //바텀네비게이션을 나타나게 해주는 함수
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
-                    case R.id.homeNav:
-                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
-                        overridePendingTransition(0, 0);
-                        finish();
-                        return true;
-                    //현재 화면에서 보여주는 액티비티
-                    case R.id.cameraNav:
-                        return true;
-                    //article 버튼을 누르면 액티비티 화면을 전환시켜준다
-                    case R.id.articleNav:
-                        startActivity(new Intent(getApplicationContext(), MedicineListActivity.class));
-                        overridePendingTransition(0, 0);
-                        finish();
-                        return true;
-                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
-                    case R.id.userNav:
-                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MyPageActivity.class));
-                        overridePendingTransition(0, 0);
-                        finish();
-                        return true;
-                }
-                return false;
-            }
-        });
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
+//        //Button btnPill = findViewById(R.id.pillbtn);
+//        //Button btnJar = findViewById(R.id.jarbtn);
+//        bottomNavigationView.setSelectedItemId(R.id.cameraNav);
+//
+//        //바텀네비게이션을 나타나게 해주는 함수
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
+//                    case R.id.homeNav:
+//                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        finish();
+//                        return true;
+//                    //현재 화면에서 보여주는 액티비티
+//                    case R.id.cameraNav:
+//                        return true;
+//                    //article 버튼을 누르면 액티비티 화면을 전환시켜준다
+//                    case R.id.articleNav:
+//                        startActivity(new Intent(getApplicationContext(), MedicineListActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        finish();
+//                        return true;
+//                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
+//                    case R.id.userNav:
+//                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MyPageActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        finish();
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     void bindPreview(){
