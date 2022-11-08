@@ -230,41 +230,41 @@ public class MedicRegisterActivity extends AppCompatActivity {
         });
 
 
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
 //        //Button btnPill = findViewById(R.id.pillbtn);
 //        //Button btnJar = findViewById(R.id.jarbtn);
-//        bottomNavigationView.setSelectedItemId(R.id.cameraNav);
-//
-//        //바텀네비게이션을 나타나게 해주는 함수
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
-//                    case R.id.homeNav:
-//                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
-//                        overridePendingTransition(0, 0);
-//                        finish();
-//                        return true;
-//                    //현재 화면에서 보여주는 액티비티
-//                    case R.id.cameraNav:
-//                        return true;
-//                    //article 버튼을 누르면 액티비티 화면을 전환시켜준다
-//                    case R.id.articleNav:
-//                        startActivity(new Intent(getApplicationContext(), MedicineListActivity.class));
-//                        overridePendingTransition(0, 0);
-//                        finish();
-//                        return true;
-//                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
-//                    case R.id.userNav:
-//                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MyPageActivity.class));
-//                        overridePendingTransition(0, 0);
-//                        finish();
-//                        return true;
-//                }
-//                return false;
-//            }
-//        });
+        bottomNavigationView.setSelectedItemId(R.id.cameraNav);
+
+        //바텀네비게이션을 나타나게 해주는 함수
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
+                    case R.id.homeNav:
+                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
+                        overridePendingTransition(0, 0);
+                        finish();
+                        return true;
+                    //현재 화면에서 보여주는 액티비티
+                    case R.id.cameraNav:
+                        return true;
+                    //article 버튼을 누르면 액티비티 화면을 전환시켜준다
+                    case R.id.articleNav:
+                        startActivity(new Intent(getApplicationContext(), MedicineListActivity.class));
+                        overridePendingTransition(0, 0);
+                        finish();
+                        return true;
+                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
+                    case R.id.userNav:
+                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MyPageActivity.class));
+                        overridePendingTransition(0, 0);
+                        finish();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     void bindPreview(){
