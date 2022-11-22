@@ -27,9 +27,11 @@
         android:theme="@style/Theme.MedicationHelper"
         android:usesCleartextTraffic="true">
 
+<!--
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="98f48dd2ad91b7abb77271bea456b281"/>
+-->
 
         <activity
             android:name=".MainActivity"
@@ -54,7 +56,7 @@
         <activity android:name=".MyPageActivity" />
         <activity android:name=".UserRegisterActivity" />
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-2721080471277714~3179912396"/>
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
+        <meta-data android:name="android.max_aspect" android:value="ratio_float" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -64,7 +66,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-            <meta-data android:name="android.max_aspect" android:value="2.1" />
+
         </provider>
     </application>
 
