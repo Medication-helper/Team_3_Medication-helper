@@ -73,7 +73,9 @@ public class MedicRegisterActivity extends AppCompatActivity {
     PreviewView previewView;
     Button btnStartCamera;
     Button btnCaptureCamera;
+    Button btnRegister;
     TextView textView;
+    ImageView picture;
 
     ProcessCameraProvider processCameraProvider;
     int lensFacing = CameraSelector.LENS_FACING_BACK;
@@ -81,7 +83,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
     String OCRresult;
 
-    Button btnRegister;
     private String imageFilepath;
     static final int REQUEST_IMAGE_CAPTURE = 672;
 
@@ -104,7 +105,9 @@ public class MedicRegisterActivity extends AppCompatActivity {
         previewView = (PreviewView) findViewById(R.id.previewView);
         btnStartCamera = (Button) findViewById(R.id.btnCameraStart);
         btnCaptureCamera = (Button) findViewById(R.id.btnPicture);
+        btnRegister = (Button) findViewById(R.id.regimedicbtn);
         textView = (TextView) findViewById(R.id.OCRTextResult);
+        picture = (ImageView) findViewById(R.id.picture);
 
         //언어 파일 경로 설정
         datapath = getFilesDir() + "/tessaract/";
@@ -159,31 +162,36 @@ public class MedicRegisterActivity extends AppCompatActivity {
                             public void onCaptureSuccess(@NonNull ImageProxy image) {
                                 @SuppressLint("UnsafeExperimentalUsageError")
                                 Image mediaImage = image.getImage();
+                                
+                                //카메라에서 가져온 이미지를 비트맵 이미지로 변환
                                 bitmap = com.cookandroid.medication_helper.ImageUtil.mediaImageToBitmap(mediaImage);
 
-                                Log.d("MainActivity", Integer.toString(bitmap.getWidth())); //4128
-                                Log.d("MainActivity", Integer.toString(bitmap.getHeight())); //3096
+                                Log.d("result", Integer.toString(bitmap.getWidth())); //4032
+                                Log.d("result", Integer.toString(bitmap.getHeight())); //3024
+                                Log.d("result", Integer.toString(image.getImageInfo().getRotationDegrees()));
 
-                                //imageView.setImageBitmap(bitmap);
+                                //이미지 회전(최종상태)
                                 rotatedbitmap = com.cookandroid.medication_helper.ImageUtil.rotateBitmap(bitmap, image.getImageInfo().getRotationDegrees());
 
-                                Log.d("MainActivity", Integer.toString(rotatedbitmap.getWidth())); //3096
-                                Log.d("MainActivity", Integer.toString(rotatedbitmap.getHeight())); //4128
-                                Log.d("MainAtivity", Integer.toString(image.getImageInfo().getRotationDegrees()));
-                                //90 //0, 90, 180, 90 //이미지를 바르게 하기위해 시계 방향으로 회전해야할 각도
+                                Log.d("result", Integer.toString(rotatedbitmap.getWidth())); //3096
+                                Log.d("result", Integer.toString(rotatedbitmap.getHeight())); //4128
+                                Log.d("result", Integer.toString(image.getImageInfo().getRotationDegrees()));
 
                                 processCameraProvider.unbindAll();//카메라 프리뷰 중단
-                                //pictureImage.setImageBitmap(rotatedBitmap);
                                 previewView.setVisibility(View.INVISIBLE);
-                                //pictureImage.setVisibility(View.VISIBLE);
 
                                 super.onCaptureSuccess(image);
 
                                 int height = rotatedbitmap.getHeight();
                                 int width = rotatedbitmap.getWidth();
 
-                                //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰 축
-                                Bitmap popupBitmap = Bitmap.createScaledBitmap(rotatedbitmap, 1000, height / (width / 1000), true);
+                                //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰 축소
+                                //popupBitmap이 서버로 보내야 하는 
+                                Bitmap popupBitmap = Bitmap.createScaledBitmap(rotatedbitmap, 900, height / (width / 900), true);
+
+                                Log.d("result", Integer.toString(popupBitmap.getWidth())); //3096
+                                Log.d("result", Integer.toString(popupBitmap.getHeight())); //4128
+                                Log.d("result", Integer.toString(image.getImageInfo().getRotationDegrees()));
 
                                 //카메라 바인딩 사용중단
                                 processCameraProvider.unbindAll();
@@ -205,7 +213,11 @@ public class MedicRegisterActivity extends AppCompatActivity {
 //                                                OCRresult=mTess.getUTF8Text();
 //
 //                                                textView.setText(OCRresult);
-                                                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
+
+                                                textView.setText("촬영 완료");
+                                                //textView.setVisibility(View.VISIBLE);
+                                                picture.setImageBitmap(popupBitmap);
+                                                picture.setVisibility(View.VISIBLE);
                                             }
                                         })
                                         //재촬영을 선택할 경우 bitmap에 저장된 비트맵 파일을 지우고 다시 카메라 프리뷰를 바인딩함
@@ -216,7 +228,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                 bindPreview();
                                                 bindImageCapture();
                                                 textView.setVisibility(View.INVISIBLE);
-                                                //pictureImage.setVisibility(View.INVISIBLE);
+
                                                 previewView.setVisibility(View.VISIBLE);
                                             }
                                         });
@@ -226,6 +238,13 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 captureComplete.create().show();
                             }
                         });
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
             }
         });
 
