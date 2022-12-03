@@ -11,7 +11,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.media.Image;
@@ -173,9 +178,12 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 //이미지 회전(최종상태)
                                 rotatedbitmap = com.cookandroid.medication_helper.ImageUtil.rotateBitmap(bitmap, image.getImageInfo().getRotationDegrees());
 
-                                Log.d("result", Integer.toString(rotatedbitmap.getWidth())); //3096
-                                Log.d("result", Integer.toString(rotatedbitmap.getHeight())); //4128
+                                Log.d("result", Integer.toString(rotatedbitmap.getWidth())); //3024
+                                Log.d("result", Integer.toString(rotatedbitmap.getHeight())); //4032
                                 Log.d("result", Integer.toString(image.getImageInfo().getRotationDegrees()));
+
+                                //가로, 세로를 중앙을 중심으로 자르기
+                                Bitmap cutImage=Bitmap.createBitmap(rotatedbitmap,504,672,2016,2688);
 
                                 processCameraProvider.unbindAll();//카메라 프리뷰 중단
                                 previewView.setVisibility(View.INVISIBLE);
@@ -185,12 +193,11 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 int height = rotatedbitmap.getHeight();
                                 int width = rotatedbitmap.getWidth();
 
-                                //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰 축소
-                                //popupBitmap이 서버로 보내야 하는 
-                                Bitmap popupBitmap = Bitmap.createScaledBitmap(rotatedbitmap, 900, height / (width / 900), true);
+                                //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰 축소(현재 가로세로 1/6 스케일)
+                                Bitmap popupBitmap = Bitmap.createScaledBitmap(cutImage, 900, height / (width / 900), true);
 
-                                Log.d("result", Integer.toString(popupBitmap.getWidth())); //3096
-                                Log.d("result", Integer.toString(popupBitmap.getHeight())); //4128
+                                Log.d("result", Integer.toString(cutImage.getWidth())); //3096
+                                Log.d("result", Integer.toString(cutImage.getHeight())); //4128
                                 Log.d("result", Integer.toString(image.getImageInfo().getRotationDegrees()));
 
                                 //카메라 바인딩 사용중단
@@ -208,15 +215,13 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                         .setPositiveButton("사용", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-//                                                String OCRresult=null;
-//                                                mTess.setImage(rotatedbitmap);
-//                                                OCRresult=mTess.getUTF8Text();
-//
-//                                                textView.setText(OCRresult);
 
-                                                textView.setText("촬영 완료");
+                                                Bitmap gray=grayScale(popupBitmap);//사진 GrayScale
+                                                Bitmap binary=GetBinaryBitmap(gray);//이진화(내가 보기엔 버려야 할 것 같음)
+
+                                                //textView.setText("촬영 완료");
                                                 //textView.setVisibility(View.VISIBLE);
-                                                picture.setImageBitmap(popupBitmap);
+                                                picture.setImageBitmap(binary);
                                                 picture.setVisibility(View.VISIBLE);
                                             }
                                         })
@@ -241,9 +246,11 @@ public class MedicRegisterActivity extends AppCompatActivity {
             }
         });
 
+        /*복약 등록 버튼*/
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"등록했습니다",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
             }
         });
@@ -347,6 +354,78 @@ public class MedicRegisterActivity extends AppCompatActivity {
                 copyFiles(lang);
             }
         }
+    }
+
+    private Bitmap grayScale(final Bitmap orgBitmap){
+        int width, height;
+        width=orgBitmap.getWidth();
+        height=orgBitmap.getHeight();
+
+        Bitmap bmpGrayScale=Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_4444);
+        Canvas canvas=new Canvas(bmpGrayScale);
+        Paint paint=new Paint();
+        ColorMatrix colorMatrix=new ColorMatrix();
+        colorMatrix.setSaturation(0);
+        ColorMatrixColorFilter colorMatrixColorFilter=new ColorMatrixColorFilter(colorMatrix);
+        paint.setColorFilter(colorMatrixColorFilter);
+        canvas.drawBitmap(orgBitmap,0,0,paint);
+        return bmpGrayScale;
+    }
+
+    private Bitmap GetBinaryBitmap(Bitmap bitmap_src) {
+
+        Bitmap bitmap_new=bitmap_src.copy(bitmap_src.getConfig(), true);
+
+        for(int x=0; x<bitmap_new.getWidth(); x++) {
+
+            for(int y=0; y<bitmap_new.getHeight(); y++) {
+
+                int color=bitmap_new.getPixel(x, y);
+
+                color=GetNewColor(color);
+
+                bitmap_new.setPixel(x, y, color);
+
+            }
+
+        }
+
+        return bitmap_new;
+
+    }
+
+    private int GetNewColor(int c) {
+
+        double dwhite=GetColorDistance(c, Color.WHITE);
+
+        double dblack=GetColorDistance(c,Color.BLACK)*0.4;
+
+        if(dwhite<=dblack) {
+
+            return Color.WHITE;
+
+        }
+
+        else {
+
+            return Color.BLACK;
+
+        }
+
+    }
+
+    private double GetColorDistance(int c1, int c2) {
+
+        int db= Color.blue(c1)-Color.blue(c2);
+
+        int dg=Color.green(c1)-Color.green(c2);
+
+        int dr=Color.red(c1)-Color.red(c2);
+
+        double d=Math.sqrt(  Math.pow(db, 2) + Math.pow(dg, 2) +Math.pow(dr, 2)  );
+
+        return d;
+
     }
 
 
