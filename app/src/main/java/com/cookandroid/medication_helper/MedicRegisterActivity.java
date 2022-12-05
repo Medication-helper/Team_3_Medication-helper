@@ -2,8 +2,10 @@ package com.cookandroid.medication_helper;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -36,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -72,12 +75,16 @@ public class MedicRegisterActivity extends AppCompatActivity {
     Bitmap bitmap;
     Bitmap rotatedbitmap;
 
+    private Uri photoUri;
+    private String imageFilepath;
+
     private TessBaseAPI mTess;
     String datapath = "";
 
     PreviewView previewView;
     Button btnStartCamera;
     Button btnCaptureCamera;
+    Button btnOcr;
     Button btnRegister;
     TextView textView;
     ImageView picture;
@@ -87,8 +94,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
     ImageCapture imageCapture;
 
     String OCRresult;
-
-    private String imageFilepath;
     static final int REQUEST_IMAGE_CAPTURE = 672;
 
     String[] EdiCodearray;//EDI 코드 목록을 저장하는 배열
@@ -105,6 +110,11 @@ public class MedicRegisterActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_medicregister);
 
+        SharedPreferences sharedPreferences=getSharedPreferences("PREF", Context.MODE_PRIVATE);
+
+        final String ocrApiGwUrl = sharedPreferences.getString("https://czt9qlltax.apigw.ntruss.com/custom/v1/16147/e9a1814442c9633751f8b26ebeba60b6f23d612647bbee28a6022693b2c1416b/general", "");
+        final String ocrSecretKey = sharedPreferences.getString("UG1rTVZLTWpseUpLWVlESmpZREt6RmZxTURBcmhBR3E=", "");
+
         userData = (UserData) getApplicationContext();
         myHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);
         previewView = (PreviewView) findViewById(R.id.previewView);
@@ -113,6 +123,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnRegister = (Button) findViewById(R.id.regimedicbtn);
         textView = (TextView) findViewById(R.id.OCRTextResult);
         picture = (ImageView) findViewById(R.id.picture);
+
 
         //언어 파일 경로 설정
         datapath = getFilesDir() + "/tessaract/";
@@ -221,7 +232,9 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                                                 //textView.setText("촬영 완료");
                                                 //textView.setVisibility(View.VISIBLE);
-                                                picture.setImageBitmap(binary);
+                                                photoUri=saveImage(binary,MedicRegisterActivity.this);
+                                                picture.setImageURI(photoUri);
+                                                //picture.setImageBitmap(binary);
                                                 picture.setVisibility(View.VISIBLE);
                                             }
                                         })
@@ -245,6 +258,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                         });
             }
         });
+
 
         /*복약 등록 버튼*/
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -426,6 +440,27 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
         return d;
 
+    }
+
+    public Uri saveImage(Bitmap bitmap,Context context){
+        File imagesFolder=new File(context.getCacheDir(),"images");
+        Uri uri=null;
+
+        try{
+            imagesFolder.mkdirs();
+            File file=new File(imagesFolder,"capturedimage.jpg");
+            FileOutputStream stream=new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            stream.flush();
+            stream.close();
+
+            uri=FileProvider.getUriForFile(context.getApplicationContext(),"com.cookandroid.medication_helper"+".fileprovider",file);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return uri;
     }
 
 
