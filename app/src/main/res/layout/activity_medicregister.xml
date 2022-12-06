@@ -6,109 +6,104 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MedicRegisterActivity" >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="약 목록 촬영"
+            android:textColor="#036635"
+            android:textSize="20dp" />
+
+        <FrameLayout
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:background="@drawable/green_border">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/previewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="약 목록 촬영"
-                android:textColor="#036635"
-                android:textSize="20dp" />
-
-            <FrameLayout
-                android:layout_width="300dp"
-                android:layout_height="400dp"
-                android:layout_gravity="center"
-                android:background="@drawable/green_border">
-
-                <androidx.camera.view.PreviewView
-                    android:id="@+id/previewView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/OCRTextResult"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="이 곳에\n 카메라가\n 표시됩니다"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="40dp"
-                    android:visibility="visible">
-                </TextView>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"
-                    android:id="@+id/picture"/>
-
-            </FrameLayout>
-
-            <FrameLayout
+                android:id="@+id/OCRTextResult"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnCameraStart"
-                    android:layout_width="120dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/green_border"
-                    android:enabled="true"
-                    android:text="시작하기"
-                    android:textColor="#036635"
-                    android:textSize="20dp"
-                    android:visibility="visible" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnPicture"
-                    android:layout_width="120dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/green_border"
-                    android:enabled="false"
-                    android:text="촬영"
-                    android:textColor="#036635"
-                    android:textSize="20dp"
-                    android:visibility="invisible" />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="약 등록 버튼을 누른 후 \n등록 완료 알람이 뜰 때까지 기다리세요"
+                android:text="이 곳에\n 카메라가\n 표시됩니다"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:textSize="40dp"
+                android:visibility="visible"></TextView>
+
+            <ImageView
+                android:id="@+id/picture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/regimedicbtn"
-                android:layout_width="140dp"
+                android:id="@+id/btnCameraStart"
+                android:layout_width="120dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/green_border"
-                android:text="약 목록 등록"
+                android:enabled="true"
+                android:text="시작하기"
                 android:textColor="#036635"
-                android:textSize="20dp" />
-        </LinearLayout>
-    </ScrollView>
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPicture"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/green_border"
+                android:enabled="false"
+                android:text="촬영"
+                android:textColor="#036635"
+                android:textSize="20dp"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="약 등록 버튼을 누른 후 \n등록 완료 알람이 뜰 때까지 기다리세요"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/regimedicbtn"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/green_border"
+            android:text="약 목록 등록"
+            android:textColor="#036635"
+            android:textSize="20dp" />
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
