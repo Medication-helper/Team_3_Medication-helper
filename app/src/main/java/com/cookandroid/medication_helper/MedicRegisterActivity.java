@@ -27,10 +27,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +90,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
     Button btnRegister;
     TextView textView;
     ImageView picture;
+    View overlay;
 
     ProcessCameraProvider processCameraProvider;
     int lensFacing = CameraSelector.LENS_FACING_BACK;
@@ -123,6 +126,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnRegister = (Button) findViewById(R.id.regimedicbtn);
         textView = (TextView) findViewById(R.id.OCRTextResult);
         picture = (ImageView) findViewById(R.id.picture);
+        overlay = (View) findViewById(R.id.overlay);
 
 
         //언어 파일 경로 설정
@@ -305,6 +309,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                 return false;
             }
         });
+        overlay.bringToFront();
     }
 
     void bindPreview(){
@@ -462,7 +467,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
         }
         return uri;
     }
-
 
     /*
     Bitmap image;//사용되는 이미지
