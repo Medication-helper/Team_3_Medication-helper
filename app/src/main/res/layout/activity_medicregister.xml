@@ -26,12 +26,28 @@
             android:layout_gravity="center"
             android:background="@drawable/green_border">
 
+            <View
+                android:id="@+id/overlay"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:layout_weight="10"
+                android:background="@drawable/camera_overlay"/>
+
             <androidx.camera.view.PreviewView
                 android:id="@+id/previewView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:visibility="invisible" />
+                android:visibility="invisible" >
+
+                <ImageView
+                    android:id="@+id/picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+            </androidx.camera.view.PreviewView>
 
             <TextView
                 android:id="@+id/OCRTextResult"
@@ -42,15 +58,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="40dp"
-                android:visibility="visible"></TextView>
-
-            <ImageView
-                android:id="@+id/picture"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:visibility="invisible" />
-
+                android:visibility="visible">
+            </TextView>
         </FrameLayout>
 
         <FrameLayout
