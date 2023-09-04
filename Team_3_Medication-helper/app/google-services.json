@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "250555420526",
+    "firebase_url": "https://medication-helper-b7100-default-rtdb.firebaseio.com",
+    "project_id": "medication-helper-b7100",
+    "storage_bucket": "medication-helper-b7100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250555420526:android:982d50e34d66bdcf307b7f",
+        "android_client_info": {
+          "package_name": "com.cookandroid.medication_helper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250555420526-55c1fgh4aq92rnfedj3svcn5d2lea4pq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cookandroid.medication_helper",
+            "certificate_hash": "fe91546ba351acf8f9f544ffa9e097db5f29602b"
+          }
+        },
+        {
+          "client_id": "250555420526-94sq2p8rattl79tifhd1css28v45ru2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdypcvL78UDPbjiWeOLY2ZMipqyZu6xsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250555420526-94sq2p8rattl79tifhd1css28v45ru2p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

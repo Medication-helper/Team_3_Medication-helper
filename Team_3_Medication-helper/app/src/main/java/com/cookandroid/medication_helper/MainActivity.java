@@ -20,6 +20,8 @@ import androidx.fragment.app.FragmentActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
@@ -71,6 +73,7 @@ public class MainActivity extends FragmentActivity {
         CheckBox checkBox = findViewById(R.id.autoLogin);
         Button btnlogin = findViewById(R.id.btnlogin);
         TextView btnsignin = findViewById(R.id.btnsignin);
+        Button btnTest = findViewById(R.id.btnTest);
 
         SharedPreferences auto = getSharedPreferences("autologin", Activity.MODE_PRIVATE);
 
@@ -132,5 +135,15 @@ public class MainActivity extends FragmentActivity {
                 finish();
             }
         });
+
+       btnTest.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               FirebaseDatabase database = FirebaseDatabase.getInstance();
+               DatabaseReference myRef = database.getReference("message");
+
+               myRef.setValue("Hello, World!");
+           }
+       });
     }
 }
