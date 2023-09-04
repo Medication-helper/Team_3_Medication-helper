@@ -56,8 +56,10 @@ public class MedicineListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
         getSupportActionBar().setCustomView(R.layout.medilisttitlebar_custom); // 커스텀 사용할 파일 위치
 
-        Button forBtn = findViewById(R.id.forbtn);
-        Button overBtn = findViewById(R.id.overbtn);
+        Button forBtn = findViewById(R.id.forbtn);//병용금기약물 항목 이동 버튼
+        Button prgBtn = findViewById(R.id.prgbtn);//임부금기약물 항목 이동 버튼
+        Button overBtn = findViewById(R.id.overbtn);//효능중복약물 항목 이동 버튼
+
 
         userData = (UserData) getApplicationContext();
         myHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);

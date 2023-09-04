@@ -16,34 +16,49 @@ activity_medicinelist.xml
         android:layout_height="400dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-
         android:background="@drawable/green_border" />
 
-    <Button
-        android:id="@+id/forbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="55dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:layout_marginTop="420dp"
-        android:background="@drawable/green_border"
-        android:padding="3dp"
-        android:text="병용 금기"
-        android:textSize="17sp" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/forbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/green_border"
+            android:text="병용 금기"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/prgbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/green_border"
+            android:text="임부 금기"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/overbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/green_border"
+            android:text="효능 중복"
+            android:textSize="17sp" />
 
 
-    <Button
-        android:id="@+id/overbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="215dp"
-        android:layout_marginTop="420dp"
-        android:layout_marginEnd="55dp"
-        android:background="@drawable/green_border"
-        android:padding="3dp"
-        android:text="효능 중복"
-        android:textSize="17sp" />
+    </LinearLayout>
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -63,15 +78,15 @@ activity_medicinelist.xml
         android:textStyle="bold" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/white"
-            app:itemIconSize="30dp"
-            app:itemIconTint="@drawable/navcolor"
-            app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/nav" />
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/navcolor"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/nav" />
 
 </RelativeLayout>
