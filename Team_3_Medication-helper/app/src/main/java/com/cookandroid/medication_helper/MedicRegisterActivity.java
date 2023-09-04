@@ -52,7 +52,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -96,6 +104,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
     int lensFacing = CameraSelector.LENS_FACING_BACK;
     ImageCapture imageCapture;
 
+    private TextRecognizer textRecognizer;//define TextRecognizer
+
     String OCRresult;
     static final int REQUEST_IMAGE_CAPTURE = 672;
 
@@ -127,6 +137,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.OCRTextResult);
         picture = (ImageView) findViewById(R.id.imageview);
         overlay = (View) findViewById(R.id.overlay);
+
+        textRecognizer= TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
 
 
         //언어 파일 경로 설정
@@ -236,10 +248,29 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
 //                                                textView.setText("촬영 완료");
 //                                                textView.setVisibility(View.VISIBLE);
-                                                photoUri=saveImage(binary,MedicRegisterActivity.this);
-                                                picture.setImageURI(photoUri);
-                                                //picture.setImageBitmap(binary);
-                                                picture.setVisibility(View.VISIBLE);
+                                                InputImage image=InputImage.fromBitmap(gray,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
+
+                                                //Recognize Text
+                                                Task<Text> result = textRecognizer.process(image)
+                                                        .addOnSuccessListener(new OnSuccessListener<Text>() {
+                                                            @Override
+                                                            public void onSuccess(Text text) {
+                                                                textView.setText(text.getText());
+                                                                textView.setVisibility(View.VISIBLE);
+
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+
+                                                            }
+                                                        });
+
+//                                                photoUri=saveImage(binary,MedicRegisterActivity.this);
+//                                                picture.setImageURI(photoUri);
+//                                                //picture.setImageBitmap(binary);
+//                                                picture.setVisibility(View.VISIBLE);
                                                 overlay.setVisibility(View.INVISIBLE);
                                             }
                                         })
