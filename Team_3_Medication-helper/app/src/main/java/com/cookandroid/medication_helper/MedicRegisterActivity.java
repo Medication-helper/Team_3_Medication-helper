@@ -113,6 +113,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
     String[] medicList;//OpenAPI를 이용해 의약품 이름 목록을 저장하는 배열
     String data;
 
+    String ocrResult;
+
     UserData userData;
     com.cookandroid.medication_helper.MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
@@ -140,21 +142,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
         textRecognizer= TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
 
-
-        //언어 파일 경로 설정
-        datapath = getFilesDir() + "/tessaract/";
-
-        //언어 파일 존재 여부 확인
-        checkFile(new File(datapath + "tessdata/"), "eng");
-
-        String lang = "eng";
-
-        mTess = new TessBaseAPI();//TessBaseAPI 생성
-        mTess.init(datapath, lang);//초기화
-
-        //숫자만 인식해서 추출하도록 블랙리스트, 화이트리스트 설정
-        mTess.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, ".,!?@#$%&*()<>_-+=/:;'\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-        mTess.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789");
 
         //카메라 촬영을 위한 동의 얻기
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
@@ -258,6 +245,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                                 textView.setText(text.getText());
                                                                 textView.setVisibility(View.VISIBLE);
 
+                                                                ocrResult=text.getText().toString();
+
                                                             }
                                                         })
                                                         .addOnFailureListener(new OnFailureListener() {
@@ -300,6 +289,16 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"등록 중, 잠시만 기다려주세요...",Toast.LENGTH_SHORT).show();
+
+                //Log.v("result",ocrResult);
+                String[] list=ocrResult.split("\n");
+
+                for(String line:list){
+                    System.out.println(line);
+                }
+
+
                 Toast.makeText(getApplicationContext(),"등록했습니다",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
             }
@@ -365,46 +364,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
                 .build();
 
         processCameraProvider.bindToLifecycle(this,cameraSelector,imageCapture);
-    }
-
-    //스마트폰에 사진 파일 복사
-    private void copyFiles(String lang){
-        try{
-            String filepath=datapath+"/tessdata/"+lang+".traineddata";
-
-            AssetManager assetManager=getAssets();
-
-            InputStream inputStream=assetManager.open("tessdata/"+lang+".traineddata");
-            OutputStream outputStream=new FileOutputStream(filepath);
-
-            byte[] buffer=new byte[1024];
-            int read;
-
-            while ((read=inputStream.read(buffer))!=-1){
-                outputStream.write(buffer,0,read);
-            }
-            outputStream.flush();
-            outputStream.close();
-            inputStream.close();
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    //스마트폰에 파일이 있는 지 확인
-    private void checkFile(File dir, String lang){
-        if(!dir.exists()&&dir.mkdirs()){
-            copyFiles(lang);
-        }
-        if(dir.exists()){
-            String datafilepath=datapath+"/tessdata/"+lang+".traineddata";
-            File datafile=new File(datafilepath);
-            if(!datafile.exists()){
-                copyFiles(lang);
-            }
-        }
     }
 
     //회색조
@@ -481,25 +440,63 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
     }
 
-    //비트맵 객체 캐시 저장소에 jpg 형식으로 저장
-    public Uri saveImage(Bitmap bitmap,Context context){
-        File imagesFolder=new File(context.getCacheDir(),"images");
-        Uri uri=null;
+    //약 이름을 이용해 공공데이터 포털에서 약 정보 알아내기
+    String getXmlData(String medicname) {
+        StringBuffer buffer=new StringBuffer();
+        String str=medicname;
+        String MedicineName= URLEncoder.encode(str);
 
-        try{
-            imagesFolder.mkdirs();
-            File file=new File(imagesFolder,"capturedimage.jpg");
-            FileOutputStream stream=new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
-            stream.flush();
-            stream.close();
 
-            uri=FileProvider.getUriForFile(context.getApplicationContext(),"com.cookandroid.medication_helper.fileprovider",file);
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }catch (IOException e){
+        String queryUrl="https://apis.data.go.kr/1471000/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&itemName="+MedicineName+"&pageNo=1&numOfRows=1&type=xml";
+        try {
+            URL url=new URL(queryUrl);
+            InputStream is=url.openStream();
+
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            XmlPullParser xpp=factory.newPullParser();
+            xpp.setInput(new InputStreamReader(is,"UTF-8"));
+
+            String tag;
+
+            xpp.next();
+            int eventType=xpp.getEventType();
+
+            while(eventType != XmlPullParser.END_DOCUMENT){
+                switch (eventType){
+
+                    case XmlPullParser.START_TAG:
+                        tag=xpp.getName();
+
+                        if(tag.equals("item"));
+
+                        //약품 이미지 URL
+                        else if(tag.equals("ITEM_NAME")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                        }
+                        //약품 회사명
+                        else if(tag.equals("ENTP_NAME")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                        }
+                        //약품 이미지 URL
+                        else if(tag.equals("ITEM_IMAGE")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                        }
+                        //약품 종류
+                        else if(tag.equals("ITEM_CLASS")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                        }
+
+                        break;
+                }
+                eventType=xpp.next();
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return uri;
+        return buffer.toString();
     }
 }
