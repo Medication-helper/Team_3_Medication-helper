@@ -20,25 +20,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
 public class MyPageActivity extends AppCompatActivity{
     TextView TvName;
-    TextView TvID;
     TextView TvBirth;
     TextView TvGender;
     TextView BtnLogout;
+    Button BtnModify;
     Button BtnDel;
 
     UserData userData;
-    com.cookandroid.medication_helper.UserDBHelper userDBHelper;
-    com.cookandroid.medication_helper.MedicDBHelper medicDBHelper;
-    SQLiteDatabase sqlUserDB, sqlMedicDB;
 
     //뒤로가기 버튼을 누르면 스택에 쌓여있는 전 액티비티로 돌아가게 하는 함수
     @Override
@@ -64,16 +63,12 @@ public class MyPageActivity extends AppCompatActivity{
         TvGender = (TextView) findViewById(R.id.tvGender);
         BtnLogout = (TextView) findViewById(R.id.btnLogout);
         BtnDel = (Button) findViewById(R.id.btnDel);
+        BtnModify = (Button) findViewById(R.id.btnModify);
 
         userData = (UserData) getApplicationContext();
-        userDBHelper = new com.cookandroid.medication_helper.UserDBHelper(this);
-        medicDBHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);
-        sqlUserDB = userDBHelper.getWritableDatabase();
-        sqlMedicDB = medicDBHelper.getWritableDatabase();
 
         /* UserData 클래스에서 현재 로그인중인 사용자의 정보를 불러옴 */
         TvName.setText(userData.getUserNickName());
-        //TvID.setText("아이디 : " + userData.getUserID());
         TvBirth.setText("생년월일 : " + userData.getUserBirth());
         TvGender.setText("성별 : " + userData.getUserGender());
 
@@ -87,35 +82,34 @@ public class MyPageActivity extends AppCompatActivity{
             }
         });
 
+        BtnModify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.UserModifyActivity.class)); // 회원수정 화면으로 이동
+                finish(); // Progress 완전 종료
+            }
+        });
+
         BtnDel.setOnClickListener(new View.OnClickListener() { // 회원탈퇴 버튼을 눌렀을 때
             @Override
             public void onClick(View view) {
                 String userID = userData.getUserID();
-
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(userID);
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                userData.Init(); // UserData의 모든 내용 초기화
-                                Toast.makeText(getApplicationContext(), "회원탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainActivity.class)); // 로그인 화면으로 돌려보냄
-                                finish(); // Progress 완전 종료
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ref.removeValue();
+                        userData.Init(); // UserData의 모든 내용 초기화
+                        Toast.makeText(getApplicationContext(), "회원탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainActivity.class)); // 로그인 화면으로 돌려보냄
+                        finish(); // Progress 완전 종료
                     }
-                };
-                UserDeleteRequest userDeleteRequest = new UserDeleteRequest(userID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(MyPageActivity.this);
-                queue.add(userDeleteRequest);
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 

@@ -1,4 +1,3 @@
-
 package com.cookandroid.medication_helper;
 
 import android.app.Activity;
@@ -14,19 +13,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONObject;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends FragmentActivity {
-    com.cookandroid.medication_helper.UserData userData;
+    UserData userData;
     String loginID, loginPW;
 
     //뒤로가기 누르면 앱종료시키는 함수
@@ -73,7 +71,6 @@ public class MainActivity extends FragmentActivity {
         CheckBox checkBox = findViewById(R.id.autoLogin);
         Button btnlogin = findViewById(R.id.btnlogin);
         TextView btnsignin = findViewById(R.id.btnsignin);
-        Button btnTest = findViewById(R.id.btnTest);
 
         SharedPreferences auto = getSharedPreferences("autologin", Activity.MODE_PRIVATE);
 
@@ -83,46 +80,45 @@ public class MainActivity extends FragmentActivity {
                 String userID = edtID.getText().toString();
                 String userPassword = edtPW.getText().toString();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if(success){
-                                Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                if (userID.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "ID를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(userID);
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                if(userPassword.equals(snapshot.child("uPW").getValue(String.class))) {
+                                    Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
 
-                                String loginID = jsonResponse.getString("userID");
-                                String loginPassword = jsonResponse.getString("userPassword");
-                                String loginName = jsonResponse.getString("userName");
-                                String loginBirth = jsonResponse.getString("userBirth");
-                                String loginGender = jsonResponse.getString("userGender");
+                                    userData.setUserID(userID);
+                                    userData.setUserPassWord(userPassword);
+                                    userData.setUserNickName(snapshot.child("uName").getValue(String.class));
+                                    userData.setUserBirth(snapshot.child("birthDate").getValue(String.class));
+                                    userData.setUserGender(snapshot.child("uGender").getValue(String.class));
 
-                                userData.setUserID(loginID);
-                                userData.setUserPassWord(loginPassword);
-                                userData.setUserNickName(loginName);
-                                userData.setUserBirth(loginBirth);
-                                userData.setUserGender(loginGender);
-
-                                Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                                return;
+                                    Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
-                        } catch(Exception e){
-                            e.printStackTrace();
+                            else
+                                Toast.makeText(getApplicationContext(), "ID가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                };
-                LoginRequest loginRequest = new LoginRequest(userID, userPassword, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                queue.add(loginRequest);
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
-        // 자동 로그인 구현 부분분
+        // 자동 로그인 구현 부분
        if (checkBox.isChecked()) {
           // autoLoginEdit.commit();
         }
@@ -131,19 +127,10 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent userReIntent = new Intent(MainActivity.this, com.cookandroid.medication_helper.UserRegisterActivity.class);
+                userReIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(userReIntent);
                 finish();
             }
         });
-
-       btnTest.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               FirebaseDatabase database = FirebaseDatabase.getInstance();
-               DatabaseReference myRef = database.getReference("message");
-
-               myRef.setValue("Hello, World!");
-           }
-       });
     }
 }

@@ -4,6 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_login.xml" value="0.358695652173913" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_medicregister.xml" value="0.358695652173913" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_my_page.xml" value="0.358695652173913" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_usermodify.xml" value="0.23772609819121446" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_userregister.xml" value="0.358695652173913" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/modify_titlebar_custom.xml" value="0.358695652173913" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/mytitlebar_custom.xml" value="0.358695652173913" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/titlebar_custom.xml" value="0.358695652173913" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_person_24.xml" value="0.231" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_vpn_key_24.xml" value="0.231" />
         <entry key="..\:/University/GitHub/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.231" />

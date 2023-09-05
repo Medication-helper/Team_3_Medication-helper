@@ -10,6 +10,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,15 +21,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,12 +40,27 @@ public class UserRegisterActivity extends AppCompatActivity{
     EditText E_ID, E_Pass, E_PassCheck, E_Name;
     RadioGroup RG;
     RadioButton RB_Man, RB_Woman;
-    Button btnIDCheck, btnBirthChoose, btnComplete;
+    Button btnRegister_Back, btnIDCheck, btnBirthChoose, btnComplete;
     TextView tvBirth;
-    int dateCheckCounter = 0;
-    int genderCheckCounter = 0;
-
     private boolean validate = false;
+    int dateCheckCounter = 0;
+
+    private DatabaseReference mDatabase;
+
+    /* Firebase에 사용자 정보를 등록하기 위한 클래스 */
+    public class addUser {
+        public String uPW, uName, birthDate, uGender, tag;
+
+        public addUser() {} //setValue를 사용하기 위해 필요, 없으면 작동하지 않음
+
+        public addUser(String uPW, String uName, String birthDate, String uGender, String tag) {
+            this.uPW = uPW;
+            this.uName = uName;
+            this.birthDate = birthDate;
+            this.uGender = uGender;
+            this.tag = tag;
+        }
+    }
 
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
@@ -61,7 +78,7 @@ public class UserRegisterActivity extends AppCompatActivity{
         setContentView(R.layout.activity_userregister);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
-        getSupportActionBar().setCustomView(R.layout.titlebar_custom); // 커스텀 사용할 파일 위치
+        getSupportActionBar().setCustomView(R.layout.register_titlebar_custom); // 커스텀 사용할 파일 위치
 
         E_ID = (EditText) findViewById(R.id.E_ID);
         E_Pass = (EditText) findViewById(R.id.E_Pass);
@@ -70,6 +87,7 @@ public class UserRegisterActivity extends AppCompatActivity{
         RG = (RadioGroup) findViewById(R.id.RG);
         RB_Man = (RadioButton) findViewById(R.id.RB_man);
         RB_Woman = (RadioButton) findViewById(R.id.RB_woman);
+        btnRegister_Back = (Button) findViewById(R.id.btnRegister_Back);
         btnIDCheck = (Button) findViewById(R.id.idCheck);
         btnBirthChoose = (Button) findViewById(R.id.BtnBirthChoose);
         btnComplete = (Button) findViewById(R.id.BtnComplete);
@@ -89,6 +107,34 @@ public class UserRegisterActivity extends AppCompatActivity{
         int mYear = calendar.get(Calendar.YEAR);
         int mMonth = calendar.get(Calendar.MONTH);
         int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        btnRegister_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent BackToMain = new Intent(UserRegisterActivity.this, com.cookandroid.medication_helper.MainActivity.class); // 메인화면으로 돌아가는 기능
+                BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 회원가입 페이지가 백그라운드에서 돌아가지 않도록 완전종료
+                startActivity(BackToMain); // 실행
+                finish(); // Progress 완전 종료
+            }
+        });
+
+        /* 입력한 ID가 바뀔 때마다 중복확인 여부 초기화 */
+        E_ID.addTextChangedListener(new TextWatcher() {
+            @Override // 텍스트가 변경되기 전에 호출되는 메소드이므로 필요없음
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override // 텍스트가 변경될 때 호출되는 메소드
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validate = false;
+            }
+
+            @Override // 텍스트가 변경된 후 호출되는 메소드이므로 상단의 메소드로도 충분함.
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         /* 생년월일 선택 */
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
@@ -117,41 +163,34 @@ public class UserRegisterActivity extends AppCompatActivity{
             }
         }, mYear, mMonth, mDay);
 
+        /* ID 중복확인 */
         btnIDCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String ID = E_ID.getText().toString();
-                if (validate)
-                    return;
-                if (ID.equals("")) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(ID);
+
+                if (ID.isEmpty())
                     Toast.makeText(getApplicationContext(), "ID가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
-                    return;
+                else {
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists())
+                                Toast.makeText(getApplicationContext(), "사용할 수 없는 ID입니다.", Toast.LENGTH_SHORT).show();
+                            else {
+                                Toast.makeText(getApplicationContext(), "사용 가능한 ID입니다.", Toast.LENGTH_SHORT).show();
+                                validate = true;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                Toast.makeText(getApplicationContext(), "사용할 수 있는 ID입니다.", Toast.LENGTH_SHORT).show();
-                                E_ID.setEnabled(false);
-                                validate = true;
-                                btnIDCheck.setText("확인");
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), "사용할 수 없는 ID입니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-
-                ValidateRequest validateRequest = new ValidateRequest(ID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(UserRegisterActivity.this);
-                queue.add(validateRequest);
             }
         });
 
@@ -164,6 +203,7 @@ public class UserRegisterActivity extends AppCompatActivity{
             }
         });
 
+        /* 회원가입 완료 */
         btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,21 +212,23 @@ public class UserRegisterActivity extends AppCompatActivity{
                 String passwordCheck = E_PassCheck.getText().toString();
                 String name = E_Name.getText().toString();
                 String birth = tvBirth.getText().toString();
+                String gender = "";
 
                 switch (RG.getCheckedRadioButtonId()) {
                     case R.id.RB_man:
-                        genderCheckCounter = 1;
+                        gender = "man";
                         break;
                     case R.id.RB_woman:
-                        genderCheckCounter = 2;
+                        gender = "woman";
                         break;
                     default:
-                        genderCheckCounter = 0;
                         break;
                 }
 
                 if (ID.length() == 0) { // ID란이 공백인 경우
                     Toast.makeText(getApplicationContext(), "ID가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                } else if(!validate) { // ID 중복확인 체크가 되지 않은 경우
+                    Toast.makeText(getApplicationContext(), "ID 중복확인 체크를 해주세요.", Toast.LENGTH_SHORT).show();
                 } else if (password.length() == 0) { // 비밀번호란이 공백인 경우
                     Toast.makeText(getApplicationContext(), "비밀번호가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 } else if (passwordCheck.length() == 0) { // 비밀번호 확인란이 공백인 경우
@@ -196,47 +238,16 @@ public class UserRegisterActivity extends AppCompatActivity{
                 } else if (name.length() == 0) { // 이름란이 공백인 경우
                     Toast.makeText(getApplicationContext(), "사용자 이름이 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Response.Listener<String> responseListener = new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                System.out.println(ID);
-                                JSONObject jsonResponse = new JSONObject(response);
-                                boolean success = jsonResponse.getBoolean("success");
-                                if (success) {
-                                    Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                                    Intent finish = new Intent(UserRegisterActivity.this, MainActivity.class);
-                                    startActivity(finish);
-                                    finish();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "회원가입에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            } catch(Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
+                    addUser addUser = new addUser(password, name, birth, gender, "0");
 
-                    switch (genderCheckCounter) {
-                        case 0:
-                            UserRegisterRequest RegisterRequest = new UserRegisterRequest(ID, password, name, birth, "", responseListener);
-                            RequestQueue Queue = Volley.newRequestQueue(UserRegisterActivity.this);
-                            Queue.add(RegisterRequest);
-                            break;
-                        case 1:
-                            UserRegisterRequest manRegisterRequest = new UserRegisterRequest(ID, password, name, birth, "man", responseListener);
-                            RequestQueue manQueue = Volley.newRequestQueue(UserRegisterActivity.this);
-                            manQueue.add(manRegisterRequest);
-                            break;
-                        case 2:
-                            UserRegisterRequest womanRegisterRequest = new UserRegisterRequest(ID, password, name, birth, "woman", responseListener);
-                            RequestQueue womanQueue = Volley.newRequestQueue(UserRegisterActivity.this);
-                            womanQueue.add(womanRegisterRequest);
-                            break;
-                        default:
-                            break;
-                    }
+                    mDatabase.child("User").child(ID).setValue(addUser);
+
+                    Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                    Intent BackToMain = new Intent(UserRegisterActivity.this, com.cookandroid.medication_helper.MainActivity.class); // 메인화면으로 돌아가는 기능
+                    BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 회원가입 페이지가 백그라운드에서 돌아가지 않도록 완전종료
+                    startActivity(BackToMain); // 실행
+                    finish(); // Progress 완전 종료
                 }
             }
         });

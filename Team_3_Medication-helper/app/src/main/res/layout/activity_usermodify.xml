@@ -18,11 +18,21 @@ activity_userregister.xml
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:id="@+id/btnRegister_Back"
+            android:id="@+id/btnModify_Back"
             android:layout_margin="10dp"
             android:text="뒤로가기"
             android:textSize="20dp"
             android:background="@drawable/green_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="(수정하지 않을 내용은 비워주세요.)"
+            android:textSize="15dp"
+            android:textColor="#036635">
+        </TextView>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -35,34 +45,7 @@ activity_userregister.xml
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="아이디 (20자 이내)"
-                android:textColor="#036635"
-                android:textSize="20dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/idCheck"
-                android:gravity="center_horizontal"
-                android:text="중복확인"
-                android:layout_marginStart="240dp"/>
-
-            <EditText
-                android:id="@+id/E_ID"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="15dp"
-                android:ems="7" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="85dp"
-                android:text="비밀번호"
+                android:text="비밀번호 변경"
                 android:textSize="20dp"
                 android:textColor="#036635">
             </TextView>
@@ -70,9 +53,9 @@ activity_userregister.xml
             <EditText
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/E_Pass"
+                android:id="@+id/M_Pass"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="105dp"
+                android:layout_marginTop="20dp"
                 android:ems = "7">
             </EditText>
 
@@ -80,8 +63,8 @@ activity_userregister.xml
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="160dp"
-                android:text="비밀번호 확인"
+                android:layout_marginTop="85dp"
+                android:text="비밀번호 변경 확인"
                 android:textSize="20dp"
                 android:textColor="#036635">
             </TextView>
@@ -89,9 +72,9 @@ activity_userregister.xml
             <EditText
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/E_PassCheck"
+                android:id="@+id/M_PassCheck"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="180dp"
+                android:layout_marginTop="105dp"
                 android:ems = "7">
             </EditText>
         </RelativeLayout>
@@ -106,7 +89,7 @@ activity_userregister.xml
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "이름"
+                android:text = "수정할 이름"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:textSize="20dp"
@@ -115,7 +98,7 @@ activity_userregister.xml
             <EditText
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/E_name"
+                android:id="@+id/M_name"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
                 android:ems = "7"/>
@@ -148,7 +131,7 @@ activity_userregister.xml
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "생년월일"
+                android:text = "수정할 생년월일"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:textSize="20dp"
@@ -157,10 +140,10 @@ activity_userregister.xml
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/TvBirth"
+                android:id="@+id/M_Birth"
                 android:text = ""
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="160dp"
                 android:textSize="20dp"
                 android:textColor="#036635"/>
 
@@ -181,7 +164,7 @@ activity_userregister.xml
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "성별"
+                android:text = "수정할 성별"
                 android:layout_marginTop="75dp"
                 android:layout_marginStart="10dp"
                 android:textSize="20dp">
@@ -221,7 +204,7 @@ activity_userregister.xml
             android:id="@+id/BtnComplete"
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
-            android:text="회원가입 하기"
+            android:text="회원수정 하기"
             android:textSize="20dp"
             android:background="@drawable/green_border" />
 
