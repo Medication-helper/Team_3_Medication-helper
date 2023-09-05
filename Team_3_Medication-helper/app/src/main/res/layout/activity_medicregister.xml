@@ -28,19 +28,18 @@
 
             <View
                 android:id="@+id/overlay"
-                android:layout_width="250dp"
-                android:layout_height="300dp"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_weight="10"
-                android:background="@drawable/camera_overlay"/>
+                android:background="@drawable/camera_overlay" />
 
             <androidx.camera.view.PreviewView
                 android:id="@+id/previewView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:visibility="invisible">
-            </androidx.camera.view.PreviewView>
+                android:visibility="invisible"></androidx.camera.view.PreviewView>
 
             <ImageView
                 android:id="@+id/imageview"
@@ -51,15 +50,14 @@
 
             <TextView
                 android:id="@+id/OCRTextResult"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
                 android:gravity="center"
                 android:text="이 곳에\n 카메라가\n 표시됩니다"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="40dp"
-                android:visibility="visible">
-            </TextView>
+                android:textSize="20dp"
+                android:visibility="visible"></TextView>
         </FrameLayout>
 
         <FrameLayout
@@ -93,14 +91,6 @@
                 android:visibility="invisible" />
         </FrameLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="약 등록 버튼을 누른 후 \n등록 완료 알람이 뜰 때까지 기다리세요"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/regimedicbtn"
