@@ -23,6 +23,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -52,6 +53,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -73,6 +79,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -119,6 +128,15 @@ public class MedicRegisterActivity extends AppCompatActivity {
     com.cookandroid.medication_helper.MedicDBHelper myHelper;
     SQLiteDatabase sqlDB;
 
+    private static final String TAG = "NCloudExample";
+    private static final String ENDPOINT = "https://kr.object.ncloudstorage.com";
+    private static final String REGION_NAME = "kr-standard";
+    private static final String ACCESS_KEY = "AUzMrapL7ShMUgOLd4DK"; // Replace with your NCloud Access Key
+    private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
+    private static final String BUCKET_NAME = "medication-helper";
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,8 +145,18 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences=getSharedPreferences("PREF", Context.MODE_PRIVATE);
 
+        //Naver CLOVA OCR용 API와 Key
         final String ocrApiGwUrl = sharedPreferences.getString("https://czt9qlltax.apigw.ntruss.com/custom/v1/16147/e9a1814442c9633751f8b26ebeba60b6f23d612647bbee28a6022693b2c1416b/general", "");
-        final String ocrSecretKey = sharedPreferences.getString("UG1rTVZLTWpseUpLWVlESmpZREt6RmZxTURBcmhBR3E=", "");
+        final String ocrSecretKey = sharedPreferences.getString("YW5kcVdvTW5MV2lISWpneE1taHBjZ1RDdFpob1RmQWM==", "");
+
+
+        //AWS 자격 증명 설정
+        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY,SECRET_KEY);
+
+        //Amazon S3 클라이언트 생성
+        AmazonS3 s3 = new AmazonS3Client(awsCredentials);
+        s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
+
 
         userData = (UserData) getApplicationContext();
         myHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);
@@ -141,6 +169,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
         overlay = (View) findViewById(R.id.overlay);
 
         textRecognizer= TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
+
+        int listSize;
 
 
         //카메라 촬영을 위한 동의 얻기
@@ -175,12 +205,15 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnCaptureCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                imageCapture.setFlashMode(ImageCapture.FLASH_MODE_ON);
                 imageCapture.takePicture(ContextCompat.getMainExecutor(MedicRegisterActivity.this),
                         new ImageCapture.OnImageCapturedCallback() {
                             @Override
                             public void onCaptureSuccess(@NonNull ImageProxy image) {
                                 @SuppressLint("UnsafeExperimentalUsageError")
                                 Image mediaImage = image.getImage();
+
+                                imageCapture.setFlashMode(ImageCapture.FLASH_MODE_OFF);
 
                                 //카메라에서 가져온 이미지를 비트맵 이미지로 변환
                                 bitmap = com.cookandroid.medication_helper.ImageUtil.mediaImageToBitmap(mediaImage);
@@ -192,12 +225,15 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 //이미지 회전(최종상태)
                                 rotatedbitmap = com.cookandroid.medication_helper.ImageUtil.rotateBitmap(bitmap, image.getImageInfo().getRotationDegrees());
 
+                                //최종적인 이미지는 3:4 비율이다
                                 Log.d("result", Integer.toString(rotatedbitmap.getWidth())); //3024
                                 Log.d("result", Integer.toString(rotatedbitmap.getHeight())); //4032
                                 Log.d("result", Integer.toString(image.getImageInfo().getRotationDegrees()));
 
-                                //가로, 세로를 중앙을 중심으로 자르기
-                                Bitmap cutImage=Bitmap.createBitmap(rotatedbitmap,504,672,2016,2688);
+                                //가로, 세로 자르기
+                                //시작지점은 가로 세로 각 1/8지점이다.
+                                //가로로는 6/8, 세로로는 4/8만 남겨보자
+                                Bitmap cutImage=Bitmap.createBitmap(rotatedbitmap,0,1008,3024,2016);
 
                                 processCameraProvider.unbindAll();//카메라 프리뷰 중단
                                 previewView.setVisibility(View.INVISIBLE);
@@ -207,7 +243,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 int height = rotatedbitmap.getHeight();
                                 int width = rotatedbitmap.getWidth();
 
-                                //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰 축소(현재 가로세로 1/6 스케일)
+                                //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰서 축소한다.
                                 Bitmap popupBitmap = Bitmap.createScaledBitmap(cutImage, 900, height / (width / 900), true);
 
                                 Log.d("result", Integer.toString(cutImage.getWidth())); //3096
@@ -217,8 +253,11 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 //카메라 바인딩 사용중단
                                 processCameraProvider.unbindAll();
 
+                                Bitmap gray=grayScale(popupBitmap);//사진 GrayScale
+                                Bitmap binary=GetBinaryBitmap(gray);//이진화(내가 보기엔 버려야 할 것 같음)
+
                                 ImageView capturedimage = new ImageView(MedicRegisterActivity.this);
-                                capturedimage.setImageBitmap(popupBitmap);
+                                capturedimage.setImageBitmap(gray);
 
                                 //사진 촬영 결과를 AlertDialog로 띄워 사용 여부를 선택한다
                                 AlertDialog.Builder captureComplete = new AlertDialog.Builder(MedicRegisterActivity.this)
@@ -230,11 +269,21 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-                                                Bitmap gray=grayScale(popupBitmap);//사진 GrayScale
-                                                Bitmap binary=GetBinaryBitmap(gray);//이진화(내가 보기엔 버려야 할 것 같음)
+                                                //여기는 Naver Clova OCR을 활용한 경우
 
-//                                                textView.setText("촬영 완료");
-//                                                textView.setVisibility(View.VISIBLE);
+                                                //photoUri가 captured.jpg로 안드로이드 캐시에 저장한 URI입니다.
+                                                //saveImage() 코드는 518번째 줄에 있으니 참고하시면 됩니다.
+                                                photoUri=saveImage(gray,MedicRegisterActivity.this);
+
+
+
+                                                URI photoURI=changeToURI(photoUri);
+                                                URL photoURL=uriTourl(photoUri);
+                                                System.out.println(photoURL);
+
+
+
+                                                //여기서부터는 MLkit을 활용한 경우
                                                 InputImage image=InputImage.fromBitmap(gray,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
 
                                                 //Recognize Text
@@ -296,6 +345,32 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                 for(String line:list){
                     System.out.println(line);
+                }
+
+                //약물 목록의 길이
+                int listSize= list.length;
+                System.out.println(listSize);
+
+                //약물 목록 수 * 4의 크기를 가진 2차원 배열 생성(약물명, 회사명, 이미지, 약품종류)
+                String listInfo[][]=new String[listSize][4];
+
+                for(int i=0;i<listSize;i++){
+                    //처방약 목록에서 약 이름을 차례대로 받아 OpenAPI로 처리
+                    data=getXmlData(list[i]);
+
+                    String [] dataResult=data.split("\n");
+
+                    listInfo[i][0]=dataResult[0];
+                    listInfo[i][1]=dataResult[1];
+                    listInfo[i][2]=dataResult[2];
+                    listInfo[i][3]=dataResult[3];
+                }
+
+                for(int i=0; i<listInfo.length;i++){
+                    System.out.println("약품명 : "+listInfo[i][0]);
+                    System.out.println("이미지URL : "+listInfo[i][1]);
+                    System.out.println("제조회사명 : "+listInfo[i][2]);
+                    System.out.println("약품종류 : "+listInfo[i][3]);
                 }
 
 
@@ -439,6 +514,100 @@ public class MedicRegisterActivity extends AppCompatActivity {
         return d;
 
     }
+
+    //비트맵 객체 캐시 저장소에 jpg 형식으로 저장
+    public Uri saveImage(Bitmap bitmap,Context context){
+        File imagesFolder=new File(context.getCacheDir(),"images");
+        Uri uri=null;
+
+        try{
+            imagesFolder.mkdirs();
+            File file=new File(imagesFolder,"capturedimage.jpg");
+            FileOutputStream stream=new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            stream.flush();
+            stream.close();
+
+            uri=FileProvider.getUriForFile(context.getApplicationContext(),"com.cookandroid.medication_helper.fileprovider",file);
+
+            System.out.println("AndroidUri : "+uri.toString());
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return uri;
+    }
+
+    // URI를 파일로 변환하는 메서드
+    public static File uriToFile(Context context, Uri uri) throws IOException {
+        File cacheDir = context.getCacheDir();
+        File tempFile = new File(cacheDir, "temp_image.jpg");
+
+        InputStream inputStream = context.getContentResolver().openInputStream(uri);
+        OutputStream outputStream = new FileOutputStream(tempFile);
+
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+
+        inputStream.close();
+        outputStream.close();
+
+        return tempFile;
+    }
+
+
+
+    //안드로이드 Uri를 자바용 URI로 변환
+    public URI changeToURI(Uri uri){
+        String uriString=uri.toString();
+
+        try {
+            // 문자열을 사용하여 Java URI 객체 생성
+            URI javaUri = new URI(uriString);
+
+            // Java URI 객체 사용
+            System.out.println("Java URI: " + javaUri.toString());
+
+            return javaUri;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //자바 URI를 URL 값으로 변화
+    public URL uriTourl(Uri uri){
+        try{
+            URL imageUrl = new URL(uri.toString());
+            System.out.println("imageURL: " + imageUrl.toString());
+            return imageUrl;
+
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+            System.out.println("Uri to URL Failed");
+            return null;
+
+        }
+    }
+
+//    public class PapagoNmtTask extends AsyncTask<String, String, String> {
+//
+//        @Override
+//        public String doInBackground(String... strings) {
+//
+//            return OcrProc.main(strings[0], strings[1]);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//
+//            ReturnThreadResult(result);
+//        }
+//    }
 
     //약 이름을 이용해 공공데이터 포털에서 약 정보 알아내기
     String getXmlData(String medicname) {

@@ -55,4 +55,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'com.google.mlkit:text-recognition-korean:16.0.0'
+
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.16.4' // 최신 버전 사용
+
+
+
 }
