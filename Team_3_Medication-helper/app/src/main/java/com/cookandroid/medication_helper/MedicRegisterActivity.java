@@ -145,7 +145,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences=getSharedPreferences("PREF", Context.MODE_PRIVATE);
         StorageReference storageRef = storage.getReference();
-        StorageReference imageRef = storageRef.child("Medicimages/pictures.jpg"); // Firebase Storage에 저장되는 사진의 위치 및 이름(현재는 이름이 고정되어있음.)
+        StorageReference imageRef = storageRef.child("pictures.jpg"); // Firebase Storage에 저장되는 사진의 위치 및 이름(현재는 이름이 고정되어있음.)
 
         //Naver CLOVA OCR용 API와 Key
         final String ocrApiGwUrl = sharedPreferences.getString("https://czt9qlltax.apigw.ntruss.com/custom/v1/16147/e9a1814442c9633751f8b26ebeba60b6f23d612647bbee28a6022693b2c1416b/general", "");
