@@ -7,6 +7,7 @@
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class MyPageActivity extends AppCompatActivity{
     Button BtnDel;
 
     UserData userData;
+    private final String PREF_NAME = "autoLogin";
+    private SharedPreferences autoLogin;
 
     //뒤로가기 버튼을 누르면 스택에 쌓여있는 전 액티비티로 돌아가게 하는 함수
     @Override
@@ -66,6 +69,7 @@ public class MyPageActivity extends AppCompatActivity{
         BtnModify = (Button) findViewById(R.id.btnModify);
 
         userData = (UserData) getApplicationContext();
+        autoLogin = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
         /* UserData 클래스에서 현재 로그인중인 사용자의 정보를 불러옴 */
         TvName.setText(userData.getUserNickName());
@@ -75,6 +79,10 @@ public class MyPageActivity extends AppCompatActivity{
         BtnLogout.setOnClickListener(new View.OnClickListener() { // 로그아웃 버튼을 눌렀을 때
             @Override
             public void onClick(View view) {
+                SharedPreferences.Editor editor = autoLogin.edit();
+                editor.putString("id", "");
+                editor.putString("pw", "");
+                editor.apply();
                 userData.Init(); // UserData의 모든 내용 초기화
                 Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainActivity.class)); // 로그인 화면으로 돌려보냄

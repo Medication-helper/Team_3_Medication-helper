@@ -25,7 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends FragmentActivity {
     UserData userData;
-    String loginID, loginPW;
+    private final String PREF_NAME = "autoLogin";
+    private SharedPreferences autoLogin;
 
     //뒤로가기 누르면 앱종료시키는 함수
     @Override
@@ -68,60 +69,23 @@ public class MainActivity extends FragmentActivity {
         EditText edtID = findViewById(R.id.editID);
         EditText edtPW = findViewById(R.id.editPW);
 
-        CheckBox checkBox = findViewById(R.id.autoLogin);
         Button btnlogin = findViewById(R.id.btnlogin);
         TextView btnsignin = findViewById(R.id.btnsignin);
 
-        SharedPreferences auto = getSharedPreferences("autologin", Activity.MODE_PRIVATE);
+        autoLogin = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String loginID = autoLogin.getString("id", "");
+        String loginPW = autoLogin.getString("pw", "");
+
+        if (!loginID.isEmpty() && !loginPW.isEmpty()) {
+            login(loginID, loginPW);
+        }
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userID = edtID.getText().toString();
-                String userPassword = edtPW.getText().toString();
-
-                if (userID.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "ID를 입력해 주세요.", Toast.LENGTH_SHORT).show();
-                } else {
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(userID);
-                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                if(userPassword.equals(snapshot.child("uPW").getValue(String.class))) {
-                                    Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
-
-                                    userData.setUserID(userID);
-                                    userData.setUserPassWord(userPassword);
-                                    userData.setUserNickName(snapshot.child("uName").getValue(String.class));
-                                    userData.setUserBirth(snapshot.child("birthDate").getValue(String.class));
-                                    userData.setUserGender(snapshot.child("uGender").getValue(String.class));
-
-                                    Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else
-                                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                                Toast.makeText(getApplicationContext(), "ID가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                login(edtID.getText().toString(), edtPW.getText().toString());
             }
         });
-
-        // 자동 로그인 구현 부분
-       if (checkBox.isChecked()) {
-          // autoLoginEdit.commit();
-        }
 
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,5 +96,53 @@ public class MainActivity extends FragmentActivity {
                 finish();
             }
         });
+    }
+
+    private void login(String userID, String userPW) {
+        CheckBox checkBox = findViewById(R.id.autoLogin);
+
+        if (userID.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "ID를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+        } else {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(userID);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        if(userPW.equals(snapshot.child("uPW").getValue(String.class))) {
+                            Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+
+                            // 자동 로그인 구현 부분
+                            if (checkBox.isChecked()) {
+                                SharedPreferences.Editor editor = autoLogin.edit();
+                                editor.putString("id", userID);
+                                editor.putString("pw", userPW);
+                                editor.apply();
+                            }
+
+                            userData.setUserID(userID);
+                            userData.setUserPassWord(userPW);
+                            userData.setUserNickName(snapshot.child("uName").getValue(String.class));
+                            userData.setUserBirth(snapshot.child("birthDate").getValue(String.class));
+                            userData.setUserGender(snapshot.child("uGender").getValue(String.class));
+
+                            Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else
+                            Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(), "ID가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
