@@ -70,6 +70,8 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -100,6 +102,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
     private TessBaseAPI mTess;
     String datapath = "";
+    String downloadURL = "";
 
     PreviewView previewView;
     Button btnStartCamera;
@@ -128,12 +131,12 @@ public class MedicRegisterActivity extends AppCompatActivity {
     UserData userData;
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    private static final String TAG = "NCloudExample";
-    private static final String ENDPOINT = "https://kr.object.ncloudstorage.com";
-    private static final String REGION_NAME = "kr-standard";
-    private static final String ACCESS_KEY = "AUzMrapL7ShMUgOLd4DK"; // Replace with your NCloud Access Key
-    private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
-    private static final String BUCKET_NAME = "medication-helper";
+//    private static final String TAG = "NCloudExample";
+//    private static final String ENDPOINT = "https://kr.object.ncloudstorage.com";
+//    private static final String REGION_NAME = "kr-standard";
+//    private static final String ACCESS_KEY = "AUzMrapL7ShMUgOLd4DK"; // Replace with your NCloud Access Key
+//    private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
+//    private static final String BUCKET_NAME = "medication-helper";
 
 
 
@@ -152,12 +155,12 @@ public class MedicRegisterActivity extends AppCompatActivity {
         final String ocrSecretKey = sharedPreferences.getString("YW5kcVdvTW5MV2lISWpneE1taHBjZ1RDdFpob1RmQWM==", "");
 
 
-        //AWS 자격 증명 설정
-        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY,SECRET_KEY);
-
-        //Amazon S3 클라이언트 생성
-        AmazonS3 s3 = new AmazonS3Client(awsCredentials);
-        s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
+//        //AWS 자격 증명 설정
+//        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY,SECRET_KEY);
+//
+//        //Amazon S3 클라이언트 생성
+//        AmazonS3 s3 = new AmazonS3Client(awsCredentials);
+//        s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
 
 
         userData = (UserData) getApplicationContext();
@@ -206,7 +209,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         btnCaptureCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageCapture.setFlashMode(ImageCapture.FLASH_MODE_ON);
+
                 imageCapture.takePicture(ContextCompat.getMainExecutor(MedicRegisterActivity.this),
                         new ImageCapture.OnImageCapturedCallback() {
                             @Override
@@ -214,7 +217,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 @SuppressLint("UnsafeExperimentalUsageError")
                                 Image mediaImage = image.getImage();
 
-                                imageCapture.setFlashMode(ImageCapture.FLASH_MODE_OFF);
+
 
                                 //카메라에서 가져온 이미지를 비트맵 이미지로 변환
                                 bitmap = com.cookandroid.medication_helper.ImageUtil.mediaImageToBitmap(mediaImage);
@@ -291,38 +294,43 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                         taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                             @Override
                                                             public void onSuccess(Uri uri) {
-                                                                String downloadUrl = uri.toString();
-                                                                Log.d("result", downloadUrl);}
+                                                                downloadURL = uri.toString();
+                                                                Log.d("URLresult", downloadURL);}
                                                         });
                                                     }
                                                 });
 
-                                                //여기서부터는 MLkit을 활용한 경우
-                                                InputImage image=InputImage.fromBitmap(gray,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
+                                                //Naver CLOVA OCR 수행, PapagoNmtTask()는 620번 줄에 있습니다.
+                                                MedicRegisterActivity.PapagoNmtTask nmtTask = new MedicRegisterActivity.PapagoNmtTask();
+                                                nmtTask.execute(ocrApiGwUrl,ocrSecretKey);
 
-                                                //Recognize Text
-                                                Task<Text> result = textRecognizer.process(image)
-                                                        .addOnSuccessListener(new OnSuccessListener<Text>() {
-                                                            @Override
-                                                            public void onSuccess(Text text) {
-                                                                textView.setText(text.getText());
-                                                                textView.setVisibility(View.VISIBLE);
 
-                                                                ocrResult=text.getText().toString();
 
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
 
-                                                            }
-                                                        });
+//                                                //여기서부터는 MLkit을 활용한 경우
+//                                                InputImage image=InputImage.fromBitmap(gray,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
+//
+//                                                //Recognize Text
+//                                                Task<Text> result = textRecognizer.process(image)
+//                                                        .addOnSuccessListener(new OnSuccessListener<Text>() {
+//                                                            @Override
+//                                                            public void onSuccess(Text text) {
+//                                                                textView.setText(text.getText());
+//                                                                textView.setVisibility(View.VISIBLE);
+//
+//                                                                ocrResult=text.getText().toString();
+//
+//                                                            }
+//                                                        })
+//                                                        .addOnFailureListener(new OnFailureListener() {
+//                                                            @Override
+//                                                            public void onFailure(@NonNull Exception e) {
+//
+//                                                            }
+//                                                        });
 
-//                                                photoUri=saveImage(binary,MedicRegisterActivity.this);
-//                                                picture.setImageURI(photoUri);
-//                                                //picture.setImageBitmap(binary);
-//                                                picture.setVisibility(View.VISIBLE);
+
+                                                //사진 촬영용 오버레이 감추기
                                                 overlay.setVisibility(View.INVISIBLE);
                                             }
                                         })
@@ -608,20 +616,52 @@ public class MedicRegisterActivity extends AppCompatActivity {
         }
     }
 
-//    public class PapagoNmtTask extends AsyncTask<String, String, String> {
-//
-//        @Override
-//        public String doInBackground(String... strings) {
-//
-//            return OcrProc.main(strings[0], strings[1]);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//
-//            ReturnThreadResult(result);
-//        }
-//    }
+    //NaverOCR
+    public class PapagoNmtTask extends AsyncTask<String, String, String> {
+
+        @Override
+        public String doInBackground(String... strings) {
+
+            return OcrProc.main(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            ReturnThreadResult(result);
+        }
+    }
+
+    //OCR 결과물 처리
+    public void ReturnThreadResult(String result) {
+        System.out.println("###  Return Thread Result");
+        String translateText = "";
+
+        String rlt = result;
+        try {
+            JSONObject jsonObject = new JSONObject(rlt);
+
+            JSONArray jsonArray  = jsonObject.getJSONArray("images");
+
+            for (int i = 0; i < jsonArray.length(); i++ ){
+
+                JSONArray jsonArray_fields  = jsonArray.getJSONObject(i).getJSONArray("fields");
+
+                for (int j=0; j < jsonArray_fields.length(); j++ ){
+
+                    String inferText = jsonArray_fields.getJSONObject(j).getString("inferText");
+                    translateText += inferText;
+                    translateText += " ";
+                }
+            }
+
+
+            textView.setText(translateText);
+
+        } catch (Exception e){
+
+        }
+    }
 
     //약 이름을 이용해 공공데이터 포털에서 약 정보 알아내기
     String getXmlData(String medicname) {
