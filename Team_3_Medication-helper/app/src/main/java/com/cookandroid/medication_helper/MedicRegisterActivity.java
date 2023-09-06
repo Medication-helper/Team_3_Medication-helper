@@ -287,8 +287,13 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                     }
                                                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                     @Override
-                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) { // 업로드 성공 시
-                                                        Toast.makeText(getApplicationContext(),"업로드에 성공했습니다.",Toast.LENGTH_SHORT).show();
+                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                            @Override
+                                                            public void onSuccess(Uri uri) {
+                                                                String downloadUrl = uri.toString();
+                                                                Log.d("result", downloadUrl);}
+                                                        });
                                                     }
                                                 });
 
