@@ -145,6 +145,7 @@ public class UserModifyActivity extends AppCompatActivity{
                 String gender = "";
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(userData.getUserID()); // 해당 사용자를 수정
                 Map<String, Object> modifys = new HashMap<>();
+                int PWCheckCounter = 1;
 
                 switch (RG.getCheckedRadioButtonId()) {
                     case R.id.RB_man:
@@ -159,27 +160,33 @@ public class UserModifyActivity extends AppCompatActivity{
 
                 if (!password.isEmpty()) { // 비밀번호가 수정되었을 경우
                     if (password.equals(passwordCheck) == false) { // 비밀번호랑 확인이 다를 경우
-                        Toast.makeText(getApplicationContext(), "비밀번호 확인란에 입력된 내용이 비밀번호와 다릅니다.", Toast.LENGTH_SHORT).show();
+                        PWCheckCounter = 0;
                     }
                     else {
+                        PWCheckCounter = 1;
                         modifys.put("uPW", password);
-                        if (!name.isEmpty()) {
-                            modifys.put("uName", name);
-                        }
-                        if (!birth.isEmpty()) {
-                            modifys.put("birthDate", birth);
-                        }
-                        if (!gender.isEmpty()) {
-                            modifys.put("uGender", gender);
-                        }
-                        ref.updateChildren(modifys);
-
-                        Toast.makeText(getApplicationContext(), "회원수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                        Intent BackToMyPage = new Intent(UserModifyActivity.this, MyPageActivity.class); // 마이페이지로 돌아가는 기능
-                        BackToMyPage.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(BackToMyPage); // 실행
-                        finish(); // Progress 완전 종료
                     }
+                }
+                if (!name.isEmpty()) {
+                    modifys.put("uName", name);
+                }
+                if (!birth.isEmpty()) {
+                    modifys.put("birthDate", birth);
+                }
+                if (!gender.isEmpty()) {
+                    modifys.put("uGender", gender);
+                }
+                
+                if (PWCheckCounter == 0) {
+                    Toast.makeText(getApplicationContext(), "비밀번호 확인란에 입력된 내용이 비밀번호와 다릅니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    ref.updateChildren(modifys);
+
+                    Toast.makeText(getApplicationContext(), "회원수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                    Intent BackToMyPage = new Intent(UserModifyActivity.this, MyPageActivity.class); // 마이페이지로 돌아가는 기능
+                    BackToMyPage.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(BackToMyPage); // 실행
+                    finish(); // Progress 완전 종료
                 }
             }
         });

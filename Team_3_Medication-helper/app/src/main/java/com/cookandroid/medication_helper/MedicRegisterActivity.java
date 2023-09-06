@@ -9,8 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -62,6 +60,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
@@ -125,8 +126,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
     String ocrResult;
 
     UserData userData;
-    com.cookandroid.medication_helper.MedicDBHelper myHelper;
-    SQLiteDatabase sqlDB;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     private static final String TAG = "NCloudExample";
     private static final String ENDPOINT = "https://kr.object.ncloudstorage.com";
@@ -144,6 +144,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medicregister);
 
         SharedPreferences sharedPreferences=getSharedPreferences("PREF", Context.MODE_PRIVATE);
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("Medicimages/pictures.jpg"); // Firebase Storage에 저장되는 사진의 위치 및 이름(현재는 이름이 고정되어있음.)
 
         //Naver CLOVA OCR용 API와 Key
         final String ocrApiGwUrl = sharedPreferences.getString("https://czt9qlltax.apigw.ntruss.com/custom/v1/16147/e9a1814442c9633751f8b26ebeba60b6f23d612647bbee28a6022693b2c1416b/general", "");
@@ -159,7 +161,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
 
         userData = (UserData) getApplicationContext();
-        myHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);
         previewView = (PreviewView) findViewById(R.id.previewView);
         btnStartCamera = (Button) findViewById(R.id.btnCameraStart);
         btnCaptureCamera = (Button) findViewById(R.id.btnPicture);
@@ -275,13 +276,21 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                                 //saveImage() 코드는 518번째 줄에 있으니 참고하시면 됩니다.
                                                 photoUri=saveImage(gray,MedicRegisterActivity.this);
 
+                                                /*URI photoURI=changeToURI(photoUri);
+                                                URL photoURL=uriTourl(photoUri);*/
 
-
-                                                URI photoURI=changeToURI(photoUri);
-                                                URL photoURL=uriTourl(photoUri);
-                                                System.out.println(photoURL);
-
-
+                                                UploadTask uploadTask = imageRef.putFile(photoUri); // photoUri를 바로 이용해 사진을 업로드했음.
+                                                uploadTask.addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) { // 업로드 실패 시
+                                                        Toast.makeText(getApplicationContext(),"업로드에 실패했습니다.",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) { // 업로드 성공 시
+                                                        Toast.makeText(getApplicationContext(),"업로드에 성공했습니다.",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
 
                                                 //여기서부터는 MLkit을 활용한 경우
                                                 InputImage image=InputImage.fromBitmap(gray,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
