@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -139,12 +141,16 @@ public class MedicineListActivity extends AppCompatActivity {
                     childref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String imageURL = snapshot.child("mIMG").getValue().toString();
+                            ImageView imageView = new ImageView(MedicineListActivity.this);
+                            Picasso.get().load(imageURL).into(imageView);
                             String message = "약품명 : " + selectedItem + "\n" +
                                     "제조사명 : " + snapshot.child("cName").getValue() + "\n" +
                                     "효능 : " + snapshot.child("mEffect").getValue() + "\n";
 
                             new AlertDialog.Builder(MedicineListActivity.this)
                                     .setTitle("약품 정보")
+                                    .setView(imageView)
                                     .setMessage(message)
                                     .setPositiveButton(android.R.string.yes, null)
                                     .show();
