@@ -22,6 +22,7 @@ import android.media.ExifInterface;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -51,11 +52,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -131,12 +128,18 @@ public class MedicRegisterActivity extends AppCompatActivity {
     UserData userData;
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
+    String imgName="medicImage.jpg";
+
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMddhhmm");
+
 //    private static final String TAG = "NCloudExample";
 //    private static final String ENDPOINT = "https://kr.object.ncloudstorage.com";
 //    private static final String REGION_NAME = "kr-standard";
-//    private static final String ACCESS_KEY = "AUzMrapL7ShMUgOLd4DK"; // Replace with your NCloud Access Key
-//    private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
-//    private static final String BUCKET_NAME = "medication-helper";
+    private static final String ACCESS_KEY = "AUzMrapL7ShMUgOLd4DK"; // Replace with your NCloud Access Key
+    private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
+//    private static final String BUCKET_NAME = "medication-helper";zz
 
 
 
@@ -237,7 +240,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 //가로, 세로 자르기
                                 //시작지점은 가로 세로 각 1/8지점이다.
                                 //가로로는 6/8, 세로로는 4/8만 남겨보자
-                                Bitmap cutImage=Bitmap.createBitmap(rotatedbitmap,0,1008,3024,2016);
+                                Bitmap cutImage=Bitmap.createBitmap(rotatedbitmap,378,1008,2268,2016);
 
                                 processCameraProvider.unbindAll();//카메라 프리뷰 중단
                                 previewView.setVisibility(View.INVISIBLE);
@@ -250,6 +253,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 //AlertDialog에 사용할 비트맵 이미지의 사이즈를 가로세로 비율 맞춰서 축소한다.
                                 Bitmap popupBitmap = Bitmap.createScaledBitmap(cutImage, 900, height / (width / 900), true);
 
+                                Bitmap popupBitmap2= resizeBitmap(cutImage);
+
                                 Log.d("result", Integer.toString(cutImage.getWidth())); //3096
                                 Log.d("result", Integer.toString(cutImage.getHeight())); //4128
                                 Log.d("result", Integer.toString(image.getImageInfo().getRotationDegrees()));
@@ -261,7 +266,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 Bitmap binary=GetBinaryBitmap(gray);//이진화(내가 보기엔 버려야 할 것 같음)
 
                                 ImageView capturedimage = new ImageView(MedicRegisterActivity.this);
-                                capturedimage.setImageBitmap(gray);
+                                capturedimage.setImageBitmap(popupBitmap2);
 
                                 //사진 촬영 결과를 AlertDialog로 띄워 사용 여부를 선택한다
                                 AlertDialog.Builder captureComplete = new AlertDialog.Builder(MedicRegisterActivity.this)
@@ -277,57 +282,77 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                                                 //photoUri가 captured.jpg로 안드로이드 캐시에 저장한 URI입니다.
                                                 //saveImage() 코드는 518번째 줄에 있으니 참고하시면 됩니다.
-                                                photoUri=saveImage(gray,MedicRegisterActivity.this);
+//                                                try {
+//                                                    saveBitmapToJpeg(gray);//JPEG로 비트맵 파일을 캐시에 저장
+//
+//                                                    //여기는 AWS s3를 이용해 Naver Object Storage를 사용
+//                                                    String imgpath = getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
+//
+//                                                    File cachefile = new File(imgpath);
+//
+//                                                    String time = getTime();
+//                                                    String devicemodel = getDeviceModel();
+//                                                    String cachefilename = devicemodel + "_" + time + imgName;
+//
+//
+//
+//                                                    Toast.makeText(getApplicationContext(), "캐시파일 접근 성공", Toast.LENGTH_SHORT).show();
+//                                                }catch (Exception e){
+//                                                    Toast.makeText(getApplicationContext(), "캐시파일 접근 실패", Toast.LENGTH_SHORT).show();
+//                                                }
+
 
                                                 /*URI photoURI=changeToURI(photoUri);
                                                 URL photoURL=uriTourl(photoUri);*/
 
-                                                UploadTask uploadTask = imageRef.putFile(photoUri); // photoUri를 바로 이용해 사진을 업로드했음.
-                                                uploadTask.addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) { // 업로드 실패 시
-                                                        Toast.makeText(getApplicationContext(),"업로드에 실패했습니다.",Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                            @Override
-                                                            public void onSuccess(Uri uri) {
-                                                                downloadURL = uri.toString();
-                                                                Log.d("URLresult", downloadURL);}
-                                                        });
-                                                    }
-                                                });
-
-                                                //Naver CLOVA OCR 수행, PapagoNmtTask()는 620번 줄에 있습니다.
-                                                MedicRegisterActivity.PapagoNmtTask nmtTask = new MedicRegisterActivity.PapagoNmtTask();
-                                                nmtTask.execute(ocrApiGwUrl,ocrSecretKey);
-
-
-
-
-//                                                //여기서부터는 MLkit을 활용한 경우
-//                                                InputImage image=InputImage.fromBitmap(gray,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
-//
-//                                                //Recognize Text
-//                                                Task<Text> result = textRecognizer.process(image)
-//                                                        .addOnSuccessListener(new OnSuccessListener<Text>() {
+//                                                UploadTask uploadTask = imageRef.putFile(photoUri); // photoUri를 바로 이용해 사진을 업로드했음.
+//                                                uploadTask.addOnFailureListener(new OnFailureListener() {
+//                                                    @Override
+//                                                    public void onFailure(@NonNull Exception e) { // 업로드 실패 시
+//                                                        Toast.makeText(getApplicationContext(),"업로드에 실패했습니다.",Toast.LENGTH_SHORT).show();
+//                                                    }
+//                                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                                    @Override
+//                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //                                                            @Override
-//                                                            public void onSuccess(Text text) {
-//                                                                textView.setText(text.getText());
-//                                                                textView.setVisibility(View.VISIBLE);
-//
-//                                                                ocrResult=text.getText().toString();
-//
-//                                                            }
-//                                                        })
-//                                                        .addOnFailureListener(new OnFailureListener() {
-//                                                            @Override
-//                                                            public void onFailure(@NonNull Exception e) {
-//
-//                                                            }
+//                                                            public void onSuccess(Uri uri) {
+//                                                                downloadURL = uri.toString();
+//                                                                Log.d("URLresult", downloadURL);}
 //                                                        });
+//                                                    }
+//                                                });
+//
+//                                                //Naver CLOVA OCR 수행, PapagoNmtTask()는 620번 줄에 있습니다.
+//                                                MedicRegisterActivity.PapagoNmtTask nmtTask = new MedicRegisterActivity.PapagoNmtTask();
+//                                                nmtTask.execute(ocrApiGwUrl,ocrSecretKey);
+
+
+
+
+                                                //여기서부터는 MLkit을 활용한 경우
+                                                InputImage image=InputImage.fromBitmap(popupBitmap2,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
+
+                                                //Recognize Text
+                                                Task<Text> result = textRecognizer.process(image)
+                                                        .addOnSuccessListener(new OnSuccessListener<Text>() {
+                                                            @Override
+                                                            public void onSuccess(Text text) {
+                                                                //textView.setText(text.getText());
+                                                                textView.setVisibility(View.VISIBLE);
+
+                                                                ocrResult=text.getText().toString();
+                                                                String replaceStr=ocrResult.replaceAll(" ","");
+                                                                textView.setText(replaceStr);
+
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+
+                                                            }
+                                                        });
 
 
                                                 //사진 촬영용 오버레이 감추기
@@ -361,9 +386,10 @@ public class MedicRegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"등록 중, 잠시만 기다려주세요...",Toast.LENGTH_SHORT).show();
+                String replaceStr=ocrResult.replaceAll(" ","");//OCR 결과물에서 간혹 발생하는 띄어쓰기 공백 삭제
 
                 //Log.v("result",ocrResult);
-                String[] list=ocrResult.split("\n");
+                String[] list=replaceStr.split("\n");
 
                 for(String line:list){
                     System.out.println(line);
@@ -371,30 +397,47 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                 //약물 목록의 길이
                 int listSize= list.length;
-                System.out.println(listSize);
+                System.out.println("약물 개수 : " + listSize);
 
-                //약물 목록 수 * 4의 크기를 가진 2차원 배열 생성(약물명, 회사명, 이미지, 약품종류)
-                String listInfo[][]=new String[listSize][4];
+                String [] dataResult=replaceStr.split("\n");
 
                 for(int i=0;i<listSize;i++){
-                    //처방약 목록에서 약 이름을 차례대로 받아 OpenAPI로 처리
-                    data=getXmlData(list[i]);
-
-                    String [] dataResult=data.split("\n");
-
-                    listInfo[i][0]=dataResult[0];
-                    listInfo[i][1]=dataResult[1];
-                    listInfo[i][2]=dataResult[2];
-                    listInfo[i][3]=dataResult[3];
+                    System.out.println("datatResult : "+dataResult[i]);
                 }
 
-                for(int i=0; i<listInfo.length;i++){
-                    System.out.println("약품명 : "+listInfo[i][0]);
-                    System.out.println("이미지URL : "+listInfo[i][1]);
-                    System.out.println("제조회사명 : "+listInfo[i][2]);
-                    System.out.println("약품종류 : "+listInfo[i][3]);
-                }
+                String [][] medicInfoList = new String[listSize][4];
 
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(int i=0;i<listSize;i++){
+                            data=getXmlData(dataResult[i]);
+                            System.out.println(data);
+
+                            String [] dataSplit = data.split("\n");
+                            System.out.println("dataSplit Size: "+dataSplit.length);
+
+                            System.out.print("파싱 결과 : ");
+                            System.out.print(dataResult[i]+" ");
+                            System.out.print(dataSplit[0]+" ");
+                            System.out.print(dataSplit[1]+" ");
+                            System.out.println(dataSplit[2]);
+
+                            medicInfoList[i][0]=dataResult[i];
+                            medicInfoList[i][1]=dataSplit[0];
+                            medicInfoList[i][2]=dataSplit[1];
+                            medicInfoList[i][3]=dataSplit[2];
+
+                            //여기에 Firebase에 업로드하는 코드를 작성하시면 됩니다.
+                            //약품명, 제조사명, 약품사진URL, 약품종류 데이터가 들어있는 2차원 배열입니다.
+
+
+
+
+                        }
+                    }
+                }).start();
 
                 Toast.makeText(getApplicationContext(),"등록했습니다",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
@@ -561,6 +604,34 @@ public class MedicRegisterActivity extends AppCompatActivity {
         return uri;
     }
 
+    //이미지뷰 사진 캐시에 저장
+    public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
+        File tempFile = new File(getCacheDir(), imgName);    // 파일 경로와 이름 넣기
+        try {
+            tempFile.createNewFile();   // 자동으로 빈 파일을 생성하기
+            FileOutputStream out = new FileOutputStream(tempFile);  // 파일을 쓸 수 있는 스트림을 준비하기
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);   // compress 함수를 사용해 스트림에 비트맵을 저장하기
+            out.close();    // 스트림 닫아주기
+            Toast.makeText(getApplicationContext(), "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //현재시간 가져오기
+    private String getTime(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
+    }
+
+    //모델명 가져오기
+    public static String getDeviceModel() {
+        return Build.MODEL;
+    }
+
+
+
     // URI를 파일로 변환하는 메서드
     public static File uriToFile(Context context, Uri uri) throws IOException {
         File cacheDir = context.getCacheDir();
@@ -663,14 +734,28 @@ public class MedicRegisterActivity extends AppCompatActivity {
         }
     }
 
+    static public Bitmap resizeBitmap(Bitmap original) {
+
+        int resizeWidth = 900;
+
+        double aspectRatio = (double) original.getHeight() / (double) original.getWidth();
+        int targetHeight = (int) (resizeWidth * aspectRatio);
+        Bitmap result = Bitmap.createScaledBitmap(original, resizeWidth, targetHeight, false);
+        if (result != original) {
+            original.recycle();
+        }
+        return result;
+    }
+
     //약 이름을 이용해 공공데이터 포털에서 약 정보 알아내기
     String getXmlData(String medicname) {
         StringBuffer buffer=new StringBuffer();
         String str=medicname;
         String MedicineName= URLEncoder.encode(str);
+        System.out.println("약품명:"+MedicineName);
 
 
-        String queryUrl="https://apis.data.go.kr/1471000/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&itemName="+MedicineName+"&pageNo=1&numOfRows=1&type=xml";
+        String queryUrl="http://apis.data.go.kr/1471000/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&item_name="+MedicineName+"&pageNo=1&numOfRows=3&type=xml";
         try {
             URL url=new URL(queryUrl);
             InputStream is=url.openStream();
@@ -692,23 +777,21 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                         if(tag.equals("item"));
 
-                        //약품 이미지 URL
-                        else if(tag.equals("ITEM_NAME")){
-                            xpp.next();
-                            buffer.append(xpp.getText());
-                        }
+
                         //약품 회사명
                         else if(tag.equals("ENTP_NAME")){
                             xpp.next();
                             buffer.append(xpp.getText());
+                            buffer.append("\n");
                         }
                         //약품 이미지 URL
                         else if(tag.equals("ITEM_IMAGE")){
                             xpp.next();
                             buffer.append(xpp.getText());
+                            buffer.append("\n");
                         }
                         //약품 종류
-                        else if(tag.equals("ITEM_CLASS")){
+                        else if(tag.equals("CLASS_NAME")){
                             xpp.next();
                             buffer.append(xpp.getText());
                         }

@@ -28,7 +28,7 @@
 
             <View
                 android:id="@+id/overlay"
-                android:layout_width="300dp"
+                android:layout_width="225dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_weight="10"
