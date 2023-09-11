@@ -29,11 +29,11 @@
         android:theme="@style/Theme.MedicationHelper"
         android:usesCleartextTraffic="true">
 
-<!--
+
         <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="98f48dd2ad91b7abb77271bea456b281"/>
--->
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCo7Xe42mv4SXW3NJle4ehvZnQ-EYICRcs" />
+
 
         <activity
             android:name=".MainActivity"
