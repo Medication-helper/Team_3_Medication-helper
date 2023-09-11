@@ -57,6 +57,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -85,7 +87,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MedicRegisterActivity extends AppCompatActivity {
@@ -141,7 +145,17 @@ public class MedicRegisterActivity extends AppCompatActivity {
     private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
 //    private static final String BUCKET_NAME = "medication-helper";zz
 
+    public class addMedicine {
+        public String cName, mIMG, mEffect;
 
+        public addMedicine() {} //setValue를 사용하기 위해 필요, 없으면 작동하지 않음
+
+        public addMedicine(String cName, String mIMG, String mEffect) {
+            this.cName = cName;
+            this.mIMG = mIMG;
+            this.mEffect = mEffect;
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -406,6 +420,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                 }
 
                 String [][] medicInfoList = new String[listSize][4];
+                List<List<String>> listItems = new ArrayList<>();
 
 
                 new Thread(new Runnable() {
@@ -432,8 +447,10 @@ public class MedicRegisterActivity extends AppCompatActivity {
                             //여기에 Firebase에 업로드하는 코드를 작성하시면 됩니다.
                             //약품명, 제조사명, 약품사진URL, 약품종류 데이터가 들어있는 2차원 배열입니다.
 
+                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                            addMedicine addMedicine = new addMedicine(dataSplit[0], dataSplit[1], dataSplit[2]);
 
-
+                            rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue(addMedicine);
 
                         }
                     }
