@@ -6,6 +6,7 @@
  ***************************/
 package com.cookandroid.medication_helper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,11 +44,32 @@ public class MyPageActivity extends AppCompatActivity{
     //뒤로가기 버튼을 누르면 스택에 쌓여있는 전 액티비티로 돌아가게 하는 함수
     @Override
     public void onBackPressed() { // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
-        super.onBackPressed();
-        Intent Back = new Intent(MyPageActivity.this, com.cookandroid.medication_helper.MainPageActivity.class); // 메인화면으로 돌아가는 기능
-        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 회원정보 페이지가 백그라운드에서 돌아가지 않도록 완전종료
-        startActivity(Back); // 실행
-        finish(); // Progress 완전 종료
+        //다이어로그를 화면에 나타냄
+        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MyPageActivity.this);
+        exitDialogBuilder
+                .setTitle("프로그램 종료")
+                .setMessage("종료하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("네",
+                        //네를 누르면 앱 종료
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                int pid = android.os.Process.myPid();
+                                android.os.Process.killProcess(pid);
+                                finish();
+                            }
+                        })
+                //아니오 누르면 다이어로그를 종료
+                .setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+        AlertDialog exitDialog = exitDialogBuilder.create();
+        exitDialog.show();
     }
 
     @Override

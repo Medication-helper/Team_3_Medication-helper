@@ -45,7 +45,7 @@ public class UserModifyActivity extends AppCompatActivity{
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(UserModifyActivity.this, MainActivity.class); // 메인화면으로 돌아가는 기능
+        Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity.class); // 메인화면으로 돌아가는 기능
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(BackToMain); // 실행
         finish(); // Progress 완전 종료

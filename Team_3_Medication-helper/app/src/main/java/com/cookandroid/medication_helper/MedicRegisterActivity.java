@@ -158,6 +158,36 @@ public class MedicRegisterActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() { // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
+        //다이어로그를 화면에 나타냄
+        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MedicRegisterActivity.this);
+        exitDialogBuilder
+                .setTitle("프로그램 종료")
+                .setMessage("종료하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("네",
+                        //네를 누르면 앱 종료
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                int pid = android.os.Process.myPid();
+                                android.os.Process.killProcess(pid);
+                                finish();
+                            }
+                        })
+                //아니오 누르면 다이어로그를 종료
+                .setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+        AlertDialog exitDialog = exitDialogBuilder.create();
+        exitDialog.show();
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

@@ -48,11 +48,32 @@ public class MedicineListActivity extends AppCompatActivity {
     /*스마트폰의 뒤로가기 버튼에 대한 뒤로가기 동작 구현*/
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent Back = new Intent(MedicineListActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
-        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(Back);
-        finish();
+        //다이어로그를 화면에 나타냄
+        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MedicineListActivity.this);
+        exitDialogBuilder
+                .setTitle("프로그램 종료")
+                .setMessage("종료하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("네",
+                        //네를 누르면 앱 종료
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                int pid = android.os.Process.myPid();
+                                android.os.Process.killProcess(pid);
+                                finish();
+                            }
+                        })
+                //아니오 누르면 다이어로그를 종료
+                .setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+        AlertDialog exitDialog = exitDialogBuilder.create();
+        exitDialog.show();
     }
 
     @Override
