@@ -48,7 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MedicCheckActivity" />
         <activity android:name=".MedicineListActivity" />
         <activity android:name=".MedicRegisterActivity" />
         <activity android:name=".ComForbiddenListActivity" />

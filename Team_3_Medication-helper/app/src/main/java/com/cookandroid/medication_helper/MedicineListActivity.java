@@ -37,10 +37,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MedicineListActivity extends AppCompatActivity {
-    Button delBtn;
-    ListView medicationListView;
-    Button btnBack;
-
     /* 의약품 DB를 사용하기 위한 변수들 */
     UserData userData;
     boolean isDeleteMode = false;
@@ -85,15 +81,14 @@ public class MedicineListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
         getSupportActionBar().setCustomView(R.layout.medilisttitlebar_custom); // 커스텀 사용할 파일 위치
 
-
         Button forBtn = findViewById(R.id.forbtn);//병용금기약물 항목 이동 버튼
         Button prgBtn = findViewById(R.id.prgbtn);//임부금기약물 항목 이동 버튼
         Button overBtn = findViewById(R.id.overbtn);//효능중복약물 항목 이동 버튼
+        Button delBtn = findViewById(R.id.btnalldelete);
 
         userData = (UserData) getApplicationContext();
 
-        medicationListView = (ListView)findViewById(R.id.medicationlist);
-        delBtn = (Button)findViewById(R.id.btnalldelete);
+        ListView medicationListView = findViewById(R.id.medicationlist);
 
         /*약 목록을 리스트뷰에 출력*/
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine");
@@ -205,6 +200,14 @@ public class MedicineListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.ComForbiddenListActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+            }
+        });
+        prgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.PregnantForbiddenListActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
             }
