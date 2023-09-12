@@ -8,8 +8,6 @@ package com.cookandroid.medication_helper;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -21,7 +19,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -36,16 +42,14 @@ import java.util.Arrays;
 public class PregnantForbiddenListActivity extends AppCompatActivity {
 
     /* 의약품DB를 사용하기 위한 변수들 */
-    String data;
     UserData userData;
-    com.cookandroid.medication_helper.MedicDBHelper myHelper;
-    SQLiteDatabase sqlDB;
+    String data;
 
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
         super.onBackPressed();
-        Intent Back = new Intent(PregnantForbiddenListActivity.this, MedicCheckActivity.class); // 메인화면으로 돌아가는 기능
-        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 임부금기 페이지가 백그라운드에서 돌아가지 않도록 완전종료
+        Intent Back = new Intent(PregnantForbiddenListActivity.this, MedicineListActivity.class); // 메인화면으로 돌아가는 기능
+        Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 병용금지 페이지가 백그라운드에서 돌아가지 않도록 완전종료
         startActivity(Back); // 실행
         finish(); // Progress 완전 종료
     }
@@ -55,27 +59,41 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_pregnantforbiddenlist);
-        setTitle("Medication Helper");
-
-        ListView pregXList=(ListView)findViewById(R.id.pregnantXList);
-        TextView pregXtextView=(TextView)findViewById(R.id.pregnantXIng);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
+        getSupportActionBar().setCustomView(R.layout.pregtitlebar_custom); // 커스텀 사용할 파일 위치
 
         userData = (UserData) getApplicationContext();
-        myHelper = new com.cookandroid.medication_helper.MedicDBHelper(this);
-        sqlDB = myHelper.getReadableDatabase(); // 복용의약품 DB를 읽기 전용으로 불러옴
-        // 현재 로그인중인 사용자가 복용중인 의약품의 DB를 읽어들임
-        Cursor cursor = sqlDB.rawQuery("SELECT * FROM medicTBL WHERE uID = '" + userData.getUserID() + "';", null);
 
-        Toast.makeText(getApplicationContext(), "조회 중입니다. 잠시만 기다려주세요", Toast.LENGTH_LONG).show();
+        Button btnBack = findViewById(R.id.btnback_pregforbid);
+        ListView pregXList = findViewById(R.id.pregnantXList);
+        TextView pregXtextView = findViewById(R.id.pregnantXIng);
 
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine");
+        ArrayList<String> medicList = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, medicList);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.child(userData.getUserID()).getChildren()) {
+                    String value = ds.getKey();
+                    System.out.println("Data : " + value);
+                    medicList.add(value);
+                }
+
+                pregXList.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(),"알 수 없는 오류가 발생했습니다.",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*
         //약 목록을 저장하는 배열
-        String[] medicineList = new String[cursor.getCount()];
-        int serialNo = 0;
-
-        while (cursor.moveToNext()) { // DB에서 받아온 처방약 목록을 상단의 배열에 저장
-            medicineList[serialNo] = cursor.getString(2);
-            serialNo++;
-        }
+        String[] medicineList = new String[4];
 
         //약 목록이 저장되어 있는 배열의 길이
         int size=medicineList.length;
@@ -173,14 +191,12 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
                     }
                 });
             }
-        }).start();
-
-        Button btnBack = findViewById(R.id.btnback4);
+        }).start(); */
 
         btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로가기 버튼을 눌렀을 경우
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PregnantForbiddenListActivity.this, MedicCheckActivity.class); // 이전 화면으로 돌아가는 동작
+                Intent intent = new Intent(PregnantForbiddenListActivity.this, MedicineListActivity.class); // 이전 화면으로 돌아가는 동작
                 startActivity(intent); // 동작 시행
                 finish(); // Progress 종료
             }
