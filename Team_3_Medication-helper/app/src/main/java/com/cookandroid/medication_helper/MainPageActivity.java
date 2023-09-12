@@ -37,14 +37,19 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-public class MainPageActivity extends AppCompatActivity{ //implements MapView.MapViewEventListener {
+public class MainPageActivity extends AppCompatActivity implements OnMapReadyCallback{ //implements MapView.MapViewEventListener {
     TextView TvHelloName;
+
+    private GoogleMap mMap;
 
     private AdView mAdview;
     private ListView mListView;
@@ -203,6 +208,12 @@ public class MainPageActivity extends AppCompatActivity{ //implements MapView.Ma
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, listener);
         }
     }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+
+    }
+
     // GPS Listener
     class GpsListener implements LocationListener {
         @Override
