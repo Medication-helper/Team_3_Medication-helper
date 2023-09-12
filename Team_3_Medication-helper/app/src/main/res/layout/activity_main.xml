@@ -52,30 +52,21 @@ activity_main.xml
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <com.google.android.gms.maps.MapView
                     android:layout_width="350dp"
-                    android:layout_height="400dp"
+                    android:layout_height="450dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="150dp"
                     android:layout_marginBottom="80dp"
                     android:background="@drawable/green_border"
-                    android:id="@+id/tvHelloName"
+                    android:id="@+id/mapview"
                     android:padding="10dp"
                     android:text=""
                     android:textColor="#036635"
-                    android:textSize="50dp"
+                    android:textSize="30dp"
                     android:gravity="center"/>
-                <!--
-                <RelativeLayout
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/map_view"
-                    android:layout_width="350dp"
-                    android:layout_height="400dp"
-                    android:layout_marginTop="150dp"
-                    android:layout_marginBottom="80dp"
-                    android:background="@drawable/green_border"
-                    android:padding="10dp" />
-                    -->
+
+
 
             </FrameLayout>
         </FrameLayout>
