@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeNav_manager"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/userListNav"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_vpn_key_24"
+        android:title="Camera"/>
+    <item
+        android:id="@+id/medicineListNav"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_recent_actors_24"
+        android:title="Article" />
+    <item
+        android:id="@+id/userNav_manager"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="My Page" />
+</menu>

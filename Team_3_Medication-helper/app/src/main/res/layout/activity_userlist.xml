@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+activity_medicinelist.xml
+작성 팀 : Hello World!
+프로그램명 : Medication Helper
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:drawablePadding="3dp"
+        android:text="사용자 선택 시 상세정보 확인 가능"
+        android:textColor="#036635"
+        android:textSize="25dp" />
+
+    <ListView
+        android:id="@+id/userList"
+        android:layout_width="300dp"
+        android:layout_height="525dp"
+        android:layout_marginTop="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/green_border" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/navcolor"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/nav_manager" />
+
+</RelativeLayout>

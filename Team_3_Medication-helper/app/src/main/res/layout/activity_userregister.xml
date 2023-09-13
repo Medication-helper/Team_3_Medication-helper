@@ -68,13 +68,12 @@ activity_userregister.xml
             </TextView>
 
             <EditText
+                android:id="@+id/E_Pass"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/E_Pass"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="105dp"
-                android:ems = "7">
-            </EditText>
+                android:ems="7"></EditText>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,6 +118,41 @@ activity_userregister.xml
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
                 android:ems = "7"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "구분"
+                android:layout_marginTop="75dp"
+                android:layout_marginStart="10dp"
+                android:textSize="20dp">
+            </TextView>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/RGtag"
+                android:layout_marginTop="75dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/RB_user"
+                    android:text="일반 사용자"
+                    android:textSize="15dp"
+                    android:layout_marginRight="20dp">
+                </RadioButton>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="관리자"
+                    android:textSize="15dp"
+                    android:id="@+id/RB_manager">
+                </RadioButton>
+            </RadioGroup>
 
         </RelativeLayout>
 
@@ -190,7 +224,7 @@ activity_userregister.xml
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/RG"
+                android:id="@+id/RGGender"
                 android:layout_marginTop="75dp"
                 android:layout_marginStart="120dp"
                 android:layout_marginBottom="10dp"

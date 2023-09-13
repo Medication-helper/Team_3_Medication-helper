@@ -14,6 +14,7 @@ public class UserData extends Application {
     private String userNickName;
     private String userBirth;
     private String userGender;
+    private int tag;
 
     @Override
     public void onCreate() { // UserData 클래스 초기화
@@ -23,6 +24,7 @@ public class UserData extends Application {
         userNickName = "";
         userBirth = "";
         userGender = "";
+        tag = 0;
     }
 
     public void Init() { // UserData 초기화
@@ -31,6 +33,7 @@ public class UserData extends Application {
         userNickName = "";
         userBirth = "";
         userGender = "";
+        tag = 0;
     }
 
     public String getUserID() { // ID 반환
@@ -72,4 +75,8 @@ public class UserData extends Application {
     public void setUserGender(String userGender) { // 성별 갱신
         this.userGender = userGender;
     }
+
+    public int getTag() { return tag; }
+
+    public void setTag(int tag) { this.tag = tag; }
 }

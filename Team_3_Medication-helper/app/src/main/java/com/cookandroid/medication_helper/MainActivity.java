@@ -124,11 +124,19 @@ public class MainActivity extends FragmentActivity {
                             userData.setUserNickName(snapshot.child("uName").getValue(String.class));
                             userData.setUserBirth(snapshot.child("birthDate").getValue(String.class));
                             userData.setUserGender(snapshot.child("uGender").getValue(String.class));
+                            userData.setTag(Integer.parseInt(snapshot.child("tag").getValue(String.class)));
 
-                            Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
+                            if (userData.getTag() == 0) {
+                                Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(MainActivity.this, com.cookandroid.medication_helper.MainPageActivity_Manager.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                         else
                             Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();

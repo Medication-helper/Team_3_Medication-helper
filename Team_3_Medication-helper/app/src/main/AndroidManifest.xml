@@ -57,6 +57,10 @@
         <activity android:name=".MyPageActivity" />
         <activity android:name=".UserRegisterActivity" />
         <activity android:name=".UserModifyActivity" />
+        <activity android:name=".MainPageActivity_Manager" />
+        <activity android:name=".UserListActivity" />
+        <activity android:name=".MyPageActivity_Manager" />
+        <activity android:name=".UserDetailActivity" />
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-2721080471277714~3179912396"/>
         <meta-data android:name="android.max_aspect" android:value="ratio_float" />
 

@@ -38,8 +38,8 @@ import java.util.Locale;
 
 public class UserRegisterActivity extends AppCompatActivity{
     EditText E_ID, E_Pass, E_PassCheck, E_Name;
-    RadioGroup RG;
-    RadioButton RB_Man, RB_Woman;
+    RadioGroup RGtag, RGgender;
+    RadioButton RB_user, RB_manager, RB_Man, RB_Woman;
     Button btnRegister_Back, btnIDCheck, btnBirthChoose, btnComplete;
     TextView tvBirth;
     private boolean validate = false;
@@ -84,14 +84,18 @@ public class UserRegisterActivity extends AppCompatActivity{
         E_Pass = (EditText) findViewById(R.id.E_Pass);
         E_PassCheck = (EditText) findViewById(R.id.E_PassCheck);
         E_Name = (EditText) findViewById(R.id.E_name);
-        RG = (RadioGroup) findViewById(R.id.RG);
-        RB_Man = (RadioButton) findViewById(R.id.RB_man);
-        RB_Woman = (RadioButton) findViewById(R.id.RB_woman);
         btnRegister_Back = (Button) findViewById(R.id.btnRegister_Back);
         btnIDCheck = (Button) findViewById(R.id.idCheck);
         btnBirthChoose = (Button) findViewById(R.id.BtnBirthChoose);
         btnComplete = (Button) findViewById(R.id.BtnComplete);
         tvBirth = (TextView) findViewById(R.id.TvBirth);
+
+        RGtag = (RadioGroup) findViewById(R.id.RGtag);
+        RB_user = (RadioButton) findViewById(R.id.RB_user);
+        RB_manager = (RadioButton) findViewById(R.id.RB_manager);
+        RGgender = (RadioGroup) findViewById(R.id.RGGender);
+        RB_Man = (RadioButton) findViewById(R.id.RB_man);
+        RB_Woman = (RadioButton) findViewById(R.id.RB_woman);
 
         /* 오늘 날짜 계산 */
         Date todayDate = Calendar.getInstance().getTime();
@@ -213,8 +217,20 @@ public class UserRegisterActivity extends AppCompatActivity{
                 String name = E_Name.getText().toString();
                 String birth = tvBirth.getText().toString();
                 String gender = "";
+                String tag = "";
 
-                switch (RG.getCheckedRadioButtonId()) {
+                switch (RGtag.getCheckedRadioButtonId()) {
+                    case R.id.RB_user:
+                        tag = "0";
+                        break;
+                    case R.id.RB_manager:
+                        tag = "1";
+                        break;
+                    default:
+                        break;
+                }
+
+                switch (RGgender.getCheckedRadioButtonId()) {
                     case R.id.RB_man:
                         gender = "man";
                         break;
@@ -237,9 +253,11 @@ public class UserRegisterActivity extends AppCompatActivity{
                     Toast.makeText(getApplicationContext(), "비밀번호 확인란에 입력된 내용이 비밀번호와 다릅니다.", Toast.LENGTH_SHORT).show();
                 } else if (name.length() == 0) { // 이름란이 공백인 경우
                     Toast.makeText(getApplicationContext(), "사용자 이름이 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                } else if (tag.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "일반 사용자 및 관리자 여부를 선택해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     mDatabase = FirebaseDatabase.getInstance().getReference();
-                    addUser addUser = new addUser(password, name, birth, gender, "0");
+                    addUser addUser = new addUser(password, name, birth, gender, tag);
 
                     mDatabase.child("User").child(ID).setValue(addUser);
 
