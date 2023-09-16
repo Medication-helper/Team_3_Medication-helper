@@ -18,8 +18,11 @@ import android.os.Bundle;
 import android.os.Trace;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -37,40 +41,58 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.maps.GoogleMap;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.google.android.gms.maps.OnMapReadyCallback;
 
-import net.daum.mf.map.api.MapPOIItem;
-import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapView;
+import com.kakao.vectormap.GestureType;
+import com.kakao.vectormap.KakaoMap;
+import com.kakao.vectormap.KakaoMapReadyCallback;
+import com.kakao.vectormap.LatLng;
+import com.kakao.vectormap.MapView;
+import com.kakao.vectormap.camera.CameraAnimation;
+import com.kakao.vectormap.camera.CameraPosition;
+import com.kakao.vectormap.camera.CameraUpdateFactory;
+import com.kakao.vectormap.label.Label;
+import com.kakao.vectormap.label.LabelOptions;
 
-public class MainPageActivity extends AppCompatActivity implements OnMapReadyCallback{ //implements MapView.MapViewEventListener {
-    TextView TvHelloName;
 
-    private GoogleMap mMap;
+public class MainPageActivity extends AppCompatActivity implements
+        KakaoMap.OnCameraMoveStartListener, KakaoMap.OnCameraMoveEndListener{
 
-    private AdView mAdview;
-    private ListView mListView;
     private static final String LOG_TAG = "MainActivity";
 
     private ViewGroup mapViewContainer;
 
-    private TextView latView;
-    private TextView lngView;
+    private final int FINE_PERMISSION_CODE = 1;
 
-
-    private MapPOIItem mDefaultMarker;
+    //체크할 권한 배열
     String[] permission_list={
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
     };
 
+    private MapView mapView;
+    private Label centerPointLabel;
+
+    ImageView myLoc;
+    ImageView Hospital;
+
+    private KakaoMap kakaoMap;
+
     Location myLocation;
     LocationManager manager;
 
+    public double lat;
+    public double lng;
+
+    private int startZoomLevel=15;
+
+
     UserData userData;
+
 
     //뒤로가기 누르면 앱종료시키는 함수
     @Override
@@ -105,15 +127,12 @@ public class MainPageActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
-
-
-
-
+        mapView=findViewById(R.id.map);
+        myLoc=findViewById(R.id.myloc);
 
         userData = (UserData) getApplicationContext();
 
@@ -121,10 +140,49 @@ public class MainPageActivity extends AppCompatActivity implements OnMapReadyCal
         actionBar.hide();
 
         checkPermission();
-
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setSelectedItemId(R.id.homeNav);
+
+
+        checkPermission();
+
+        showAlertDialog();
+
+        mapView.start(new KakaoMapReadyCallback() {
+            @Override
+            public void onMapReady(KakaoMap map) {
+                kakaoMap=map;
+                kakaoMap.setOnCameraMoveStartListener(MainPageActivity.this);
+                kakaoMap.setOnCameraMoveEndListener(MainPageActivity.this);
+
+                centerPointLabel = kakaoMap.getLabelManager().getLayer()
+                        .addLabel(LabelOptions.from(kakaoMap.getCameraPosition().getPosition())
+                                .setStyles(R.drawable.red_dot_marker));
+
+            }
+
+            @Override
+            public LatLng getPosition() {
+                // 지도 시작 시 위치 좌표를 설정
+                System.out.println("첫 시작 위치 : "+lat+" "+lng);
+                return LatLng.from(lat, lng);
+            }
+
+            @Override
+            public int getZoomLevel() {
+                // 지도 시작 시 확대/축소 줌 레벨 설정
+                return 15;
+            }
+        });
+
+        myLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMyLocation();
+
+                moveCamera(LatLng.from(lat,lng));
+            }
+        });
 
         //바텀네비게이션을 나타나게 해주는 함수
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -159,6 +217,20 @@ public class MainPageActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("안녕하세요!")
+                .setMessage("OOO님!")
+                .setNeutralButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getMyLocation();
+                        moveCamera(LatLng.from(lat,lng));
+                    }
+                })
+                .show();
+    }
+
     public void checkPermission(){
         boolean isGrant=false;
         for(String str : permission_list){
@@ -172,7 +244,7 @@ public class MainPageActivity extends AppCompatActivity implements OnMapReadyCal
             ActivityCompat.requestPermissions(this,permission_list,0);
         }
     }
-
+    // 사용자가 권한 허용/거부 버튼을 눌렀을 때 호출되는 메서드
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -183,15 +255,10 @@ public class MainPageActivity extends AppCompatActivity implements OnMapReadyCal
                 break;
             }
         }
-        // 모든 권한을 허용했다면 사용자 위치를 측정한다.
-        if(isGrant == true){
-            getMyLocation();
-        }
     }
 
-    // 현재 위치를 가져온다.
     public void getMyLocation(){
-        manager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        manager = (LocationManager) getSystemService(LOCATION_SERVICE);
         // 권한이 모두 허용되어 있을 때만 동작하도록 한다.
         int chk1 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         int chk2 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -208,12 +275,6 @@ public class MainPageActivity extends AppCompatActivity implements OnMapReadyCal
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, listener);
         }
     }
-
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-
-    }
-
     // GPS Listener
     class GpsListener implements LocationListener {
         @Override
@@ -241,13 +302,34 @@ public class MainPageActivity extends AppCompatActivity implements OnMapReadyCal
         if(myLocation == null){
             return;
         }
-        // 현재 위치값을 추출한다.
-        double lat=myLocation.getLatitude();
-        double lng=myLocation.getLongitude();
+        // 현재 위치값을 추출한다.d
+        lat=myLocation.getLatitude();
+        lng=myLocation.getLongitude();
 
+        moveCamera(LatLng.from(lat,lng));
 
+        System.out.println("위도 : "+lat);
+        System.out.println("경도 : "+lng);
     }
 
+    @Override
+    public void onCameraMoveStart(KakaoMap kakaoMap, GestureType gestureType) {
+        Toast.makeText(this, "onCameraMoveStart", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onCameraMoveEnd(KakaoMap kakaoMap, CameraPosition cameraPosition,
+                                GestureType gestureType) {
 
+        if (centerPointLabel != null) {
+            centerPointLabel.moveTo(cameraPosition.getPosition());
+        }
+    }
+
+    private void moveCamera(LatLng position) {
+
+        kakaoMap.moveCamera(CameraUpdateFactory.newCenterPosition(position),
+                CameraAnimation.from(1500));
+
+    }
 }

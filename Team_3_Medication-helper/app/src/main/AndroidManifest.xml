@@ -31,8 +31,8 @@
 
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCGMfGB8Ktf29s-fJT1gaBAcl7O98TixmE" />
+            android:name="com.kakao.vectormap.APP_KEY"
+            android:value="bed94bbedf9d84a8477ef4c5cd25079e"/>
 
 
         <activity
