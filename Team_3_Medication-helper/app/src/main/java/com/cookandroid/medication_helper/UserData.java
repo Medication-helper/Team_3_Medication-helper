@@ -11,7 +11,7 @@ import android.app.Application;
 public class UserData extends Application {
     private String userID;
     private String userPassWord;
-    private String userNickName;
+    private String userName;
     private String userBirth;
     private String userGender;
     private int tag;
@@ -21,7 +21,7 @@ public class UserData extends Application {
         super.onCreate();
         userID = "";
         userPassWord = "";
-        userNickName = "";
+        userName = "";
         userBirth = "";
         userGender = "";
         tag = 0;
@@ -30,7 +30,7 @@ public class UserData extends Application {
     public void Init() { // UserData 초기화
         userID = "";
         userPassWord = "";
-        userNickName = "";
+        userName = "";
         userBirth = "";
         userGender = "";
         tag = 0;
@@ -52,12 +52,12 @@ public class UserData extends Application {
         this.userPassWord = userPassWord;
     }
 
-    public String getUserNickName() { // 이름 반환
-        return userNickName;
+    public String getUserName() { // 이름 반환
+        return userName;
     }
 
-    public void setUserNickName(String userNickName) { // 이름 갱신
-        this.userNickName = userNickName;
+    public void setUserName(String userName) { // 이름 갱신
+        this.userName = userName;
     }
 
     public String getUserBirth() { // 생년월일 반환
