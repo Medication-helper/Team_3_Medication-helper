@@ -121,7 +121,7 @@ public class MainActivity extends FragmentActivity {
 
                             userData.setUserID(userID);
                             userData.setUserPassWord(userPW);
-                            userData.setUserNickName(snapshot.child("uName").getValue(String.class));
+                            userData.setUserName(snapshot.child("uName").getValue(String.class));
                             userData.setUserBirth(snapshot.child("birthDate").getValue(String.class));
                             userData.setUserGender(snapshot.child("uGender").getValue(String.class));
                             userData.setTag(Integer.parseInt(snapshot.child("tag").getValue(String.class)));

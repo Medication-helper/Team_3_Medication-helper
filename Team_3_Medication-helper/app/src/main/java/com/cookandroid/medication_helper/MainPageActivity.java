@@ -15,16 +15,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Trace;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,17 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -89,7 +73,6 @@ public class MainPageActivity extends AppCompatActivity implements
     public double lng;
 
     private int startZoomLevel=15;
-
 
     UserData userData;
 
@@ -143,14 +126,13 @@ public class MainPageActivity extends AppCompatActivity implements
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setSelectedItemId(R.id.homeNav);
 
-
         checkPermission();
 
         showAlertDialog();
 
         mapView.start(new KakaoMapReadyCallback() {
             @Override
-            public void onMapReady(KakaoMap map) {
+            public void onMapReady(@NonNull KakaoMap map) {
                 kakaoMap=map;
                 kakaoMap.setOnCameraMoveStartListener(MainPageActivity.this);
                 kakaoMap.setOnCameraMoveEndListener(MainPageActivity.this);
@@ -220,7 +202,7 @@ public class MainPageActivity extends AppCompatActivity implements
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("안녕하세요!")
-                .setMessage("OOO님!")
+                .setMessage(userData.getUserName() + "님!")
                 .setNeutralButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

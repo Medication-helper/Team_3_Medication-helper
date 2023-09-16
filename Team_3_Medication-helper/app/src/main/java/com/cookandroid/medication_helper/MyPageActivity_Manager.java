@@ -92,7 +92,7 @@ public class MyPageActivity_Manager extends AppCompatActivity{
         autoLogin = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
         /* UserData 클래스에서 현재 로그인중인 사용자의 정보를 불러옴 */
-        TvName.setText(userData.getUserNickName());
+        TvName.setText(userData.getUserName());
         TvBirth.setText("생년월일 : " + userData.getUserBirth());
         TvGender.setText("성별 : " + userData.getUserGender());
 
