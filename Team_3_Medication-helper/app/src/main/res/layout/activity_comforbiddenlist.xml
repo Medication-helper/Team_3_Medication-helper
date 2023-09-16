@@ -24,25 +24,6 @@ activity_comfordbiddenlist.xml
             android:background="@drawable/green_border"
             android:layout_marginBottom="5dp"/>
 
-        <TextView
-            android:text="금기 성분"
-            android:textColor="#036635"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            />
-
-        <TextView
-            android:id="@+id/combinationXIng"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:textSize="30dp"
-            android:text="약 선택하면 성분 표시"
-            android:layout_gravity="center_horizontal"
-            android:padding="5dp"
-            android:background="@drawable/green_border"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnback_comforbid"

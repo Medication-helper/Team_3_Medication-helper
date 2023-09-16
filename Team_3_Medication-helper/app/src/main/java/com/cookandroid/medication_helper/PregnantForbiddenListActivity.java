@@ -6,6 +6,7 @@
  ***************************/
 package com.cookandroid.medication_helper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +46,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
     /* 의약품DB를 사용하기 위한 변수들 */
     UserData userData;
     String data;
+    int listSize;
 
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
@@ -67,7 +70,6 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
 
         Button btnBack = findViewById(R.id.btnback_pregforbid);
         ListView pregXList = findViewById(R.id.pregnantXList);
-        TextView pregXtextView = findViewById(R.id.pregnantXIng);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine");
         ArrayList<String> medicList = new ArrayList<>();
@@ -82,7 +84,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
                     medicList.add(value);
                 }
 
-                pregXList.setAdapter(adapter);
+
             }
 
             @Override
@@ -91,107 +93,120 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        //약 목록을 저장하는 배열
-        String[] medicineList = new String[4];
+        listSize=medicList.size();
+        String[] mediclist = new String[listSize];
 
-        //약 목록이 저장되어 있는 배열의 길이
-        int size=medicineList.length;
+        for(int i=0;i<listSize;i++){
+            mediclist[i] = medicList.get(i);
+        }
 
-        //받은 약 목록 전체의 이름과 임부금기성분을 저장하는 배열(성분이 없으면 [?][1]은 ""이다)
-        String[][] medicNameINGList=new String[size][2];
+        String[][] medicNameINGList = new String[listSize][3];
 
-        //OpenApI xml 파싱 스레드
+        //OpenAPI XML 파싱 스레드
         new Thread(new Runnable() {
 
             int forbiddenlistSize=0;
-
             int index=0;
 
             @Override
             public void run() {
+                //약물목록에 있는 약 이름들을 이용하여 부작용 정보 내용(주성분,부작용)을 가져와 저장한다
+                for(int i=0;i<listSize;i++){
+                    data=getXmlData(mediclist[i]);
 
-                for(int i=0;i<size;i++){
-                    //처방약 목록에서 약 이름을 차례대로 받아 OpenAPI로 처리
-                    data=getXmlData(medicineList[i]);
+                    String [] dataSplit = data.split("\n");
 
-                    medicNameINGList[i][0]=medicineList[i];
-                    medicNameINGList[i][1]=data;
+                    medicNameINGList[i][0]=mediclist[i];
+                    medicNameINGList[i][1]=dataSplit[0];
+                    medicNameINGList[i][2]=dataSplit[2];
+
                 }
 
-                //임부 금기 성분이 있는 약들만 보관할 배열들의 크기를 구한다.
-                for(int i=0;i<size;i++){
+                for(int i=0;i>listSize;i++){
                     String str=medicNameINGList[i][1];
                     if(TextUtils.isEmpty(str)==false){
                         forbiddenlistSize++;
                     }
                 }
 
-                //임부 금기 약물에 해당하는 약물들의 이름만 따로 저장하는 배열
-                String[] pregXMedicNameList=new String[forbiddenlistSize];
-
-                for(int i=0;i<size;i++){
-                    String str=medicNameINGList[i][1];
-                    if(TextUtils.isEmpty(str)==false){
-                        pregXMedicNameList[index]=medicNameINGList[i][0];
-                        index++;
-                    }
-                }
-
-                //임부 금기 약물에 해당하는 약물들의 성분만 따로 저장하는 배열
-                String[] pregXIngredientList=new String[forbiddenlistSize];
+                //임부금기약물에 해당하는 약물들의 약물명만 따로 저장하는 리스트
+                String[] comXnameList = new String[forbiddenlistSize];
 
                 index=0;
 
-                for(int i=0;i<size;i++){
+                for(int i=0;i<listSize;i++){
                     String str=medicNameINGList[i][1];
                     if(TextUtils.isEmpty(str)==false){
-                        pregXIngredientList[index]=medicNameINGList[i][1];
+                        comXnameList[index]=medicNameINGList[i][0];//1열 : 약품명
                         index++;
                     }
                 }
 
-                //임부금기 사항이 있는 약품 이름 목록을 가지는 arraylist
-                ArrayList<String> PregnantXMedicationList=new ArrayList<>(Arrays.asList(pregXMedicNameList));
 
-                ArrayAdapter PregnantXNameAdapter=new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_single_choice,PregnantXMedicationList);
+                //임부금기약물에 해당하는 약물들의 약물명, 약물성분, 부작용 저장 2차원 배열
+                String[][] comXingList = new String[forbiddenlistSize][3];
 
+                index=0;
+
+                for(int i=0;i<listSize;i++){
+                    String str=medicNameINGList[i][1];
+                    if(TextUtils.isEmpty(str)==false){
+                        comXingList[index][0]=medicNameINGList[i][0];//1열 : 약품명
+                        comXingList[index][1]=medicNameINGList[i][1];//2열 : 약품성분
+                        comXingList[index][2]=medicNameINGList[i][2];//3열 : 약품 부작용
+                        index++;
+                    }
+                }
+
+                //병용금기사항 약물명 목록을 가지는 ArrayList
+                ArrayList<String> ComXMedication = new ArrayList<>(Arrays.asList(comXnameList));
+
+                ArrayAdapter ComXNameAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_single_choice,ComXMedication);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //화면에 병용 금기 대상 약품 이름 목록 표시
+                        pregXList.setAdapter(ComXNameAdapter);
 
-                        //화면에 임부 금기 대상 약품 이름 목록 표시
-                        pregXList.setAdapter(PregnantXNameAdapter);
-
-                        //약품 리스트뷰에서 항목을 선택했을 때 성분을 Textview에 표시
                         pregXList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                String medicineName=(String) adapterView.getAdapter().getItem(i);
+                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                                String medicineName=(String) adapterView.getAdapter().getItem(position);
+                                String ingr="";
+                                String sideeffect="";
 
-                                for(int x=0;x<forbiddenlistSize;x++){
-                                    if(medicineName.equals(pregXMedicNameList[x])==true){
-                                        String Ingredient=pregXIngredientList[x];
-                                        pregXtextView.setText(Ingredient);
-                                        break;
+                                for(int i=0;i<forbiddenlistSize;i++){
+                                    if(medicineName.equals(comXingList[i][0])){
+                                        ingr=comXingList[i][1];
+                                        sideeffect=comXingList[i][2];
                                     }
                                 }
+
+                                String message = "약품명 : " + medicineName + "\n" +
+                                        "성분 : " + ingr + "\n" +
+                                        "부작용 : " + sideeffect + "\n";
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(PregnantForbiddenListActivity.this);
+
+                                builder.setTitle("부작용 정보")
+                                        .setMessage(message)
+                                        .setNeutralButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                        .show();
                             }
                         });
 
-                        //ScrollView 안에서 리스트뷰를 스크롤 할 수 있도록 설정
-                        pregXList.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View view, MotionEvent motionEvent) {
-                                pregXList.requestDisallowInterceptTouchEvent(true);
-                                return false;
-                            }
-                        });
                     }
                 });
+
             }
-        }).start(); */
+        }).start();
+
 
         btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로가기 버튼을 눌렀을 경우
             @Override
@@ -209,7 +224,7 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
         String str=medicname;
         String MedicineName= URLEncoder.encode(str);
 
-        String queryUrl="http://apis.data.go.kr/1471000/DURPrdlstInfoService01/getPwnmTabooInfoList?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&itemName="+MedicineName+"&pageNo=1&numOfRows=1&type=xml";
+        String queryUrl="https://apis.data.go.kr/1471000/DURPrdlstInfoService03/getPwnmTabooInfoList03?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&pageNo=1&numOfRows=1&type=xml&typeName=임부금기&itemName="+medicname;
         try {
             URL url=new URL(queryUrl);
             InputStream is=url.openStream();
@@ -230,8 +245,13 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
                         tag=xpp.getName();
 
                         if(tag.equals("item"));
-                        //부작용 원인 약 성분 가져오기
+
                         else if(tag.equals("INGR_NAME")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                            buffer.append("\n");
+                        }
+                        else if(tag.equals("PROHBT_CONTENT")){
                             xpp.next();
                             buffer.append(xpp.getText());
                         }
