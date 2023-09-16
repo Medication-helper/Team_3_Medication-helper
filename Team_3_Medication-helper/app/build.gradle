@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.cookandroid.medication_helper"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -59,11 +59,7 @@ dependencies {
 
     implementation 'com.google.mlkit:text-recognition-korean:16.0.0'
 
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
-
-
-
+    implementation 'com.kakao.maps.open:android:2.6.0'
 
 
 
