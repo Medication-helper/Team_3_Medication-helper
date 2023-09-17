@@ -14,7 +14,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:drawablePadding="3dp"
-        android:text="사용자 상세정보"
+        android:text="약품 상세정보"
         android:textColor="#036635"
         android:textSize="25dp" />
 
@@ -27,7 +27,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:drawablePadding="3dp"
-        android:text="아이디     : "
+        android:text="이름         : "
         android:textColor="#036635"
         android:textSize="25dp" />
 
@@ -51,7 +51,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:drawablePadding="3dp"
-        android:text="비밀번호 : "
+        android:text="제조사     : "
         android:textColor="#036635"
         android:textSize="25dp" />
 
@@ -75,7 +75,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:drawablePadding="3dp"
-        android:text="이름        : "
+        android:text="효능        : "
         android:textColor="#036635"
         android:textSize="25dp" />
 
@@ -99,67 +99,16 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:drawablePadding="3dp"
-        android:text="생년월일 : "
+        android:text="사진"
         android:textColor="#036635"
         android:textSize="25dp" />
 
-    <EditText
-        android:id="@+id/SelectedUserBirth"
-        android:layout_width="200dp"
+    <ImageView
+        android:id="@+id/selectedmIMG"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="125dp"
-        android:layout_marginTop="320dp"
-        android:layout_marginBottom="15dp"
-        android:ems="7"
-        android:textColor="@color/black"
-        android:textSize="25dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="410dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:drawablePadding="3dp"
-        android:text="성별        : "
-        android:textColor="#036635"
-        android:textSize="25dp" />
-
-    <EditText
-        android:id="@+id/SelectedUserGender"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="125dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginBottom="15dp"
-        android:ems="7"
-        android:textColor="@color/black"
-        android:textSize="25dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="490dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:drawablePadding="3dp"
-        android:text="구분        : "
-        android:textColor="#036635"
-        android:textSize="25dp" />
-
-    <EditText
-        android:id="@+id/SelectedUsertag"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="125dp"
-        android:layout_marginTop="480dp"
-        android:layout_marginBottom="15dp"
-        android:ems="7"
-        android:textColor="@color/black"
-        android:textSize="25dp" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="380dp"
+        android:layout_marginEnd="10dp" />
 
 </RelativeLayout>

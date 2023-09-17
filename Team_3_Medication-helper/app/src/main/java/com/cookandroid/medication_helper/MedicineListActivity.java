@@ -91,11 +91,11 @@ public class MedicineListActivity extends AppCompatActivity {
         ListView medicationListView = findViewById(R.id.medicationlist);
 
         /*약 목록을 리스트뷰에 출력*/
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine");
+        DatabaseReference showRef = FirebaseDatabase.getInstance().getReference("Medicine");
         ArrayList<String> medicList = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, medicList);
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        showRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.child(userData.getUserID()).getChildren()) {
@@ -126,7 +126,8 @@ public class MedicineListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String selectedItem = (String) adapterView.getItemAtPosition(position);
-                DatabaseReference childref = ref.child(userData.getUserID()).child(selectedItem);
+                DatabaseReference deleteRef = showRef.child(userData.getUserID()).child(selectedItem);
+                DatabaseReference detailRef = FirebaseDatabase.getInstance().getReference("MedicineList").child(selectedItem);
 
                 if (isDeleteMode) {
                     new AlertDialog.Builder(MedicineListActivity.this)
@@ -135,10 +136,10 @@ public class MedicineListActivity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    childref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    deleteRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            childref.removeValue();
+                                            deleteRef.removeValue();
                                             Toast.makeText(getApplicationContext(), "해당 약품이 목록에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                         @Override
@@ -154,22 +155,37 @@ public class MedicineListActivity extends AppCompatActivity {
                             .setNegativeButton(android.R.string.no, null)
                             .show();
                 } else {
-                    childref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    detailRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String imageURL = snapshot.child("mIMG").getValue().toString();
-                            ImageView imageView = new ImageView(MedicineListActivity.this);
-                            Picasso.get().load(imageURL).into(imageView);
-                            String message = "약품명 : " + selectedItem + "\n" +
-                                    "제조사명 : " + snapshot.child("cName").getValue() + "\n" +
-                                    "효능 : " + snapshot.child("mEffect").getValue() + "\n";
+                            detailRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (!snapshot.exists()) {
+                                        Toast.makeText(getApplicationContext(), "존재하지 않는 약품입니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        String imageURL = snapshot.child("mIMG").getValue().toString();
+                                        ImageView imageView = new ImageView(MedicineListActivity.this);
+                                        Picasso.get().load(imageURL).into(imageView);
+                                        String message = "약품명 : " + selectedItem + "\n" +
+                                                "제조사명 : " + snapshot.child("cName").getValue() + "\n" +
+                                                "효능 : " + snapshot.child("mEffect").getValue() + "\n";
 
-                            new AlertDialog.Builder(MedicineListActivity.this)
-                                    .setTitle("약품 정보")
-                                    .setView(imageView)
-                                    .setMessage(message)
-                                    .setPositiveButton(android.R.string.yes, null)
-                                    .show();
+                                        new AlertDialog.Builder(MedicineListActivity.this)
+                                                .setTitle("약품 정보")
+                                                .setView(imageView)
+                                                .setMessage(message)
+                                                .setPositiveButton(android.R.string.yes, null)
+                                                .show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                         @Override

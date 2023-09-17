@@ -221,9 +221,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
         textRecognizer= TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
 
-        int listSize;
-
-
         //카메라 촬영을 위한 동의 얻기
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
         try {
@@ -480,8 +477,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
                             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                             addMedicine addMedicine = new addMedicine(dataSplit[0], dataSplit[1], dataSplit[2]);
 
-                            rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue(addMedicine);
-
+                            rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue("");
+                            rootRef.child("MedicineList").child(dataResult[i]).setValue(addMedicine);
                         }
                     }
                 }).start();

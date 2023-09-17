@@ -64,19 +64,18 @@ public class MainPageActivity_Manager extends AppCompatActivity{ //implements Ma
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    //현재 페이지
                     case R.id.homeNav_manager:
                         return true;
-                    //사용자 목록 페이지
                     case R.id.userListNav:
                         startActivity(new Intent(getApplicationContext(), UserListActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //약품 목록 페이지
                     case R.id.medicineListNav:
+                        startActivity(new Intent(getApplicationContext(), MedicineListActivity_Manager.class));
+                        overridePendingTransition(0, 0);
+                        finish();
                         return true;
-                    //마이페이지
                     case R.id.userNav_manager:
                         startActivity(new Intent(getApplicationContext(), MyPageActivity_Manager.class));
                         overridePendingTransition(0, 0);

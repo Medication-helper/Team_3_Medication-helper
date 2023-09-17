@@ -8,12 +8,12 @@
     <item
         android:id="@+id/userListNav"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_vpn_key_24"
+        android:icon="@drawable/ic_baseline_recent_actors_24"
         android:title="Camera"/>
     <item
         android:id="@+id/medicineListNav"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_recent_actors_24"
+        android:icon="@drawable/ic_baseline_medical_services_24"
         android:title="Article" />
     <item
         android:id="@+id/userNav_manager"

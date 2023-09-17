@@ -148,7 +148,6 @@ public class MyPageActivity_Manager extends AppCompatActivity{
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.homeNav_manager:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity_Manager.class));
                         overridePendingTransition(0, 0);
@@ -159,10 +158,11 @@ public class MyPageActivity_Manager extends AppCompatActivity{
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //article 버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.medicineListNav:
+                        startActivity(new Intent(getApplicationContext(), MedicineListActivity_Manager.class));
+                        overridePendingTransition(0, 0);
+                        finish();
                         return true;
-                    //현재 페이지에서 보여주는 액티비티
                     case R.id.userNav_manager:
                         return true;
                 }

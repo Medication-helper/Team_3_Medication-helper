@@ -37,9 +37,9 @@ public class UserDetailActivity extends AppCompatActivity {
         Intent selectedUser = getIntent();
         String userID = selectedUser.getStringExtra("selectedUser");
 
-        selectedUserID = (EditText) findViewById(R.id.SelectedUserID);
-        selectedUserPW = (EditText) findViewById(R.id.SelectedUserPW);
-        selectedUserName = (EditText) findViewById(R.id.SelectedUserName);
+        selectedUserID = (EditText) findViewById(R.id.SelectedmName);
+        selectedUserPW = (EditText) findViewById(R.id.SelectedcName);
+        selectedUserName = (EditText) findViewById(R.id.SelectedmEffect);
         selectedUserBirth = (EditText) findViewById(R.id.SelectedUserBirth);
         selectedUserGender = (EditText) findViewById(R.id.SelectedUserGender);
         selectedUsertag = (EditText) findViewById(R.id.SelectedUsertag);
