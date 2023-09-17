@@ -22,24 +22,7 @@ activity_duplicatelist.xml
             android:layout_gravity="center"
             android:background="@drawable/green_border"
             android:layout_marginBottom="5dp"/>
-        <TextView
-            android:text="약물 효능"
-            android:textColor="#036635"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            />
-        <TextView
-            android:id="@+id/duplicateIng"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:textSize="30dp"
-            android:text="약 선택하면 효능 표시"
-            android:layout_gravity="center_horizontal"
-            android:padding="5dp"
-            android:background="@drawable/green_border"/>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnback_duplicate"
