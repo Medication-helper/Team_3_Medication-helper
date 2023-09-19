@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -40,7 +42,27 @@ import com.kakao.vectormap.camera.CameraAnimation;
 import com.kakao.vectormap.camera.CameraPosition;
 import com.kakao.vectormap.camera.CameraUpdateFactory;
 import com.kakao.vectormap.label.Label;
+import com.kakao.vectormap.label.LabelLayer;
 import com.kakao.vectormap.label.LabelOptions;
+import com.kakao.vectormap.label.LabelStyle;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class MainPageActivity extends AppCompatActivity implements
@@ -73,6 +95,20 @@ public class MainPageActivity extends AppCompatActivity implements
     public double lng;
 
     private int startZoomLevel=15;
+
+    String[] category_name_array={
+            "정형외과","내과","피부과","소아과","산부인과","비뇨기과","치과","안과","이비인후과","한의원","외과","약국"
+    };
+
+    ArrayList<String> roadAddressNames = new ArrayList<>();
+    ArrayList<String> placeNames = new ArrayList<>();
+    ArrayList<String> xValues = new ArrayList<>();
+    ArrayList<String> yValues = new ArrayList<>();
+    ArrayList<String> phoneNumbers = new ArrayList<>();
+
+    private LabelLayer labelLayer;
+
+    public int LabelCount=0;
 
     UserData userData;
 
@@ -116,6 +152,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
         mapView=findViewById(R.id.map);
         myLoc=findViewById(R.id.myloc);
+        Hospital=findViewById(R.id.places);
 
         userData = (UserData) getApplicationContext();
 
@@ -137,6 +174,8 @@ public class MainPageActivity extends AppCompatActivity implements
                 kakaoMap.setOnCameraMoveStartListener(MainPageActivity.this);
                 kakaoMap.setOnCameraMoveEndListener(MainPageActivity.this);
 
+                labelLayer = kakaoMap.getLabelManager().getLayer();
+
                 centerPointLabel = kakaoMap.getLabelManager().getLayer()
                         .addLabel(LabelOptions.from(kakaoMap.getCameraPosition().getPosition())
                                 .setStyles(R.drawable.red_dot_marker));
@@ -153,7 +192,7 @@ public class MainPageActivity extends AppCompatActivity implements
             @Override
             public int getZoomLevel() {
                 // 지도 시작 시 확대/축소 줌 레벨 설정
-                return 15;
+                return 1;
             }
         });
 
@@ -165,6 +204,15 @@ public class MainPageActivity extends AppCompatActivity implements
                 moveCamera(LatLng.from(lat,lng));
             }
         });
+
+        Hospital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCategoryList();
+            }
+        });
+
+
 
         //바텀네비게이션을 나타나게 해주는 함수
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -313,5 +361,168 @@ public class MainPageActivity extends AppCompatActivity implements
         kakaoMap.moveCamera(CameraUpdateFactory.newCenterPosition(position),
                 CameraAnimation.from(1500));
 
+    }
+
+    private void showCategoryList(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("병원 선택");
+        ArrayAdapter<String> adapter= new ArrayAdapter<String>(
+                this,android.R.layout.simple_list_item_1,category_name_array
+        );
+
+        DialogListener listener=new DialogListener();
+        builder.setAdapter(adapter,listener);
+        builder.setNegativeButton("취소",null);
+        builder.show();
+    }
+
+    // 다이얼로그의 리스너
+    class DialogListener implements DialogInterface.OnClickListener{
+
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            // 사용자가 선택한 항목 인덱스번째의 type 값을 가져온다.
+            String type=category_name_array[i];
+            System.out.println("선택 항목 : "+type);
+            // 주변 정보를 가져온다
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String xmldata="";
+                    xmldata=coordToAddr(lat,lng,type);
+                    try{
+                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                        DocumentBuilder builder = factory.newDocumentBuilder();
+                        Document document = builder.parse(new InputSource(new StringReader(xmldata)));
+
+                        // 결과를 저장할 배열
+                        NodeList documents = document.getElementsByTagName("documents");
+
+                        for (int i = 0; i < documents.getLength(); i++) {
+                            Element element = (Element) documents.item(i);
+                            String roadAddressName = element.getElementsByTagName("road_address_name").item(0).getTextContent();
+                            String placeName = element.getElementsByTagName("place_name").item(0).getTextContent();
+                            String x = element.getElementsByTagName("x").item(0).getTextContent();
+                            String y = element.getElementsByTagName("y").item(0).getTextContent();
+                            String phone = element.getElementsByTagName("phone").item(0).getTextContent();
+
+                            // 추출한 데이터를 배열에 추가
+                            roadAddressNames.add(roadAddressName);
+                            placeNames.add(placeName);
+                            xValues.add(x);
+                            yValues.add(y);
+                            phoneNumbers.add(phone);
+                        }
+
+                        //여기서부터 데이터 사용 가능
+                        for (int i = 0; i < documents.getLength(); i++){
+                            System.out.println("도로명주소 : "+roadAddressNames.get(i));
+                            System.out.println("병원명 : "+placeNames.get(i));
+                            System.out.println("전화번호 : "+phoneNumbers.get(i));
+                            System.out.println("x : "+xValues.get(i));
+                            System.out.println("y : "+yValues.get(i));
+                            System.out.println("다음 항목");
+                        }
+
+                        LabelStyle style=LabelStyle.from(R.drawable.blue_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
+                        //지도에 현재 올라와있는 모든 라벨 삭제
+                        for(int i=0;i<LabelCount;i++){
+                            labelLayer.remove(labelLayer.getLabel(String.valueOf(LabelCount)));
+                        }
+                        LabelCount=0;
+
+
+                        //좌표로 지도에 라벨들을 추가
+                        for(int i=0;i<roadAddressNames.size();i++){
+                            Double latitude= Double.parseDouble(yValues.get(i));
+                            Double longitude = Double.parseDouble(xValues.get(i));
+
+                            LatLng pos = LatLng.from(latitude,longitude);
+                            labelLayer.addLabel(LabelOptions.from(String.valueOf(LabelCount),pos)
+                                    .setStyles(style)
+                                    .setTexts(placeNames.get(i), phoneNumbers.get(i),String.valueOf(LabelCount)
+                                    ));
+                            LabelCount++;
+                        }
+                        System.out.println("라벨 갯수 : "+LabelCount);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }).start();
+
+        }
+    }
+
+    public static String coordToAddr(double lat, double lng, String keyword) {
+        String longitude=Double.toString(lng);
+        String latitude=Double.toString(lat);
+        String encode="";
+
+        try{
+            encode= URLEncoder.encode(keyword,"UTF-8");
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+        String url = "https://dapi.kakao.com/v2/local/search/keyword.xml?page=1&size=15&sort=accuracy&query="+encode+"&x="+longitude+"&y="+latitude+"&radius=2000";
+
+        try{
+            String xmlData = getJSONData(url);
+            return xmlData;
+
+
+        }catch(Exception e){
+            System.out.println("주소 api 요청 에러");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private static String getJSONData(String apiURL) throws Exception{
+        HttpURLConnection conn = null;
+        StringBuffer response = new StringBuffer();
+
+        //인증키 - KakaoAK하고 한 칸 띄워주셔야해요!
+        String auth = "KakaoAK " + "4026195bfea62bf126dc43927c36de8c";
+
+        //URL 설정
+        URL url = new URL(apiURL);
+
+        conn = (HttpURLConnection) url.openConnection();
+
+        //Request 형식 설정
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("X-Requested-With", "curl");
+        conn.setRequestProperty("Authorization", auth);
+
+        //request에 JSON data 준비
+        conn.setDoOutput(true);
+
+        //보내고 결과값 받기
+        int responseCode = conn.getResponseCode();
+        if (responseCode == 400) {
+            System.out.println("400:: 해당 명령을 실행할 수 없음");
+        } else if (responseCode == 401) {
+            System.out.println("401:: Authorization가 잘못됨");
+        } else if (responseCode == 500) {
+            System.out.println("500:: 서버 에러, 문의 필요");
+        } else { // 성공 후 응답 JSON 데이터받기
+
+            Charset charset = Charset.forName("UTF-8");
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+
+            String inputLine;
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+        }
+        System.out.println(response.toString());
+
+        return response.toString();
     }
 }
