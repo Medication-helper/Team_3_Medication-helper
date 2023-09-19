@@ -48,6 +48,8 @@ public class ComForbiddenListActivity extends AppCompatActivity {
     String data;
     int listSize;
 
+    ArrayList<String> medicList;
+
     @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
     public void onBackPressed() {
         super.onBackPressed();
@@ -72,7 +74,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
         ListView comXList = findViewById(R.id.combinationXList);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine");
-        ArrayList<String> medicList = new ArrayList<>();
+        medicList = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, medicList);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -82,7 +84,143 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                     String value = ds.getKey();
                     System.out.println("Data : " + value);
                     medicList.add(value);
+
+
                 }
+
+                listSize=medicList.size();
+                System.out.println("약물 개수 : "+listSize);
+
+                String[] mediclist = new String[listSize];
+
+                for(int i=0;i<listSize;i++){
+                    mediclist[i] = medicList.get(i);
+                }
+
+                for(int i=0;i<listSize;i++){
+                    System.out.println("medicList 약물 : "+mediclist[i]);
+                }
+
+                String[][] medicNameINGList = new String[listSize][3];
+
+                //OpenAPI XML 파싱 스레드
+                new Thread(new Runnable() {
+
+                    int forbiddenlistSize=0;
+                    int index=0;
+
+                    @Override
+                    public void run() {
+
+                        //약물목록에 있는 약 이름들을 이용하여 부작용 정보 내용(주성분,부작용)을 가져와 저장한다.
+                        for(int i=0;i<listSize;i++){
+                            data=getXmlData(mediclist[i]);
+
+                            String []dataSplit=new String[2];
+
+                            if(TextUtils.isEmpty(data)==false){
+                                dataSplit= data.split("\n");
+                            }
+
+                            medicNameINGList[i][0]=mediclist[i];
+                            System.out.println("약품명 : "+medicNameINGList[i][0]);
+                            medicNameINGList[i][1]=dataSplit[0];
+                            System.out.println("유발성분명 : "+medicNameINGList[i][1]);
+                            medicNameINGList[i][2]=dataSplit[1];
+                            System.out.println("부작용 : "+medicNameINGList[i][2]);
+
+                        }
+
+                        forbiddenlistSize=0;
+
+
+                        for(int i=0;i<listSize;i++){
+                            String str=medicNameINGList[i][1];
+                            if(TextUtils.isEmpty(str)==false){
+                                forbiddenlistSize++;
+                            }
+                        }
+
+                        System.out.println("부작용 있는 약물 개수 : "+forbiddenlistSize);
+
+
+                        //병용금기약물에 해당하는 약물들의 약물명만 따로 저장하는 리스트
+                        String[] comXnameList = new String[forbiddenlistSize];
+
+                        index=0;
+
+                        for(int i=0;i<listSize;i++){
+                            String str=medicNameINGList[i][1];
+                            if(TextUtils.isEmpty(str)==false){
+                                comXnameList[index]=medicNameINGList[i][0];//1열 : 약품명
+                                index++;
+                            }
+                        }
+
+
+                        //병용금기약물에 해당하는 약물들의 약물명, 약물성분, 부작용 저장 2차원 배열
+                        String[][] comXingList = new String[forbiddenlistSize][3];
+
+                        index=0;
+
+                        for(int i=0;i<listSize;i++){
+                            String str=medicNameINGList[i][1];
+                            if(TextUtils.isEmpty(str)==false){
+                                comXingList[index][0]=medicNameINGList[i][0];//1열 : 약품명
+                                comXingList[index][1]=medicNameINGList[i][1];//2열 : 약품성분
+                                comXingList[index][2]=medicNameINGList[i][2];//3열 : 약품 부작용
+                                index++;
+                            }
+                        }
+
+                        //병용금기사항 약물명 목록을 가지는 ArrayList
+                        ArrayList<String> ComXMedication = new ArrayList<>(Arrays.asList(comXnameList));
+
+                        ArrayAdapter ComXNameAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_single_choice,ComXMedication);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //화면에 병용 금기 대상 약품 이름 목록 표시
+                                comXList.setAdapter(ComXNameAdapter);
+
+                                comXList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                                        String medicineName=(String) adapterView.getAdapter().getItem(position);
+                                        String ingr="";
+                                        String sideeffect="";
+
+                                        for(int i=0;i<forbiddenlistSize;i++){
+                                            if(medicineName.equals(comXingList[i][0])){
+                                                ingr=comXingList[i][1];
+                                                sideeffect=comXingList[i][2];
+                                            }
+                                        }
+
+                                        String message = "약품명 : " + medicineName + "\n" +
+                                                "성분 : " + ingr + "\n" +
+                                                "부작용 : " + sideeffect + "\n";
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ComForbiddenListActivity.this);
+
+                                        builder.setTitle("부작용 정보")
+                                                .setMessage(message)
+                                                .setNeutralButton("확인", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+                }).start();
 
             }
 
@@ -91,120 +229,6 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"알 수 없는 오류가 발생했습니다.",Toast.LENGTH_SHORT).show();
             }
         });
-
-        listSize=medicList.size();
-        String[] mediclist = new String[listSize];
-
-        for(int i=0;i<listSize;i++){
-            mediclist[i] = medicList.get(i);
-        }
-
-        String[][] medicNameINGList = new String[listSize][3];
-
-        //OpenAPI XML 파싱 스레드
-        new Thread(new Runnable() {
-
-            int forbiddenlistSize=0;
-            int index=0;
-
-            @Override
-            public void run() {
-                //약물목록에 있는 약 이름들을 이용하여 부작용 정보 내용(주성분,부작용)을 가져와 저장한다
-                for(int i=0;i<listSize;i++){
-                    data=getXmlData(mediclist[i]);
-
-                    String [] dataSplit = data.split("\n");
-
-                    medicNameINGList[i][0]=mediclist[i];
-                    medicNameINGList[i][1]=dataSplit[0];
-                    medicNameINGList[i][2]=dataSplit[2];
-
-                }
-
-                for(int i=0;i>listSize;i++){
-                    String str=medicNameINGList[i][1];
-                    if(TextUtils.isEmpty(str)==false){
-                        forbiddenlistSize++;
-                    }
-                }
-
-                //병용금기약물에 해당하는 약물들의 약물명만 따로 저장하는 리스트
-                String[] comXnameList = new String[forbiddenlistSize];
-
-                index=0;
-
-                for(int i=0;i<listSize;i++){
-                    String str=medicNameINGList[i][1];
-                    if(TextUtils.isEmpty(str)==false){
-                        comXnameList[index]=medicNameINGList[i][0];//1열 : 약품명
-                        index++;
-                    }
-                }
-
-
-                //병용금기약물에 해당하는 약물들의 약물명, 약물성분, 부작용 저장 2차원 배열
-                String[][] comXingList = new String[forbiddenlistSize][3];
-
-                index=0;
-
-                for(int i=0;i<listSize;i++){
-                    String str=medicNameINGList[i][1];
-                    if(TextUtils.isEmpty(str)==false){
-                        comXingList[index][0]=medicNameINGList[i][0];//1열 : 약품명
-                        comXingList[index][1]=medicNameINGList[i][1];//2열 : 약품성분
-                        comXingList[index][2]=medicNameINGList[i][2];//3열 : 약품 부작용
-                        index++;
-                    }
-                }
-
-                //병용금기사항 약물명 목록을 가지는 ArrayList
-                ArrayList<String> ComXMedication = new ArrayList<>(Arrays.asList(comXnameList));
-
-                ArrayAdapter ComXNameAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_single_choice,ComXMedication);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //화면에 병용 금기 대상 약품 이름 목록 표시
-                        comXList.setAdapter(ComXNameAdapter);
-
-                        comXList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                                String medicineName=(String) adapterView.getAdapter().getItem(position);
-                                String ingr="";
-                                String sideeffect="";
-
-                                for(int i=0;i<forbiddenlistSize;i++){
-                                    if(medicineName.equals(comXingList[i][0])){
-                                        ingr=comXingList[i][1];
-                                        sideeffect=comXingList[i][2];
-                                    }
-                                }
-
-                                String message = "약품명 : " + medicineName + "\n" +
-                                        "성분 : " + ingr + "\n" +
-                                        "부작용 : " + sideeffect + "\n";
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ComForbiddenListActivity.this);
-
-                                builder.setTitle("부작용 정보")
-                                        .setMessage(message)
-                                        .setNeutralButton("확인", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        })
-                                        .show();
-                            }
-                        });
-
-                    }
-                });
-
-            }
-        }).start();
 
 
         btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로가기 버튼을 눌렀을 경우
@@ -221,9 +245,8 @@ public class ComForbiddenListActivity extends AppCompatActivity {
     String getXmlData(String medicname) {
         StringBuffer buffer=new StringBuffer();
         String str=medicname;
-        String MedicineName= URLEncoder.encode(str);
 
-        String queryUrl="https://apis.data.go.kr/1471000/DURPrdlstInfoService03/getUsjntTabooInfoList03?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&pageNo=1&numOfRows=1&typeName=병용금기&itemName="+medicname;
+        String queryUrl="http://apis.data.go.kr/1471000/DURPrdlstInfoService03/getUsjntTabooInfoList03?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&pageNo=1&numOfRows=1&typeName=병용금기&itemName="+medicname;
         try {
             URL url=new URL(queryUrl);
             InputStream is=url.openStream();

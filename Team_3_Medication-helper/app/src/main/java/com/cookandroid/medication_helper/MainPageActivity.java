@@ -192,7 +192,7 @@ public class MainPageActivity extends AppCompatActivity implements
             @Override
             public int getZoomLevel() {
                 // 지도 시작 시 확대/축소 줌 레벨 설정
-                return 1;
+                return 13;
             }
         });
 
@@ -249,8 +249,9 @@ public class MainPageActivity extends AppCompatActivity implements
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("안녕하세요!")
-                .setMessage(userData.getUserName() + "님!")
+        builder.setTitle("위치 갱신")
+                //.setMessage(userData.getUserName() + "님!")
+                .setMessage("현재 위치를 가져옵니다")
                 .setNeutralButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -425,7 +426,7 @@ public class MainPageActivity extends AppCompatActivity implements
                             System.out.println("다음 항목");
                         }
 
-                        LabelStyle style=LabelStyle.from(R.drawable.blue_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
+                        LabelStyle style=LabelStyle.from(R.drawable.blue_dot_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
                         //지도에 현재 올라와있는 모든 라벨 삭제
                         for(int i=0;i<LabelCount;i++){
                             labelLayer.remove(labelLayer.getLabel(String.valueOf(LabelCount)));
@@ -450,7 +451,6 @@ public class MainPageActivity extends AppCompatActivity implements
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-
 
                 }
             }).start();
