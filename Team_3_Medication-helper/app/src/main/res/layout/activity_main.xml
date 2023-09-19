@@ -62,16 +62,14 @@ activity_main.xml
                         android:id="@+id/places"
                         android:src="@drawable/ic_baseline_local_hospital_24"
                         />
-
-
-
                 </LinearLayout>
 
                 <com.kakao.vectormap.MapView
                     android:id="@+id/map"
-                    android:layout_width="350dp"
+                    android:layout_width="300dp"
                     android:layout_height="400dp"
                     android:layout_gravity="center_horizontal"
+                    android:background="@drawable/green_border"
                     android:layout_marginTop="150dp"
                     />
 
