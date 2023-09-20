@@ -488,7 +488,7 @@ public class MainPageActivity extends AppCompatActivity implements
         StringBuffer response = new StringBuffer();
 
         //인증키 - KakaoAK하고 한 칸 띄워주셔야해요!
-        String auth = "KakaoAK " + "4026195bfea62bf126dc43927c36de8c";
+        String auth = "KakaoAK " + "df024ece0cf2fd13374976e289fd5914";
 
         //URL 설정
         URL url = new URL(apiURL);
