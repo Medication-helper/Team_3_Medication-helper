@@ -177,8 +177,9 @@ public class MainPageActivity extends AppCompatActivity implements
                 labelLayer = kakaoMap.getLabelManager().getLayer();
 
                 centerPointLabel = kakaoMap.getLabelManager().getLayer()
-                        .addLabel(LabelOptions.from(kakaoMap.getCameraPosition().getPosition())
+                        .addLabel(LabelOptions.from(LatLng.from(lat,lng))
                                 .setStyles(R.drawable.red_dot_marker));
+
 
             }
 
@@ -196,6 +197,7 @@ public class MainPageActivity extends AppCompatActivity implements
             }
         });
 
+        /*내 위치를 가져오는 이미지버튼*/
         myLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,6 +207,7 @@ public class MainPageActivity extends AppCompatActivity implements
             }
         });
 
+        /*카테고리를 선택하는 이미지버튼*/
         Hospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -353,8 +356,10 @@ public class MainPageActivity extends AppCompatActivity implements
                                 GestureType gestureType) {
 
         if (centerPointLabel != null) {
-            centerPointLabel.moveTo(cameraPosition.getPosition());
+            centerPointLabel.moveTo(LatLng.from(lat,lng));
         }
+
+
     }
 
     private void moveCamera(LatLng position) {
