@@ -101,7 +101,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                     System.out.println("medicList 약물 : "+mediclist[i]);
                 }
 
-                String[][] medicNameINGList = new String[listSize][3];
+                String[][] medicNameINGList = new String[listSize][4];
 
                 //OpenAPI XML 파싱 스레드
                 new Thread(new Runnable() {
@@ -116,7 +116,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                         for(int i=0;i<listSize;i++){
                             data=getXmlData(mediclist[i]);
 
-                            String []dataSplit=new String[2];
+                            String []dataSplit=new String[3];
 
                             if(TextUtils.isEmpty(data)==false){
                                 dataSplit= data.split("\n");
@@ -125,9 +125,11 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                             medicNameINGList[i][0]=mediclist[i];
                             System.out.println("약품명 : "+medicNameINGList[i][0]);
                             medicNameINGList[i][1]=dataSplit[0];
-                            System.out.println("유발성분명 : "+medicNameINGList[i][1]);
+                            System.out.println("금기명 : "+medicNameINGList[i][1]);
                             medicNameINGList[i][2]=dataSplit[1];
-                            System.out.println("부작용 : "+medicNameINGList[i][2]);
+                            System.out.println("유발성분명 : "+medicNameINGList[i][2]);
+                            medicNameINGList[i][3]=dataSplit[2];
+                            System.out.println("부작용 : "+medicNameINGList[i][3]);
 
                         }
 
@@ -158,8 +160,8 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                         }
 
 
-                        //병용금기약물에 해당하는 약물들의 약물명, 약물성분, 부작용 저장 2차원 배열
-                        String[][] comXingList = new String[forbiddenlistSize][3];
+                        //병용금기약물에 해당하는 약물들의 약물명, 금기명, 약물성분, 부작용 저장 2차원 배열
+                        String[][] comXingList = new String[forbiddenlistSize][4];
 
                         index=0;
 
@@ -167,8 +169,9 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                             String str=medicNameINGList[i][1];
                             if(TextUtils.isEmpty(str)==false){
                                 comXingList[index][0]=medicNameINGList[i][0];//1열 : 약품명
-                                comXingList[index][1]=medicNameINGList[i][1];//2열 : 약품성분
-                                comXingList[index][2]=medicNameINGList[i][2];//3열 : 약품 부작용
+                                comXingList[index][1]=medicNameINGList[i][1];//2열 : 금기명
+                                comXingList[index][2]=medicNameINGList[i][2];//3열 : 약품 성분
+                                comXingList[index][3]=medicNameINGList[i][3];//4열 : 약품 부작용
                                 index++;
                             }
                         }
@@ -193,8 +196,8 @@ public class ComForbiddenListActivity extends AppCompatActivity {
 
                                         for(int i=0;i<forbiddenlistSize;i++){
                                             if(medicineName.equals(comXingList[i][0])){
-                                                ingr=comXingList[i][1];
-                                                sideeffect=comXingList[i][2];
+                                                ingr=comXingList[i][2];
+                                                sideeffect=comXingList[i][3];
                                             }
                                         }
 
@@ -267,6 +270,12 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                         tag=xpp.getName();
 
                         if(tag.equals("item"));
+
+                        else if(tag.equals("TYPE_NAME")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                            buffer.append("\n");
+                        }
 
                         else if(tag.equals("INGR_KOR_NAME")){
                             xpp.next();

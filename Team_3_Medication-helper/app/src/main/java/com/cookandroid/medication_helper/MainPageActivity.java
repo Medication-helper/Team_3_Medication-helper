@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -59,10 +61,55 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.sql.Array;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+class Hospital{
+    int index;
+    String roadAddressNames;
+    String placeNames;
+    String xValues;
+    String yValues;
+    String phoneNumbers;
+
+    Hospital(int index, String roadAddressNames, String placeNames, String xValues, String yValues, String phoneNumbers){
+        this.index=index;
+        this.roadAddressNames=roadAddressNames;
+        this.placeNames=placeNames;
+        this.xValues=xValues;
+        this.yValues=yValues;
+        this.phoneNumbers=phoneNumbers;
+    }
+
+    public int get_index(){
+        return this.index;
+    }
+
+    public String get_roadAddress(){
+        return this.roadAddressNames;
+    }
+
+    public String get_placeName(){
+        return this.placeNames;
+    }
+
+    public String get_xValues(){
+        return this.xValues;
+    }
+
+    public String get_yValues(){
+        return this.yValues;
+    }
+
+    public String get_phone(){
+        return this.phoneNumbers;
+    }
+
+
+}
 
 
 public class MainPageActivity extends AppCompatActivity implements
@@ -106,11 +153,18 @@ public class MainPageActivity extends AppCompatActivity implements
     ArrayList<String> yValues = new ArrayList<>();
     ArrayList<String> phoneNumbers = new ArrayList<>();
 
+    ArrayList<Hospital> searchResult = new ArrayList<>();
+
     private LabelLayer labelLayer;
 
     public int LabelCount=0;
+    public int documentLength=0;
 
     UserData userData;
+
+    ListView searchList;
+
+    public ArrayAdapter<String> searchadapter;
 
 
     //뒤로가기 누르면 앱종료시키는 함수
@@ -153,6 +207,7 @@ public class MainPageActivity extends AppCompatActivity implements
         mapView=findViewById(R.id.map);
         myLoc=findViewById(R.id.myloc);
         Hospital=findViewById(R.id.places);
+        searchList=findViewById(R.id.hospitalList);
 
         userData = (UserData) getApplicationContext();
 
@@ -166,6 +221,10 @@ public class MainPageActivity extends AppCompatActivity implements
         checkPermission();
 
         showAlertDialog();
+
+        searchadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, placeNames);
+        searchList.setAdapter(searchadapter);
+
 
         mapView.start(new KakaoMapReadyCallback() {
             @Override
@@ -392,6 +451,7 @@ public class MainPageActivity extends AppCompatActivity implements
             System.out.println("선택 항목 : "+type);
             // 주변 정보를 가져온다
 
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -402,8 +462,10 @@ public class MainPageActivity extends AppCompatActivity implements
                         DocumentBuilder builder = factory.newDocumentBuilder();
                         Document document = builder.parse(new InputSource(new StringReader(xmldata)));
 
+
                         // 결과를 저장할 배열
                         NodeList documents = document.getElementsByTagName("documents");
+                        searchResult.clear();
 
                         for (int i = 0; i < documents.getLength(); i++) {
                             Element element = (Element) documents.item(i);
@@ -413,6 +475,17 @@ public class MainPageActivity extends AppCompatActivity implements
                             String y = element.getElementsByTagName("y").item(0).getTextContent();
                             String phone = element.getElementsByTagName("phone").item(0).getTextContent();
 
+                            Hospital hospital = new Hospital(
+                                    i,
+                                    roadAddressName,
+                                    placeName,
+                                    x,
+                                    y,
+                                    phone
+                            );
+
+                            searchResult.add(hospital);
+
                             // 추출한 데이터를 배열에 추가
                             roadAddressNames.add(roadAddressName);
                             placeNames.add(placeName);
@@ -421,37 +494,76 @@ public class MainPageActivity extends AppCompatActivity implements
                             phoneNumbers.add(phone);
                         }
 
+                        documentLength=documents.getLength();
+
                         //여기서부터 데이터 사용 가능
                         for (int i = 0; i < documents.getLength(); i++){
-                            System.out.println("도로명주소 : "+roadAddressNames.get(i));
+                            //System.out.println("도로명주소 : "+roadAddressNames.get(i));
                             System.out.println("병원명 : "+placeNames.get(i));
-                            System.out.println("전화번호 : "+phoneNumbers.get(i));
-                            System.out.println("x : "+xValues.get(i));
-                            System.out.println("y : "+yValues.get(i));
-                            System.out.println("다음 항목");
+                            //System.out.println("전화번호 : "+phoneNumbers.get(i));
+                            //System.out.println("x : "+xValues.get(i));
+                            //System.out.println("y : "+yValues.get(i));
+                            //System.out.println("다음 항목");
                         }
 
+//                        for (int i=0;i<searchResult.size();i++){
+//                            System.out.println("인덱스 : "+searchResult.get(i).get_index());
+//                            System.out.println("도로명주소 : "+searchResult.get(i).get_roadAddress());
+//                            System.out.println("병원명 : "+searchResult.get(i).get_placeName());
+//                            System.out.println("전화번호 : "+searchResult.get(i).get_phone());
+//                            System.out.println("x : "+searchResult.get(i).get_xValues());
+//                            System.out.println("y : "+searchResult.get(i).get_yValues());
+//                            System.out.println("다음 항목");
+//                        }
+
                         LabelStyle style=LabelStyle.from(R.drawable.blue_dot_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
-                        //지도에 현재 올라와있는 모든 라벨 삭제
-                        for(int i=0;i<LabelCount;i++){
-                            labelLayer.remove(labelLayer.getLabel(String.valueOf(LabelCount)));
+
+
+                        //진료과 선택에 따른 병원 목록은 최대 15개까지 검색
+                        //각각 1~15의 번호가 Lavel들을 구분하는 id로 붙는다
+
+
+                        //지도에 현재 올라와있는 모든 라벨들을 삭제한다
+                        for(int i=1;i<=LabelCount;i++){
+                            labelLayer.remove(labelLayer.getLabel(String.valueOf(i)));
+                            System.out.println("알림 : "+i+"번째 마커 삭제 완료");
                         }
+
                         LabelCount=0;
 
 
-                        //좌표로 지도에 라벨들을 추가
-                        for(int i=0;i<roadAddressNames.size();i++){
-                            Double latitude= Double.parseDouble(yValues.get(i));
-                            Double longitude = Double.parseDouble(xValues.get(i));
+//                        //좌표로 지도에 병원 위치 표시 라벨들을 추가(라벨 ID는 1~15)
+//                        for(int i=0;i<roadAddressNames.size();i++){
+//                            LabelCount++;
+//                            Double latitude= Double.parseDouble(yValues.get(i));
+//                            Double longitude = Double.parseDouble(xValues.get(i));
+//
+//                            LatLng pos = LatLng.from(latitude,longitude);
+//                            labelLayer.addLabel(LabelOptions.from("hospital"+LabelCount,pos)
+//                                    .setStyles(style)
+//                                    );
+//                        }
+
+                        //좌표로 지도에 병원 위치 표시 라벨들을 추가(라벨 ID는 1~15)
+                        for(int i=0;i<searchResult.size();i++){
+                            LabelCount++;
+                            Double latitude= Double.parseDouble(searchResult.get(i).get_yValues());
+                            Double longitude = Double.parseDouble(searchResult.get(i).get_xValues());
 
                             LatLng pos = LatLng.from(latitude,longitude);
                             labelLayer.addLabel(LabelOptions.from(String.valueOf(LabelCount),pos)
                                     .setStyles(style)
-                                    .setTexts(placeNames.get(i), phoneNumbers.get(i),String.valueOf(LabelCount)
-                                    ));
-                            LabelCount++;
+                            );
                         }
                         System.out.println("라벨 갯수 : "+LabelCount);
+
+
+                        searchList.setVisibility(View.VISIBLE);
+
+
+
+
+
 
                     }catch (Exception e){
                         e.printStackTrace();
