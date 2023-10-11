@@ -91,7 +91,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                     mediclist[i] = medicList.get(i);
                 }
 
-                String[][] medicNameINGList = new String[listSize][3];
+                String[][] medicNameINGList = new String[listSize][4];
 
                 //OpenAPI XML 파싱 스레드
                 new Thread(new Runnable() {
@@ -104,7 +104,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                         for(int i=0;i<listSize;i++){
                             data=getXmlData(mediclist[i]);
 
-                            String []dataSplit=new String[2];
+                            String []dataSplit=new String[3];
 
                             if(TextUtils.isEmpty(data)==false){
                                 dataSplit= data.split("\n");
@@ -113,9 +113,11 @@ public class DuplicateListActivity extends AppCompatActivity {
                             medicNameINGList[i][0]=mediclist[i];
                             System.out.println("약품명 : "+medicNameINGList[i][0]);
                             medicNameINGList[i][1]=dataSplit[0];
-                            System.out.println("유발성분명 : "+medicNameINGList[i][1]);
+                            System.out.println("효능 : "+medicNameINGList[i][1]);
                             medicNameINGList[i][2]=dataSplit[1];
-                            System.out.println("부작용 : "+medicNameINGList[i][2]);
+                            System.out.println("금기명 : "+medicNameINGList[i][2]);
+                            medicNameINGList[i][3]=dataSplit[2];
+                            System.out.println("성분 : "+medicNameINGList[i][3]);
 
                         }
 
@@ -145,8 +147,8 @@ public class DuplicateListActivity extends AppCompatActivity {
                             }
                         }
 
-                        //효능중복약물에 해당하는 약물들의 약물명, 약물성분, 부작용 저장 2차원 배열
-                        String[][] DupXingList = new String[forbiddenlistSize][3];
+                        //효능중복약물에 해당하는 약물들의 약물명, 효능, 금기명, 성분 저장 2차원 배열
+                        String[][] DupXingList = new String[forbiddenlistSize][4];
 
                         index=0;
 
@@ -154,8 +156,9 @@ public class DuplicateListActivity extends AppCompatActivity {
                             String str=medicNameINGList[i][1];
                             if(TextUtils.isEmpty(str)==false){
                                 DupXingList[index][0]=medicNameINGList[i][0];//1열 : 약품명
-                                DupXingList[index][1]=medicNameINGList[i][1];//2열 : 약품성분
-                                DupXingList[index][2]=medicNameINGList[i][2];//3열 : 약품 부작용
+                                DupXingList[index][1]=medicNameINGList[i][1];//2열 : 효능
+                                DupXingList[index][2]=medicNameINGList[i][2];//3열 : 금기명
+                                DupXingList[index][3]=medicNameINGList[i][3];//4열 : 성분
                                 index++;
                             }
                         }
@@ -181,7 +184,7 @@ public class DuplicateListActivity extends AppCompatActivity {
                                         for(int i=0;i<forbiddenlistSize;i++){
                                             if(medicineName.equals(DupXingList[i][0])){
                                                 ingr=DupXingList[i][1];
-                                                sideeffect=DupXingList[i][2];
+                                                sideeffect=DupXingList[i][3];
                                             }
                                         }
 
@@ -262,6 +265,13 @@ public class DuplicateListActivity extends AppCompatActivity {
                             buffer.append(xpp.getText());
                             buffer.append("\n");
                         }
+
+                        else if(tag.equals("TYPE_NAME")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                            buffer.append("\n");
+                        }
+
                         else if(tag.equals("INGR_NAME")){
                             xpp.next();
                             buffer.append(xpp.getText());

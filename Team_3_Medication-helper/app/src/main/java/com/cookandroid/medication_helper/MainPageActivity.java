@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -160,6 +162,10 @@ public class MainPageActivity extends AppCompatActivity implements
 
     UserData userData;
 
+    ListView searchList;
+
+    public ArrayAdapter<String> searchadapter;
+
 
     //뒤로가기 누르면 앱종료시키는 함수
     @Override
@@ -201,6 +207,7 @@ public class MainPageActivity extends AppCompatActivity implements
         mapView=findViewById(R.id.map);
         myLoc=findViewById(R.id.myloc);
         Hospital=findViewById(R.id.places);
+        searchList=findViewById(R.id.hospitalList);
 
         userData = (UserData) getApplicationContext();
 
@@ -214,6 +221,10 @@ public class MainPageActivity extends AppCompatActivity implements
         checkPermission();
 
         showAlertDialog();
+
+        searchadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, placeNames);
+        searchList.setAdapter(searchadapter);
+
 
         mapView.start(new KakaoMapReadyCallback() {
             @Override
@@ -440,6 +451,7 @@ public class MainPageActivity extends AppCompatActivity implements
             System.out.println("선택 항목 : "+type);
             // 주변 정보를 가져온다
 
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -450,11 +462,9 @@ public class MainPageActivity extends AppCompatActivity implements
                         DocumentBuilder builder = factory.newDocumentBuilder();
                         Document document = builder.parse(new InputSource(new StringReader(xmldata)));
 
+
                         // 결과를 저장할 배열
                         NodeList documents = document.getElementsByTagName("documents");
-
-
-
                         searchResult.clear();
 
                         for (int i = 0; i < documents.getLength(); i++) {
@@ -487,24 +497,24 @@ public class MainPageActivity extends AppCompatActivity implements
                         documentLength=documents.getLength();
 
                         //여기서부터 데이터 사용 가능
-//                        for (int i = 0; i < documents.getLength(); i++){
-//                            System.out.println("도로명주소 : "+roadAddressNames.get(i));
-//                            System.out.println("병원명 : "+placeNames.get(i));
-//                            System.out.println("전화번호 : "+phoneNumbers.get(i));
-//                            System.out.println("x : "+xValues.get(i));
-//                            System.out.println("y : "+yValues.get(i));
+                        for (int i = 0; i < documents.getLength(); i++){
+                            //System.out.println("도로명주소 : "+roadAddressNames.get(i));
+                            System.out.println("병원명 : "+placeNames.get(i));
+                            //System.out.println("전화번호 : "+phoneNumbers.get(i));
+                            //System.out.println("x : "+xValues.get(i));
+                            //System.out.println("y : "+yValues.get(i));
+                            //System.out.println("다음 항목");
+                        }
+
+//                        for (int i=0;i<searchResult.size();i++){
+//                            System.out.println("인덱스 : "+searchResult.get(i).get_index());
+//                            System.out.println("도로명주소 : "+searchResult.get(i).get_roadAddress());
+//                            System.out.println("병원명 : "+searchResult.get(i).get_placeName());
+//                            System.out.println("전화번호 : "+searchResult.get(i).get_phone());
+//                            System.out.println("x : "+searchResult.get(i).get_xValues());
+//                            System.out.println("y : "+searchResult.get(i).get_yValues());
 //                            System.out.println("다음 항목");
 //                        }
-
-                        for (int i=0;i<searchResult.size();i++){
-                            System.out.println("인덱스 : "+searchResult.get(i).get_index());
-                            System.out.println("도로명주소 : "+searchResult.get(i).get_roadAddress());
-                            System.out.println("병원명 : "+searchResult.get(i).get_placeName());
-                            System.out.println("전화번호 : "+searchResult.get(i).get_phone());
-                            System.out.println("x : "+searchResult.get(i).get_xValues());
-                            System.out.println("y : "+searchResult.get(i).get_yValues());
-                            System.out.println("다음 항목");
-                        }
 
                         LabelStyle style=LabelStyle.from(R.drawable.blue_dot_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
 
@@ -546,6 +556,14 @@ public class MainPageActivity extends AppCompatActivity implements
                             );
                         }
                         System.out.println("라벨 갯수 : "+LabelCount);
+
+
+                        searchList.setVisibility(View.VISIBLE);
+
+
+
+
+
 
                     }catch (Exception e){
                         e.printStackTrace();
