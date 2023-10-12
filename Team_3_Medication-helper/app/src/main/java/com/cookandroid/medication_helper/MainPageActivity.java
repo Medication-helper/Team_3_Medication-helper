@@ -19,16 +19,19 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.impl.CameraFactory;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -42,6 +45,7 @@ import com.kakao.vectormap.LatLng;
 import com.kakao.vectormap.MapView;
 import com.kakao.vectormap.camera.CameraAnimation;
 import com.kakao.vectormap.camera.CameraPosition;
+import com.kakao.vectormap.camera.CameraUpdate;
 import com.kakao.vectormap.camera.CameraUpdateFactory;
 import com.kakao.vectormap.label.Label;
 import com.kakao.vectormap.label.LabelLayer;
@@ -127,6 +131,10 @@ public class MainPageActivity extends AppCompatActivity implements
             Manifest.permission.ACCESS_FINE_LOCATION
     };
 
+    TextView hname;
+    TextView road;
+    TextView pNum;
+
     private MapView mapView;
     private Label centerPointLabel;
 
@@ -166,6 +174,12 @@ public class MainPageActivity extends AppCompatActivity implements
 
     public ArrayAdapter<String> searchadapter;
 
+    boolean labelExists;
+
+    int selected=0;
+
+    LatLng selectedpos;
+
 
     //뒤로가기 누르면 앱종료시키는 함수
     @Override
@@ -203,6 +217,10 @@ public class MainPageActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+
+        hname=findViewById(R.id.tv_list_name);
+        road=findViewById(R.id.tv_list_road);
+        pNum=findViewById(R.id.tv_list_phone);
 
         mapView=findViewById(R.id.map);
         myLoc=findViewById(R.id.myloc);
@@ -263,6 +281,7 @@ public class MainPageActivity extends AppCompatActivity implements
                 getMyLocation();
 
                 moveCamera(LatLng.from(lat,lng));
+                searchList.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -270,7 +289,62 @@ public class MainPageActivity extends AppCompatActivity implements
         Hospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                labelExists=labelLayer.hasLabel("selected");
+
+                if(labelExists){
+                    labelLayer.remove(labelLayer.getLabel("selected"));
+                }
+
+                LatLng myposition = LatLng.from(lat, lng); // 원하는 새로운 위치
+
+                CameraUpdate cameraUpdate2 = CameraUpdateFactory.newCenterPosition(myposition, 13);
+                kakaoMap.moveCamera(cameraUpdate2);
+                searchList.setVisibility(View.VISIBLE);
                 showCategoryList();
+            }
+        });
+
+        searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String selectedHospital = (String) adapterView.getItemAtPosition(position);
+
+                labelExists=labelLayer.hasLabel("selected");
+
+                if(labelExists){
+                    labelLayer.remove(labelLayer.getLabel("selected"));
+                    LabelStyle style=LabelStyle.from(R.drawable.blue_dot_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
+
+                    labelLayer.addLabel(LabelOptions.from(String.valueOf(selected),selectedpos)
+                            .setStyles(style));
+
+                }
+
+                for (int i = 0; i < searchResult.size(); i++) {
+                    if (searchResult.get(i).get_placeName().compareTo(selectedHospital) == 0) {
+                        hname.setText(searchResult.get(i).get_placeName());
+                        road.setText(searchResult.get(i).get_roadAddress());
+                        pNum.setText(searchResult.get(i).get_phone());
+
+                        selected=i+1;
+
+                        labelLayer.remove(labelLayer.getLabel(String.valueOf(selected)));
+
+                        Double latitude = Double.parseDouble(searchResult.get(i).get_yValues());
+                        Double longitude = Double.parseDouble(searchResult.get(i).get_xValues());
+
+                        LatLng pos = LatLng.from(latitude, longitude);
+                        selectedpos=pos;
+
+                        LabelStyle style = LabelStyle.from(R.drawable.green_dot_marker).setTextStyles(15, Color.BLACK).setZoomLevel(11);
+                        labelLayer.addLabel(LabelOptions.from("selected", pos)
+                                .setStyles(style));
+
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newCenterPosition(pos, 15);
+                        kakaoMap.moveCamera(cameraUpdate);
+                    }
+                }
             }
         });
 
@@ -288,18 +362,21 @@ public class MainPageActivity extends AppCompatActivity implements
                     case R.id.cameraNav:
                         startActivity(new Intent(getApplicationContext(), MedicRegisterActivity.class));
                         overridePendingTransition(0, 0);
+                        searchList.setVisibility(View.INVISIBLE);
                         finish();
                         return true;
                     //article 버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.articleNav:
                         startActivity(new Intent(getApplicationContext(), MedicineListActivity.class));
                         overridePendingTransition(0, 0);
+                        searchList.setVisibility(View.INVISIBLE);
                         finish();
                         return true;
                     //user 버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.userNav:
                         startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MyPageActivity.class));
                         overridePendingTransition(0, 0);
+                        searchList.setVisibility(View.INVISIBLE);
                         finish();
                         return true;
                 }
@@ -319,6 +396,7 @@ public class MainPageActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         getMyLocation();
                         moveCamera(LatLng.from(lat,lng));
+
                     }
                 })
                 .show();
@@ -449,9 +527,8 @@ public class MainPageActivity extends AppCompatActivity implements
             // 사용자가 선택한 항목 인덱스번째의 type 값을 가져온다.
             String type=category_name_array[i];
             System.out.println("선택 항목 : "+type);
+
             // 주변 정보를 가져온다
-
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -466,6 +543,7 @@ public class MainPageActivity extends AppCompatActivity implements
                         // 결과를 저장할 배열
                         NodeList documents = document.getElementsByTagName("documents");
                         searchResult.clear();
+                        placeNames.clear();
 
                         for (int i = 0; i < documents.getLength(); i++) {
                             Element element = (Element) documents.item(i);
@@ -488,7 +566,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
                             // 추출한 데이터를 배열에 추가
                             roadAddressNames.add(roadAddressName);
-                            placeNames.add(placeName);
+                            placeNames.add(placeName);//병원 목록
                             xValues.add(x);
                             yValues.add(y);
                             phoneNumbers.add(phone);
@@ -558,7 +636,19 @@ public class MainPageActivity extends AppCompatActivity implements
                         System.out.println("라벨 갯수 : "+LabelCount);
 
 
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                searchadapter.notifyDataSetChanged();
+                            }
+                        });
+
+
                         searchList.setVisibility(View.VISIBLE);
+
+
 
 
 
