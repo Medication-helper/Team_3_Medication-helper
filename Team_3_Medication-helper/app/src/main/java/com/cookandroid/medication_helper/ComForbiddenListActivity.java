@@ -191,6 +191,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                         String medicineName=(String) adapterView.getAdapter().getItem(position);
+                                        String forbid="";
                                         String ingr="";
                                         String sideeffect="";
 
