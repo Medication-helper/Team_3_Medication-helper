@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="처방 약품 등록"
+        android:text="주변 병원 조회"
         android:textStyle="bold"/>
 </LinearLayout>
