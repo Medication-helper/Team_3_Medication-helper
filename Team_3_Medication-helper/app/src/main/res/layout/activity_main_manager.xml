@@ -37,6 +37,12 @@
         </LinearLayout>
     </ScrollView>
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="100dp"/>
+    
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav_manager"
         android:layout_width="match_parent"

@@ -1,5 +1,9 @@
 package com.cookandroid.medication_helper;
 
+import static android.content.ContentValues.TAG;
+
+import static com.cookandroid.medication_helper.FirebaseUtils.updateMedicineUsage;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -57,8 +61,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -479,6 +487,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                             rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue("");
                             rootRef.child("MedicineList").child(dataResult[i]).setValue(addMedicine);
+                            updateMedicineUsage(dataResult[i], 1);
                         }
                     }
                 }).start();
