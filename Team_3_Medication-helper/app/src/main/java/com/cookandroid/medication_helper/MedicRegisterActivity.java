@@ -100,17 +100,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MedicRegisterActivity extends AppCompatActivity {
-
-    Bitmap image;
     Bitmap bitmap;
     Bitmap rotatedbitmap;
-
-    private Uri photoUri;
-    private String imageFilepath;
-
-    private TessBaseAPI mTess;
-    String datapath = "";
-    String downloadURL = "";
 
     PreviewView previewView;
     Button btnStartCamera;
@@ -127,11 +118,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
     private TextRecognizer textRecognizer;//define TextRecognizer
 
-    String OCRresult;
-    static final int REQUEST_IMAGE_CAPTURE = 672;
-
-    String[] EdiCodearray;//EDI 코드 목록을 저장하는 배열
-    String[] medicList;//OpenAPI를 이용해 의약품 이름 목록을 저장하는 배열
     String data;
 
     String ocrResult;
@@ -144,13 +130,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMddhhmm");
-
-//    private static final String TAG = "NCloudExample";
-//    private static final String ENDPOINT = "https://kr.object.ncloudstorage.com";
-//    private static final String REGION_NAME = "kr-standard";
-    private static final String ACCESS_KEY = "AUzMrapL7ShMUgOLd4DK"; // Replace with your NCloud Access Key
-    private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
-//    private static final String BUCKET_NAME = "medication-helper";zz
 
     public class addMedicine {
         public String cName, mIMG, mEffect;
@@ -207,19 +186,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
         StorageReference storageRef = storage.getReference();
         StorageReference imageRef = storageRef.child("pictures.jpg"); // Firebase Storage에 저장되는 사진의 위치 및 이름(현재는 이름이 고정되어있음.)
 
-        //Naver CLOVA OCR용 API와 Key
-        final String ocrApiGwUrl = sharedPreferences.getString("https://czt9qlltax.apigw.ntruss.com/custom/v1/16147/e9a1814442c9633751f8b26ebeba60b6f23d612647bbee28a6022693b2c1416b/general", "");
-        final String ocrSecretKey = sharedPreferences.getString("YW5kcVdvTW5MV2lISWpneE1taHBjZ1RDdFpob1RmQWM==", "");
-
-
-//        //AWS 자격 증명 설정
-//        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY,SECRET_KEY);
-//
-//        //Amazon S3 클라이언트 생성
-//        AmazonS3 s3 = new AmazonS3Client(awsCredentials);
-//        s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
-
-
         userData = (UserData) getApplicationContext();
         previewView = (PreviewView) findViewById(R.id.previewView);
         btnStartCamera = (Button) findViewById(R.id.btnCameraStart);
@@ -271,8 +237,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                                 @SuppressLint({"UnsafeExperimentalUsageError", "UnsafeOptInUsageError"})
                                 Image mediaImage = image.getImage();
-
-
 
                                 //카메라에서 가져온 이미지를 비트맵 이미지로 변환
                                 bitmap = com.cookandroid.medication_helper.ImageUtil.mediaImageToBitmap(mediaImage);
@@ -436,7 +400,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                             //여기에 Firebase에 업로드하는 코드를 작성하시면 됩니다.
                             //약품명, 제조사명, 약품사진URL, 약품종류 데이터가 들어있는 2차원 배열입니다.
-
                             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                             addMedicine addMedicine = new addMedicine(dataSplit[0], dataSplit[1], dataSplit[2]);
 
@@ -453,8 +416,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
-//        //Button btnPill = findViewById(R.id.pillbtn);
-//        //Button btnJar = findViewById(R.id.jarbtn);
         bottomNavigationView.setSelectedItemId(R.id.cameraNav);
 
         //바텀네비게이션을 나타나게 해주는 함수
