@@ -78,8 +78,6 @@ public class MainPageActivity_Manager extends AppCompatActivity{ //implements Ma
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
         getSupportActionBar().setCustomView(R.layout.managermain_titlebar); // 커스텀 사용할 파일 위치
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav_manager);
-        bottomNavigationView.setSelectedItemId(R.id.homeNav_manager);
         BarChart chart = (BarChart) findViewById(R.id.chart);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("SideCount");
@@ -126,6 +124,8 @@ public class MainPageActivity_Manager extends AppCompatActivity{ //implements Ma
             }
         });
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav_manager);
+        bottomNavigationView.setSelectedItemId(R.id.homeNav_manager);
         //바텀네비게이션을 나타나게 해주는 함수
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

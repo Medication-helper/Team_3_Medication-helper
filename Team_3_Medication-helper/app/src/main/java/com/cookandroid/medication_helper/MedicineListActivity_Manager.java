@@ -120,20 +120,17 @@ public class MedicineListActivity_Manager extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
+                switch (item.getItemId()){
                     case R.id.homeNav_manager:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity_Manager.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //camera 버튼을 누르면 액티비티 화면을 전환시켜준다.
                     case R.id.userListNav:
                         startActivity(new Intent(getApplicationContext(), UserListActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //현재 화면에서 보여주는 액티비티
                     case R.id.medicineListNav:
                         return true;
                     case R.id.sideEffectListNav:
@@ -141,11 +138,11 @@ public class MedicineListActivity_Manager extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.userNav_manager:
                         startActivity(new Intent(getApplicationContext(), MyPageActivity_Manager.class));
                         overridePendingTransition(0, 0);
                         finish();
+                        return true;
                 }
                 return false;
             }

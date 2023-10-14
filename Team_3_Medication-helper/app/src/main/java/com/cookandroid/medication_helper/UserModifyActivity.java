@@ -40,22 +40,16 @@ public class UserModifyActivity extends AppCompatActivity{
     int dateCheckCounter = 0;
     UserData userData;
 
-    private DatabaseReference mDatabase;
-
-    @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity.class); // 메인화면으로 돌아가는 기능
-        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(BackToMain); // 실행
-        finish(); // Progress 완전 종료
-    }
+    private int tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_usermodify);
+
+        Intent intent = getIntent();
+        tag = intent.getIntExtra("tag", 2);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
         getSupportActionBar().setCustomView(R.layout.modify_titlebar_custom); // 커스텀 사용할 파일 위치
@@ -91,10 +85,17 @@ public class UserModifyActivity extends AppCompatActivity{
         btnModify_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent BackToMyPage = new Intent(UserModifyActivity.this, MyPageActivity.class); // 메인화면으로 돌아가는 기능
-                BackToMyPage.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(BackToMyPage); // 실행
-                finish(); // Progress 완전 종료
+                if (tag == 0) {
+                    Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity.class);
+                    BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(BackToMain); // 실행
+                    finish(); // Progress 완전 종료
+                } else if (tag == 1) {
+                    Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class);
+                    BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(BackToMain); // 실행
+                    finish(); // Progress 완전 종료
+                }
             }
         });
 
@@ -183,12 +184,36 @@ public class UserModifyActivity extends AppCompatActivity{
                     ref.updateChildren(modifys);
 
                     Toast.makeText(getApplicationContext(), "회원수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                    Intent BackToMyPage = new Intent(UserModifyActivity.this, MyPageActivity.class); // 마이페이지로 돌아가는 기능
-                    BackToMyPage.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(BackToMyPage); // 실행
-                    finish(); // Progress 완전 종료
+                    if (tag == 0) {
+                        Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity.class); // 마이페이지로 돌아가는 기능
+                        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(BackToMain); // 실행
+                        finish(); // Progress 완전 종료
+                    } else if (tag == 1) {
+                        Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class); // 마이페이지로 돌아가는 기능
+                        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(BackToMain); // 실행
+                        finish(); // Progress 완전 종료
+                    }
                 }
             }
         });
+    }
+
+
+    @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
+    public void onBackPressed() { // 메인화면으로 돌아가는 기능
+        super.onBackPressed();
+        if (tag == 0) {
+            Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity.class);
+            BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(BackToMain); // 실행
+            finish(); // Progress 완전 종료
+        } else if (tag == 1) {
+            Intent BackToMain = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class);
+            BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(BackToMain); // 실행
+            finish(); // Progress 완전 종료
+        }
     }
 }

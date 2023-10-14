@@ -113,8 +113,11 @@ public class MyPageActivity extends AppCompatActivity{
         BtnModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.UserModifyActivity.class)); // 회원수정 화면으로 이동
-                finish(); // Progress 완전 종료
+                Intent intent = new Intent(MyPageActivity.this, UserModifyActivity.class);
+                intent.putExtra("tag", 0);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 

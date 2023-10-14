@@ -113,8 +113,11 @@ public class MyPageActivity_Manager extends AppCompatActivity{
         BtnModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), UserModifyActivity.class)); // 회원수정 화면으로 이동
-                finish(); // Progress 완전 종료
+                Intent intent = new Intent(MyPageActivity_Manager.this, UserModifyActivity.class);
+                intent.putExtra("tag", 1);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -147,7 +150,7 @@ public class MyPageActivity_Manager extends AppCompatActivity{
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
+                switch (item.getItemId()){
                     case R.id.homeNav_manager:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity_Manager.class));
                         overridePendingTransition(0, 0);

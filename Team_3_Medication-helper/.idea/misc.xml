@@ -7,6 +7,8 @@
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_account_circle_80.xml" value="0.2985" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_article_24.xml" value="0.2985" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_home_24.xml" value="0.2985" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_person_24.xml" value="0.298" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_photo_camera_24.xml" value="0.298" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_baseline_vpn_key_24.xml" value="0.2985" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.2985" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2985" />
@@ -29,6 +31,7 @@
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_my_page.xml" value="0.358695652173913" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_my_page_manager.xml" value="0.358695652173913" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_pregnantforbiddenlist.xml" value="0.358695652173913" />
+        <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_sideeffectlist.xml" value="0.24909420289855072" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_splash.xml" value="0.358695652173913" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_userdetail.xml" value="0.33" />
         <entry key="..\:/Git_Local/Team_3_Medication-helper/Team_3_Medication-helper/app/src/main/res/layout/activity_userlist.xml" value="0.358695652173913" />

@@ -115,12 +115,12 @@ public class SideEffectListActivity extends AppCompatActivity {
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav_manager);
-        bottomNavigationView.setSelectedItemId(R.id.medicineListNav);
+        bottomNavigationView.setSelectedItemId(R.id.sideEffectListNav);
         //바텀네비게이션을 나타나게 해주는 함수
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
+                switch (item.getItemId()){
                     case R.id.homeNav_manager:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity_Manager.class));
                         overridePendingTransition(0, 0);
@@ -142,6 +142,7 @@ public class SideEffectListActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), MyPageActivity_Manager.class));
                         overridePendingTransition(0, 0);
                         finish();
+                        return true;
                 }
                 return false;
             }
