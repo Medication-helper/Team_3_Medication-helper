@@ -9,13 +9,16 @@ package com.cookandroid.medication_helper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -190,27 +193,38 @@ public class PregnantForbiddenListActivity extends AppCompatActivity {
                                             }
                                         }
 
-                                        String message = "약품명 : " + medicineName + "\n" +
-                                                "성분 : " + ingr + "\n" +
-                                                "부작용 : " + sideeffect + "\n";
-
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(PregnantForbiddenListActivity.this);
-
-                                        builder.setTitle("부작용 정보")
-                                                .setMessage(message)
-                                                .setNeutralButton("확인", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                })
-                                                .show();
+                                        showSideEffectDialog(medicineName, ingr, sideeffect);
                                     }
                                 });
 
+
+                            }
+                        });
+                    }
+
+                    void showSideEffectDialog(String medicineName,String ingr, String sideeffect){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PregnantForbiddenListActivity.this,R.style.AlertDialogTheme);
+                        View view= LayoutInflater.from(PregnantForbiddenListActivity.this).inflate(R.layout.sideeffect_dialog1,(LinearLayout)findViewById(R.id.seDialog1));
+
+                        builder.setView(view);
+                        ((TextView)view.findViewById(R.id.medicname)).setText(medicineName);
+                        ((TextView)view.findViewById(R.id.ingredient)).setText(ingr);
+                        ((TextView)view.findViewById(R.id.sideffect)).setText(sideeffect);
+
+                        AlertDialog alertDialog = builder.create();
+
+                        view.findViewById(R.id.btnOk).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                alertDialog.dismiss();
                             }
                         });
 
+                        if(alertDialog.getWindow()!=null){
+                            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+                        }
+
+                        alertDialog.show();
                     }
                 }).start();
             }

@@ -219,7 +219,7 @@ public class MainPageActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
-        getSupportActionBar().setCustomView(R.layout.mediregititlebar_custom); // 커스텀 사용할 파일 위치
+        getSupportActionBar().setCustomView(R.layout.main_titlebar_custom); // 커스텀 사용할 파일 위치
 
         hname=findViewById(R.id.tv_list_name);
         road=findViewById(R.id.tv_list_road);
@@ -233,7 +233,7 @@ public class MainPageActivity extends AppCompatActivity implements
         userData = (UserData) getApplicationContext();
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+
 
         checkPermission();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
@@ -650,12 +650,6 @@ public class MainPageActivity extends AppCompatActivity implements
 
 
                         searchList.setVisibility(View.VISIBLE);
-
-
-
-
-
-
 
 
                     }catch (Exception e){
