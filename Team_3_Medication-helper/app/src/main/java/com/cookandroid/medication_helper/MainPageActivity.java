@@ -232,13 +232,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
         userData = (UserData) getApplicationContext();
 
-<<<<<<< HEAD
-        /*ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();*/
-=======
         ActionBar actionBar = getSupportActionBar();
-
->>>>>>> origin
 
         checkPermission();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
