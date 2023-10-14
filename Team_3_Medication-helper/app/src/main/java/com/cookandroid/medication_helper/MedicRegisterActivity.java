@@ -268,7 +268,8 @@ public class MedicRegisterActivity extends AppCompatActivity {
                         new ImageCapture.OnImageCapturedCallback() {
                             @Override
                             public void onCaptureSuccess(@NonNull ImageProxy image) {
-                                @SuppressLint("UnsafeExperimentalUsageError")
+
+                                @SuppressLint({"UnsafeExperimentalUsageError", "UnsafeOptInUsageError"})
                                 Image mediaImage = image.getImage();
 
 

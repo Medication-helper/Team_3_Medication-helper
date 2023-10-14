@@ -24,7 +24,6 @@ activity_pregnantforbiddenlist.xml
             android:layout_marginBottom="5dp"/>
 
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnback_pregforbid"
             android:layout_width="200dp"
