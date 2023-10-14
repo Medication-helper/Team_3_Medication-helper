@@ -8,10 +8,13 @@ package com.cookandroid.medication_helper;
 
 import static com.cookandroid.medication_helper.FirebaseUtils.updateMedicineUsage;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +22,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +40,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -42,6 +49,7 @@ public class MedicineListActivity extends AppCompatActivity {
     /* 의약품 DB를 사용하기 위한 변수들 */
     UserData userData;
     boolean isDeleteMode = false;
+    Dialog dialog;
 
     /*스마트폰의 뒤로가기 버튼에 대한 뒤로가기 동작 구현*/
     @Override
@@ -167,6 +175,7 @@ public class MedicineListActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "존재하지 않는 약품입니다.", Toast.LENGTH_SHORT).show();
                                     }
                                     else {
+                                        //DB에서 선택한 약물 이름 뜯어오기
                                         String imageURL = snapshot.child("mIMG").getValue().toString();
                                         ImageView imageView = new ImageView(MedicineListActivity.this);
                                         Picasso.get().load(imageURL).into(imageView);
@@ -174,12 +183,17 @@ public class MedicineListActivity extends AppCompatActivity {
                                                 "제조사명 : " + snapshot.child("cName").getValue() + "\n" +
                                                 "효능 : " + snapshot.child("mEffect").getValue() + "\n";
 
-                                        new AlertDialog.Builder(MedicineListActivity.this)
-                                                .setTitle("약품 정보")
-                                                .setView(imageView)
-                                                .setMessage(message)
-                                                .setPositiveButton(android.R.string.yes, null)
-                                                .show();
+                                        String company = snapshot.child("cName").getValue().toString();
+                                        String effect = snapshot.child("mEffect").getValue().toString();
+
+                                        showCustomDialog(selectedItem,company,effect,imageURL);
+
+//                                        new AlertDialog.Builder(MedicineListActivity.this)
+//                                                .setTitle("약품 정보")
+//                                                .setView(imageView)
+//                                                .setMessage(message)
+//                                                .setPositiveButton(android.R.string.yes, null)
+//                                                .show();
                                     }
                                 }
 
@@ -270,5 +284,36 @@ public class MedicineListActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void showCustomDialog(String medicname, String company, String Effect, String ImageURL){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MedicineListActivity.this,R.style.AlertDialogTheme);
+        View view=LayoutInflater.from(MedicineListActivity.this).inflate(R.layout.custom_diaolog,(LinearLayout)findViewById(R.id.medicinfodialog));
+
+        builder.setView(view);
+        ((TextView)view.findViewById(R.id.infoname)).setText(medicname);
+        ((TextView)view.findViewById(R.id.infocompany)).setText(company);
+        ((TextView)view.findViewById(R.id.infoeffect)).setText(Effect);
+        ImageView medicPic=view.findViewById(R.id.infopic);
+        Picasso.get().load(ImageURL).into(medicPic);
+
+
+        AlertDialog alertDialog = builder.create();
+
+        view.findViewById(R.id.btnOk).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        if(alertDialog.getWindow()!=null){
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        }
+
+        alertDialog.show();
+
+
     }
 }

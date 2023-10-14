@@ -16,34 +16,33 @@ activity_main.xml
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingBottom="60dp">
 
         <FrameLayout
-            android:layout_width="300dp"
-            android:layout_height="500dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             >
 
             <com.kakao.vectormap.MapView
                 android:id="@+id/map"
-                android:layout_width="300dp"
-                android:layout_height="500dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/green_border"
                 />
 
             <ListView
                 android:id="@+id/hospitalList"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="150dp"
-
                 android:background="@drawable/green_border"
                 android:visibility="invisible"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="400dp">
+                android:layout_gravity="bottom">
 
                 <TextView
                     android:id="@+id/tv_list_name"
@@ -55,7 +54,7 @@ activity_main.xml
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:textSize="25dp"
+                    android:textSize="22dp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -66,7 +65,7 @@ activity_main.xml
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintStart_toStartOf="@+id/tv_list_name"
                     app:layout_constraintTop_toBottomOf="@+id/tv_list_name"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     />
 
@@ -76,7 +75,8 @@ activity_main.xml
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="전화번호"
-                    android:textSize="16dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tv_list_road"
                     app:layout_constraintTop_toBottomOf="@+id/tv_list_road" />
@@ -87,8 +87,8 @@ activity_main.xml
                 android:layout_height="50dp"
                 android:id="@+id/myloc"
                 android:src="@drawable/ic_baseline_my_location_24"
-                android:layout_marginLeft="250dp"
-                android:layout_marginTop="400dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="50dp"
                 />
 
             <ImageView
@@ -96,8 +96,7 @@ activity_main.xml
                 android:layout_height="50dp"
                 android:id="@+id/places"
                 android:src="@drawable/ic_baseline_local_hospital_24"
-                android:layout_marginLeft="250dp"
-                android:layout_marginTop="450dp"
+                android:layout_gravity="bottom|end"
                 />
         </FrameLayout>
     </LinearLayout>
