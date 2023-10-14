@@ -8,9 +8,9 @@
         android:id="@+id/title_cat01"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="등록 약품 목록 조회"
-        android:textStyle="bold"/>
+        android:text="부작용 항목별 통계"
+        android:textStyle="bold" />
 </LinearLayout>

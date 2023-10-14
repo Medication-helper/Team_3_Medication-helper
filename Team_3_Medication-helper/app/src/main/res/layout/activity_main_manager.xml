@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".MainPageActivity_Manager">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,33 +16,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingClass">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:drawablePadding="3dp"
-                android:text="관리자"
-                android:textColor="#036635"
-                android:textSize="30sp" />
-
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </FrameLayout>
+                android:layout_height="wrap_content"
+                tools:ignore="MissingClass">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"/>
     
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav_manager"
