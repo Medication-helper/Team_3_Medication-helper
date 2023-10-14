@@ -163,6 +163,11 @@ public class MyPageActivity_Manager extends AppCompatActivity{
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
+                    case R.id.sideEffectListNav:
+                        startActivity(new Intent(getApplicationContext(), SideEffectListActivity.class));
+                        overridePendingTransition(0, 0);
+                        finish();
+                        return true;
                     case R.id.userNav_manager:
                         return true;
                 }

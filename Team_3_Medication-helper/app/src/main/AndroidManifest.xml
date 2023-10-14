@@ -63,6 +63,8 @@
         <activity android:name=".UserDetailActivity" />
         <activity android:name=".MedicineListActivity_Manager" />
         <activity android:name=".MedicineDetailActivity" />
+        <activity android:name=".SideEffectListActivity"/>
+        <activity android:name=".SideEffectDetailActivity" />
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-2721080471277714~3179912396"/>
         <meta-data android:name="android.max_aspect" android:value="ratio_float" />
 

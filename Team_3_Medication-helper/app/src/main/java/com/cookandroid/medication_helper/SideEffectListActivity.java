@@ -26,12 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MedicineListActivity_Manager extends AppCompatActivity {
+public class SideEffectListActivity extends AppCompatActivity {
     /*스마트폰의 뒤로가기 버튼에 대한 뒤로가기 동작 구현*/
     @Override
     public void onBackPressed() {
         //다이어로그를 화면에 나타냄
-        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MedicineListActivity_Manager.this);
+        AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(SideEffectListActivity.this);
         exitDialogBuilder
                 .setTitle("프로그램 종료")
                 .setMessage("종료하시겠습니까?")
@@ -62,17 +62,17 @@ public class MedicineListActivity_Manager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_mediclist_manager);
+        setContentView(R.layout.activity_sideeffectlist);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
-        getSupportActionBar().setCustomView(R.layout.mediclistbar_custom); // 커스텀 사용할 파일 위치
+        getSupportActionBar().setCustomView(R.layout.sidelisttitlebar_custom); // 커스텀 사용할 파일 위치
 
-        ListView medicineListView = findViewById(R.id.medicineList);
+        ListView sideEffectListView = findViewById(R.id.sideEffectList);
 
         /*사용자 목록을 리스트뷰에 출력*/
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MedicineList");
-        ArrayList<String> medicineList = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, medicineList);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("SideEffect");
+        ArrayList<String> sideEffectList = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sideEffectList);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -80,10 +80,10 @@ public class MedicineListActivity_Manager extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String value = ds.getKey();
                     System.out.println("Data : " + value);
-                    medicineList.add(value);
+                    sideEffectList.add(value);
                 }
 
-                medicineListView.setAdapter(adapter);
+                sideEffectListView.setAdapter(adapter);
             }
 
             @Override
@@ -93,20 +93,20 @@ public class MedicineListActivity_Manager extends AppCompatActivity {
         });
 
         //ScrollView 안에서 리스트뷰를 스크롤 할 수 있도록 설정
-        medicineListView.setOnTouchListener(new View.OnTouchListener() {
+        sideEffectListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                medicineListView.requestDisallowInterceptTouchEvent(true);
+                sideEffectListView.requestDisallowInterceptTouchEvent(true);
                 return false;
             }
         });
 
-        medicineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        sideEffectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String selectedItem = (String) adapterView.getItemAtPosition(position);
 
-                Intent intent = new Intent(MedicineListActivity_Manager.this, MedicineDetailActivity.class);
+                Intent intent = new Intent(SideEffectListActivity.this, SideEffectDetailActivity.class);
                 intent.putExtra("selectedMedicine", selectedItem);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -121,27 +121,23 @@ public class MedicineListActivity_Manager extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
                     case R.id.homeNav_manager:
                         startActivity(new Intent(getApplicationContext(), MainPageActivity_Manager.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //camera 버튼을 누르면 액티비티 화면을 전환시켜준다.
                     case R.id.userListNav:
                         startActivity(new Intent(getApplicationContext(), UserListActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //현재 화면에서 보여주는 액티비티
                     case R.id.medicineListNav:
-                        return true;
-                    case R.id.sideEffectListNav:
-                        startActivity(new Intent(getApplicationContext(), SideEffectListActivity.class));
+                        startActivity(new Intent(getApplicationContext(), MedicineListActivity_Manager.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
+                    case R.id.sideEffectListNav:
+                        return true;
                     case R.id.userNav_manager:
                         startActivity(new Intent(getApplicationContext(), MyPageActivity_Manager.class));
                         overridePendingTransition(0, 0);

@@ -232,8 +232,8 @@ public class MainPageActivity extends AppCompatActivity implements
 
         userData = (UserData) getApplicationContext();
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        /*ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();*/
 
         checkPermission();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);

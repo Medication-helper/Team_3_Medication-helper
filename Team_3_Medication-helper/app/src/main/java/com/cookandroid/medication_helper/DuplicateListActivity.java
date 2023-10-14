@@ -40,6 +40,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DuplicateListActivity extends AppCompatActivity {
 
@@ -119,6 +121,13 @@ public class DuplicateListActivity extends AppCompatActivity {
                             medicNameINGList[i][3]=dataSplit[2];
                             System.out.println("성분 : "+medicNameINGList[i][3]);
 
+                            DatabaseReference sideRef = FirebaseDatabase.getInstance().getReference("SideEffect");
+                            Map<String, Object> comForbidUpdate = new HashMap<>();
+                            if (medicNameINGList[i][3] != null)
+                                comForbidUpdate.put("component", medicNameINGList[i][3]);
+                            if (medicNameINGList[i][1] != null)
+                                comForbidUpdate.put("mEffect", medicNameINGList[i][1]);
+                            sideRef.child(medicNameINGList[i][0]).updateChildren(comForbidUpdate);
                         }
 
                         forbiddenlistSize=0;

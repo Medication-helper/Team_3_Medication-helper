@@ -9,12 +9,17 @@
         android:id="@+id/userListNav"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_recent_actors_24"
-        android:title="Camera"/>
+        android:title="UserList" />
     <item
         android:id="@+id/medicineListNav"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_medical_services_24"
-        android:title="Article" />
+        android:title="MedicineList" />
+    <item
+        android:id="@+id/sideEffectListNav"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_healing_24"
+        android:title="sideEffectList" />
     <item
         android:id="@+id/userNav_manager"
         android:enabled="true"

@@ -40,6 +40,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ComForbiddenListActivity extends AppCompatActivity {
 
@@ -131,6 +133,13 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                             medicNameINGList[i][3]=dataSplit[2];
                             System.out.println("부작용 : "+medicNameINGList[i][3]);
 
+                            DatabaseReference sideRef = FirebaseDatabase.getInstance().getReference("SideEffect");
+                            Map<String, Object> comForbidUpdate = new HashMap<>();
+                            if (medicNameINGList[i][2] != null)
+                                comForbidUpdate.put("component", medicNameINGList[i][2]);
+                            if (medicNameINGList[i][3] != null)
+                                comForbidUpdate.put("cForbid", medicNameINGList[i][3]);
+                            sideRef.child(medicNameINGList[i][0]).updateChildren(comForbidUpdate);
                         }
 
                         forbiddenlistSize=0;
@@ -191,7 +200,6 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                         String medicineName=(String) adapterView.getAdapter().getItem(position);
-                                        String forbid="";
                                         String ingr="";
                                         String sideeffect="";
 
