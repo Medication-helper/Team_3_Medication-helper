@@ -15,8 +15,8 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 
 public class FirebaseUtils {
-    public static void updateMedicineUsage(String medicineId, int delta) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MedicineUsage").child(medicineId);
+    public static void updateSideCount(String sideType, int delta) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("SideCount").child(sideType);
 
         ref.runTransaction(new Transaction.Handler() {
             @NonNull
@@ -35,7 +35,7 @@ public class FirebaseUtils {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, boolean committed, @Nullable DataSnapshot dataSnapshot) {
                 // Transaction completed
-                Log.d(TAG, "updateMedicineUsage:onComplete:" + databaseError);
+                Log.d(TAG, "updateSideCount:onComplete:" + databaseError);
             }
         });
     }

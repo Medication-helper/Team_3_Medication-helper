@@ -78,9 +78,7 @@ public class MainPageActivity_Manager extends AppCompatActivity{ //implements Ma
         bottomNavigationView.setSelectedItemId(R.id.homeNav_manager);
         BarChart chart = (BarChart) findViewById(R.id.chart);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MedicineUsage");
-
-        String [][] medicUsageList = new String[2][];
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("SideCount");
 
         ArrayList<ArrayList<String>> usageList = new ArrayList<>();
         usageList.add(new ArrayList<>());
@@ -106,7 +104,7 @@ public class MainPageActivity_Manager extends AppCompatActivity{ //implements Ma
                     System.out.println(entries);
                 }
 
-                BarDataSet dataSet = new BarDataSet(entries, "복용중인 사용자 수");
+                BarDataSet dataSet = new BarDataSet(entries, "부작용 약품 수");
                 BarData barData = new BarData(dataSet);
                 chart.setData(barData);
 

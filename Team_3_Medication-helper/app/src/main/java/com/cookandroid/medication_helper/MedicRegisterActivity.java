@@ -2,8 +2,6 @@ package com.cookandroid.medication_helper;
 
 import static android.content.ContentValues.TAG;
 
-import static com.cookandroid.medication_helper.FirebaseUtils.updateMedicineUsage;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -491,7 +489,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                             rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue("");
                             rootRef.child("MedicineList").child(dataResult[i]).setValue(addMedicine);
-                            updateMedicineUsage(dataResult[i], 1);
                         }
                     }
                 }).start();

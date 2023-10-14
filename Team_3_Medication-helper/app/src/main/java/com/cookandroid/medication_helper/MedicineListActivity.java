@@ -6,8 +6,6 @@
  ***************************/
 package com.cookandroid.medication_helper;
 
-import static com.cookandroid.medication_helper.FirebaseUtils.updateMedicineUsage;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -149,7 +147,6 @@ public class MedicineListActivity extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             deleteRef.removeValue();
-                                            updateMedicineUsage(selectedItem, -1);
                                             Toast.makeText(getApplicationContext(), "해당 약품이 목록에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                         @Override

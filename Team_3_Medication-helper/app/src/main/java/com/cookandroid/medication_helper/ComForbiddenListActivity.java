@@ -6,6 +6,8 @@
  ***************************/
 package com.cookandroid.medication_helper;
 
+import static com.cookandroid.medication_helper.FirebaseUtils.updateSideCount;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -119,7 +121,8 @@ public class ComForbiddenListActivity extends AppCompatActivity {
 
                         //약물목록에 있는 약 이름들을 이용하여 부작용 정보 내용(주성분,부작용)을 가져와 저장한다.
                         for(int i=0;i<listSize;i++){
-                            data=getXmlData(mediclist[i]);
+                            final int index = i;
+                            data=getXmlData(mediclist[index]);
 
                             String []dataSplit=new String[3];
 
@@ -127,22 +130,37 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                                 dataSplit= data.split("\n");
                             }
 
-                            medicNameINGList[i][0]=mediclist[i];
-                            System.out.println("약품명 : "+medicNameINGList[i][0]);
-                            medicNameINGList[i][1]=dataSplit[0];
-                            System.out.println("금기명 : "+medicNameINGList[i][1]);
-                            medicNameINGList[i][2]=dataSplit[1];
-                            System.out.println("유발성분명 : "+medicNameINGList[i][2]);
-                            medicNameINGList[i][3]=dataSplit[2];
-                            System.out.println("부작용 : "+medicNameINGList[i][3]);
+                            medicNameINGList[index][0]=mediclist[index];
+                            System.out.println("약품명 : "+medicNameINGList[index][0]);
+                            medicNameINGList[index][1]=dataSplit[0];
+                            System.out.println("금기명 : "+medicNameINGList[index][1]);
+                            medicNameINGList[index][2]=dataSplit[1];
+                            System.out.println("유발성분명 : "+medicNameINGList[index][2]);
+                            medicNameINGList[index][3]=dataSplit[2];
+                            System.out.println("부작용 : "+medicNameINGList[index][3]);
 
                             DatabaseReference sideRef = FirebaseDatabase.getInstance().getReference("SideEffect");
-                            Map<String, Object> comForbidUpdate = new HashMap<>();
-                            if (medicNameINGList[i][2] != null)
-                                comForbidUpdate.put("component", medicNameINGList[i][2]);
-                            if (medicNameINGList[i][3] != null)
-                                comForbidUpdate.put("cForbid", medicNameINGList[i][3]);
-                            sideRef.child(medicNameINGList[i][0]).updateChildren(comForbidUpdate);
+                            sideRef.child(medicNameINGList[index][0]).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (!snapshot.child("cForbid").exists()) {
+                                        if (medicNameINGList[index][1] != null) {
+                                            updateSideCount("병용금기", 1);
+                                            Map<String, Object> comForbidUpdate = new HashMap<>();
+                                            if (medicNameINGList[index][2] != null)
+                                                comForbidUpdate.put("component", medicNameINGList[index][2]);
+                                            if (medicNameINGList[index][3] != null)
+                                                comForbidUpdate.put("cForbid", medicNameINGList[index][3]);
+                                            sideRef.child(medicNameINGList[index][0]).updateChildren(comForbidUpdate);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                         forbiddenlistSize=0;
