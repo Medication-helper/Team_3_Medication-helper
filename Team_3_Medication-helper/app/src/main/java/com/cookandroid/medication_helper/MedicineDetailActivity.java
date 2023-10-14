@@ -3,12 +3,15 @@ package com.cookandroid.medication_helper;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +24,7 @@ import com.squareup.picasso.Picasso;
 public class MedicineDetailActivity extends AppCompatActivity {
     EditText selectedmName, selectedcName, selectedmEffect;
     ImageView selectedmIMG;
+    Button btnOk;
 
     @Override
     public void onBackPressed() {
@@ -36,6 +40,9 @@ public class MedicineDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_medicdetail);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         Intent selectedMedicine = getIntent();
         String medicine = selectedMedicine.getStringExtra("selectedMedicine");
@@ -44,6 +51,7 @@ public class MedicineDetailActivity extends AppCompatActivity {
         selectedcName = (EditText) findViewById(R.id.SelectedcName);
         selectedmEffect = (EditText) findViewById(R.id.SelectedmEffect);
         selectedmIMG = (ImageView) findViewById(R.id.selectedmIMG);
+        btnOk=findViewById(R.id.btnOk);
 
         selectedmName.setEnabled(false);
         selectedcName.setEnabled(false);
@@ -70,6 +78,16 @@ public class MedicineDetailActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MedicineDetailActivity.this, MedicineListActivity_Manager.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent); // 실행
+                finish(); // Progress 완전 종료
             }
         });
     }

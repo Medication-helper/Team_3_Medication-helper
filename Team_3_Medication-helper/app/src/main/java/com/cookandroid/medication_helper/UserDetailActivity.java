@@ -3,11 +3,14 @@ package com.cookandroid.medication_helper;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserDetailActivity extends AppCompatActivity {
     EditText selectedUserID, selectedUserPW, selectedUserName, selectedUserBirth, selectedUserGender, selectedUsertag;
+    Button btnOk;
 
     @Override
     public void onBackPressed() {
@@ -33,6 +37,9 @@ public class UserDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_userdetail);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         Intent selectedUser = getIntent();
         String userID = selectedUser.getStringExtra("selectedUser");
@@ -43,6 +50,7 @@ public class UserDetailActivity extends AppCompatActivity {
         selectedUserBirth = (EditText) findViewById(R.id.SelectedUserBirth);
         selectedUserGender = (EditText) findViewById(R.id.SelectedUserGender);
         selectedUsertag = (EditText) findViewById(R.id.SelectedUsertag);
+        btnOk=findViewById(R.id.btnOk);
 
         selectedUserID.setEnabled(false);
         selectedUserPW.setEnabled(false);
@@ -81,6 +89,16 @@ public class UserDetailActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDetailActivity.this, UserListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent); // 실행
+                finish(); // Progress 완전 종료
             }
         });
     }
