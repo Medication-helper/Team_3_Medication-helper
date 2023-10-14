@@ -11,90 +11,112 @@ activity_my_page.xml
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MyPageActivity">
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:drawableStart="@drawable/ic_baseline_account_circle_80"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="관리자"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
+                android:text="로그아웃"
+                android:textColor="#808080"
+                android:textSize="17sp"
+                android:textStyle="bold"/>
+
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_account_circle_80"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:text="관리자"
-            android:textSize="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_gravity=""
             android:text="회원정보"
             android:textSize="20dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="150dp" />
+            android:layout_marginLeft="40dp"
+            android:textStyle="bold"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="#808080"
-            android:layout_marginTop="190dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:background="#808080" />
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="220dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="#036635"
-            android:textSize="20sp" />
+            android:textSize="25dp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvBirth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="260dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="#036635"
-            android:textSize="20sp" />
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/tvGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="#036635"
-            android:textSize="20sp" />
+            android:textSize="25dp" />
 
-        <TextView
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnModify"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="290dp"
-            android:layout_marginTop="70dp"
-            android:text="로그아웃"
-            android:textColor="#808080"
-            android:textSize="17sp" />
+            android:layout_marginTop="30dp"
+            android:text="회원정보 수정"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnModify"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="400dp"
-        android:text="회원정보 수정"
-        android:textColor="@color/black"
-        android:textSize="17sp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="회원탈퇴"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnDel"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="450dp"
-        android:text="회원탈퇴"
-        android:textColor="@color/black"
-        android:textSize="17sp" />
+
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav_manager"

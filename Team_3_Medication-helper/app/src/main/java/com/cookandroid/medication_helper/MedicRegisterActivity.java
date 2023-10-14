@@ -329,62 +329,14 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-                                                //여기는 Naver Clova OCR을 활용한 경우
+                                                btnRegister.setEnabled(true);
+                                                btnCaptureCamera.setEnabled(false);
 
-                                                //photoUri가 captured.jpg로 안드로이드 캐시에 저장한 URI입니다.
-                                                //saveImage() 코드는 518번째 줄에 있으니 참고하시면 됩니다.
-//                                                try {
-//                                                    saveBitmapToJpeg(gray);//JPEG로 비트맵 파일을 캐시에 저장
-//
-//                                                    //여기는 AWS s3를 이용해 Naver Object Storage를 사용
-//                                                    String imgpath = getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
-//
-//                                                    File cachefile = new File(imgpath);
-//
-//                                                    String time = getTime();
-//                                                    String devicemodel = getDeviceModel();
-//                                                    String cachefilename = devicemodel + "_" + time + imgName;
-//
-//
-//
-//                                                    Toast.makeText(getApplicationContext(), "캐시파일 접근 성공", Toast.LENGTH_SHORT).show();
-//                                                }catch (Exception e){
-//                                                    Toast.makeText(getApplicationContext(), "캐시파일 접근 실패", Toast.LENGTH_SHORT).show();
-//                                                }
-
-
-                                                /*URI photoURI=changeToURI(photoUri);
-                                                URL photoURL=uriTourl(photoUri);*/
-
-//                                                UploadTask uploadTask = imageRef.putFile(photoUri); // photoUri를 바로 이용해 사진을 업로드했음.
-//                                                uploadTask.addOnFailureListener(new OnFailureListener() {
-//                                                    @Override
-//                                                    public void onFailure(@NonNull Exception e) { // 업로드 실패 시
-//                                                        Toast.makeText(getApplicationContext(),"업로드에 실패했습니다.",Toast.LENGTH_SHORT).show();
-//                                                    }
-//                                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                                    @Override
-//                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                                            @Override
-//                                                            public void onSuccess(Uri uri) {
-//                                                                downloadURL = uri.toString();
-//                                                                Log.d("URLresult", downloadURL);}
-//                                                        });
-//                                                    }
-//                                                });
-//
-//                                                //Naver CLOVA OCR 수행, PapagoNmtTask()는 620번 줄에 있습니다.
-//                                                MedicRegisterActivity.PapagoNmtTask nmtTask = new MedicRegisterActivity.PapagoNmtTask();
-//                                                nmtTask.execute(ocrApiGwUrl,ocrSecretKey);
-
-
-
-
-                                                //여기서부터는 MLkit을 활용한 경우
+                                                //MLkit OCR
                                                 InputImage image=InputImage.fromBitmap(popupBitmap2,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
 
                                                 //Recognize Text
+                                                textView.setTextSize(20);
                                                 Task<Text> result = textRecognizer.process(image)
                                                         .addOnSuccessListener(new OnSuccessListener<Text>() {
                                                             @Override
