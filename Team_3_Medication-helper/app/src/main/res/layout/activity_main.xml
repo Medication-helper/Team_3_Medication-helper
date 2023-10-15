@@ -40,9 +40,12 @@ activity_main.xml
                 android:visibility="invisible"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="250dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:background="@drawable/green_border"
+                android:id="@+id/infoSquare"
+                android:visibility="invisible">
 
                 <TextView
                     android:id="@+id/tv_list_name"

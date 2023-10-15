@@ -9,73 +9,103 @@ activity_medicinelist.xml
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <ListView
-        android:id="@+id/medicationlist"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/green_border" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="420dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/forbtn"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/green_border"
-            android:text="병용 금기"
-            android:textSize="17sp" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="약품을 선택해 상세 조회"
+            android:textAlignment="center"
+            android:textColor="#036635"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/prgbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/green_border"
-            android:text="임부 금기"
-            android:textSize="17sp" />
+        <ListView
+            android:id="@+id/medicationlist"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/green_border" />
 
-        <Button
-            android:id="@+id/overbtn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/forbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/dialog_button_background"
+                android:text="병용 금기"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/prgbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/dialog_button_background"
+                android:text="임부 금기"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/overbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/dialog_button_background"
+                android:text="효능 중복"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnalldelete"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/green_border"
-            android:text="효능 중복"
-            android:textSize="17sp" />
+            android:layout_above="@+id/bottomNav"
+            android:layout_centerHorizontal="true"
+            android:background="#FF0000"
+            android:text="약품 삭제"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
 
 
     </LinearLayout>
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnalldelete"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomNav"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="490dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="4dp"
-        android:background="#FF0000"
-        android:text="약 목록 삭제"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+
+
+
+
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"

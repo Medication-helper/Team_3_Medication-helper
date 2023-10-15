@@ -32,6 +32,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.impl.CameraFactory;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -134,6 +135,7 @@ public class MainPageActivity extends AppCompatActivity implements
     TextView hname;
     TextView road;
     TextView pNum;
+    ConstraintLayout constraintLayout;
 
     private MapView mapView;
     private Label centerPointLabel;
@@ -230,6 +232,8 @@ public class MainPageActivity extends AppCompatActivity implements
         Hospital=findViewById(R.id.places);
         searchList=findViewById(R.id.hospitalList);
 
+        constraintLayout=findViewById(R.id.infoSquare);
+
         userData = (UserData) getApplicationContext();
 
         ActionBar actionBar = getSupportActionBar();
@@ -284,6 +288,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
                 moveCamera(LatLng.from(lat,lng));
                 searchList.setVisibility(View.INVISIBLE);
+                constraintLayout.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -292,7 +297,9 @@ public class MainPageActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
+                constraintLayout.setVisibility(View.INVISIBLE);
                 labelExists=labelLayer.hasLabel("selected");
+
 
                 if(labelExists){
                     labelLayer.remove(labelLayer.getLabel("selected"));
@@ -345,6 +352,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newCenterPosition(pos, 15);
                         kakaoMap.moveCamera(cameraUpdate);
+                        constraintLayout.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -487,7 +495,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
     @Override
     public void onCameraMoveStart(KakaoMap kakaoMap, GestureType gestureType) {
-        Toast.makeText(this, "onCameraMoveStart", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onCameraMoveStart", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -610,19 +618,6 @@ public class MainPageActivity extends AppCompatActivity implements
                         }
 
                         LabelCount=0;
-
-
-//                        //좌표로 지도에 병원 위치 표시 라벨들을 추가(라벨 ID는 1~15)
-//                        for(int i=0;i<roadAddressNames.size();i++){
-//                            LabelCount++;
-//                            Double latitude= Double.parseDouble(yValues.get(i));
-//                            Double longitude = Double.parseDouble(xValues.get(i));
-//
-//                            LatLng pos = LatLng.from(latitude,longitude);
-//                            labelLayer.addLabel(LabelOptions.from("hospital"+LabelCount,pos)
-//                                    .setStyles(style)
-//                                    );
-//                        }
 
                         //좌표로 지도에 병원 위치 표시 라벨들을 추가(라벨 ID는 1~15)
                         for(int i=0;i<searchResult.size();i++){

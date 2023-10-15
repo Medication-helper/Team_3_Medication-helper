@@ -9,14 +9,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="화면 중앙에 맞춰 사진 촬영"
+            android:textAlignment="center"
+            android:textColor="#036635"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <FrameLayout
             android:layout_width="300dp"
             android:layout_height="400dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:background="@drawable/green_border">
 
             <View
@@ -43,13 +54,14 @@
 
             <TextView
                 android:id="@+id/OCRTextResult"
-                android:layout_width="300dp"
-                android:layout_height="400dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="이 곳에\n 카메라가\n 표시됩니다"
+                android:text="카메라\n 버튼을\n 클릭하세요"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="40dp"
+                android:textStyle="bold"
                 android:visibility="visible"></TextView>
         </FrameLayout>
 
@@ -64,11 +76,12 @@
                 android:layout_width="120dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:background="@drawable/green_border"
+                android:background="@drawable/dialog_button_background"
                 android:enabled="true"
-                android:text="시작하기"
-                android:textColor="#036635"
+                android:text="카메라"
+                android:textColor="@color/white"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 android:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -76,10 +89,10 @@
                 android:layout_width="120dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:background="@drawable/green_border"
+                android:background="@drawable/dialog_button_background"
                 android:enabled="false"
                 android:text="촬영"
-                android:textColor="#036635"
+                android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="invisible" />
         </FrameLayout>
@@ -91,10 +104,12 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/green_border"
+            android:background="@drawable/dialog_button_background"
+            android:enabled="false"
             android:text="약 목록 등록"
-            android:textColor="#036635"
-            android:textSize="20dp" />
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

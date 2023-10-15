@@ -12,7 +12,7 @@ activity_login.xml
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="140dp"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <TextView
@@ -22,9 +22,10 @@ activity_login.xml
             android:text="Medication-Helper"
             android:textColor="#036635"
             android:textSize="40sp"
-            android:layout_gravity="center_horizontal|top" />
+            android:layout_gravity="center_horizontal|top"
+            android:textStyle="bold"/>
         <EditText
-            android:layout_width="375dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:id="@+id/editID"
@@ -40,7 +41,7 @@ activity_login.xml
             android:background="@drawable/green_border"/>
 
         <EditText
-            android:layout_width="375dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/editPW"
             android:layout_gravity="center"
@@ -63,15 +64,15 @@ activity_login.xml
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnlogin"
-            android:layout_width="375dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="130dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="130dp"
             android:background="@drawable/green_border"
-            android:text="로그인 하기"
             android:backgroundTint="#036635"
+            android:text="로그인 하기"
             android:textColor="@color/white"
             android:textSize="17sp" />
 

@@ -24,7 +24,6 @@ activity_pregnantforbiddenlist.xml
             android:layout_marginBottom="5dp"/>
 
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnback_pregforbid"
             android:layout_width="200dp"
@@ -36,9 +35,11 @@ activity_pregnantforbiddenlist.xml
             android:layout_marginTop="20dp"
             android:layout_marginEnd="52dp"
             android:layout_marginBottom="4dp"
-            android:background="@drawable/green_border"
+            android:background="@drawable/dialog_button_background"
             android:text="뒤로 가기"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 </ScrollView>

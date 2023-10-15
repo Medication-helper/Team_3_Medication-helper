@@ -100,17 +100,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MedicRegisterActivity extends AppCompatActivity {
-
-    Bitmap image;
     Bitmap bitmap;
     Bitmap rotatedbitmap;
-
-    private Uri photoUri;
-    private String imageFilepath;
-
-    private TessBaseAPI mTess;
-    String datapath = "";
-    String downloadURL = "";
 
     PreviewView previewView;
     Button btnStartCamera;
@@ -127,11 +118,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
     private TextRecognizer textRecognizer;//define TextRecognizer
 
-    String OCRresult;
-    static final int REQUEST_IMAGE_CAPTURE = 672;
-
-    String[] EdiCodearray;//EDI 코드 목록을 저장하는 배열
-    String[] medicList;//OpenAPI를 이용해 의약품 이름 목록을 저장하는 배열
     String data;
 
     String ocrResult;
@@ -144,13 +130,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMddhhmm");
-
-//    private static final String TAG = "NCloudExample";
-//    private static final String ENDPOINT = "https://kr.object.ncloudstorage.com";
-//    private static final String REGION_NAME = "kr-standard";
-    private static final String ACCESS_KEY = "AUzMrapL7ShMUgOLd4DK"; // Replace with your NCloud Access Key
-    private static final String SECRET_KEY = "bQrxFe5gT77YaF0AA90kATGjIkBcOkZZ8dNskjTo"; // Replace with your NCloud Secret Key
-//    private static final String BUCKET_NAME = "medication-helper";zz
 
     public class addMedicine {
         public String cName, mIMG, mEffect;
@@ -207,19 +186,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
         StorageReference storageRef = storage.getReference();
         StorageReference imageRef = storageRef.child("pictures.jpg"); // Firebase Storage에 저장되는 사진의 위치 및 이름(현재는 이름이 고정되어있음.)
 
-        //Naver CLOVA OCR용 API와 Key
-        final String ocrApiGwUrl = sharedPreferences.getString("https://czt9qlltax.apigw.ntruss.com/custom/v1/16147/e9a1814442c9633751f8b26ebeba60b6f23d612647bbee28a6022693b2c1416b/general", "");
-        final String ocrSecretKey = sharedPreferences.getString("YW5kcVdvTW5MV2lISWpneE1taHBjZ1RDdFpob1RmQWM==", "");
-
-
-//        //AWS 자격 증명 설정
-//        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY,SECRET_KEY);
-//
-//        //Amazon S3 클라이언트 생성
-//        AmazonS3 s3 = new AmazonS3Client(awsCredentials);
-//        s3.setRegion(Region.getRegion(Regions.AP_NORTHEAST_2));
-
-
         userData = (UserData) getApplicationContext();
         previewView = (PreviewView) findViewById(R.id.previewView);
         btnStartCamera = (Button) findViewById(R.id.btnCameraStart);
@@ -268,10 +234,9 @@ public class MedicRegisterActivity extends AppCompatActivity {
                         new ImageCapture.OnImageCapturedCallback() {
                             @Override
                             public void onCaptureSuccess(@NonNull ImageProxy image) {
-                                @SuppressLint("UnsafeExperimentalUsageError")
+
+                                @SuppressLint({"UnsafeExperimentalUsageError", "UnsafeOptInUsageError"})
                                 Image mediaImage = image.getImage();
-
-
 
                                 //카메라에서 가져온 이미지를 비트맵 이미지로 변환
                                 bitmap = com.cookandroid.medication_helper.ImageUtil.mediaImageToBitmap(mediaImage);
@@ -329,62 +294,14 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-                                                //여기는 Naver Clova OCR을 활용한 경우
+                                                btnRegister.setEnabled(true);
+                                                btnCaptureCamera.setEnabled(false);
 
-                                                //photoUri가 captured.jpg로 안드로이드 캐시에 저장한 URI입니다.
-                                                //saveImage() 코드는 518번째 줄에 있으니 참고하시면 됩니다.
-//                                                try {
-//                                                    saveBitmapToJpeg(gray);//JPEG로 비트맵 파일을 캐시에 저장
-//
-//                                                    //여기는 AWS s3를 이용해 Naver Object Storage를 사용
-//                                                    String imgpath = getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
-//
-//                                                    File cachefile = new File(imgpath);
-//
-//                                                    String time = getTime();
-//                                                    String devicemodel = getDeviceModel();
-//                                                    String cachefilename = devicemodel + "_" + time + imgName;
-//
-//
-//
-//                                                    Toast.makeText(getApplicationContext(), "캐시파일 접근 성공", Toast.LENGTH_SHORT).show();
-//                                                }catch (Exception e){
-//                                                    Toast.makeText(getApplicationContext(), "캐시파일 접근 실패", Toast.LENGTH_SHORT).show();
-//                                                }
-
-
-                                                /*URI photoURI=changeToURI(photoUri);
-                                                URL photoURL=uriTourl(photoUri);*/
-
-//                                                UploadTask uploadTask = imageRef.putFile(photoUri); // photoUri를 바로 이용해 사진을 업로드했음.
-//                                                uploadTask.addOnFailureListener(new OnFailureListener() {
-//                                                    @Override
-//                                                    public void onFailure(@NonNull Exception e) { // 업로드 실패 시
-//                                                        Toast.makeText(getApplicationContext(),"업로드에 실패했습니다.",Toast.LENGTH_SHORT).show();
-//                                                    }
-//                                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                                    @Override
-//                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                                            @Override
-//                                                            public void onSuccess(Uri uri) {
-//                                                                downloadURL = uri.toString();
-//                                                                Log.d("URLresult", downloadURL);}
-//                                                        });
-//                                                    }
-//                                                });
-//
-//                                                //Naver CLOVA OCR 수행, PapagoNmtTask()는 620번 줄에 있습니다.
-//                                                MedicRegisterActivity.PapagoNmtTask nmtTask = new MedicRegisterActivity.PapagoNmtTask();
-//                                                nmtTask.execute(ocrApiGwUrl,ocrSecretKey);
-
-
-
-
-                                                //여기서부터는 MLkit을 활용한 경우
+                                                //MLkit OCR
                                                 InputImage image=InputImage.fromBitmap(popupBitmap2,0);//MLKit에서 사용하기 위해서 비트맵에서 InputImage로 변환
 
                                                 //Recognize Text
+                                                textView.setTextSize(20);
                                                 Task<Text> result = textRecognizer.process(image)
                                                         .addOnSuccessListener(new OnSuccessListener<Text>() {
                                                             @Override
@@ -483,7 +400,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                             //여기에 Firebase에 업로드하는 코드를 작성하시면 됩니다.
                             //약품명, 제조사명, 약품사진URL, 약품종류 데이터가 들어있는 2차원 배열입니다.
-
                             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                             addMedicine addMedicine = new addMedicine(dataSplit[0], dataSplit[1], dataSplit[2]);
 
@@ -500,8 +416,6 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
-//        //Button btnPill = findViewById(R.id.pillbtn);
-//        //Button btnJar = findViewById(R.id.jarbtn);
         bottomNavigationView.setSelectedItemId(R.id.cameraNav);
 
         //바텀네비게이션을 나타나게 해주는 함수
