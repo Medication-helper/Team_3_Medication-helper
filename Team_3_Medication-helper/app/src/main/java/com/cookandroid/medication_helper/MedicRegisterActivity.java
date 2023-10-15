@@ -1,6 +1,10 @@
-package com.cookandroid.medication_helper;
+/****************************
+ MedicRegisterActivity.java
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication Helper
+ ***************************/
 
-import static android.content.ContentValues.TAG;
+package com.cookandroid.medication_helper;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -137,9 +141,9 @@ public class MedicRegisterActivity extends AppCompatActivity {
         public addMedicine() {} //setValue를 사용하기 위해 필요, 없으면 작동하지 않음
 
         public addMedicine(String cName, String mIMG, String mEffect) {
-            this.cName = cName;
-            this.mIMG = mIMG;
-            this.mEffect = mEffect;
+            this.cName = cName; // 제조사 이름
+            this.mIMG = mIMG; // 약 이미지로 연결되는 URL
+            this.mEffect = mEffect; // 약 효능
         }
     }
 
@@ -349,14 +353,13 @@ public class MedicRegisterActivity extends AppCompatActivity {
         });
 
 
-        /*복약 등록 버튼*/
+        /* 복약 등록 버튼 */
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"등록 중, 잠시만 기다려주세요...",Toast.LENGTH_SHORT).show();
                 String replaceStr=ocrResult.replaceAll(" ","");//OCR 결과물에서 간혹 발생하는 띄어쓰기 공백 삭제
 
-                //Log.v("result",ocrResult);
                 String[] list=replaceStr.split("\n");
 
                 for(String line:list){
@@ -369,13 +372,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
 
                 String [] dataResult=replaceStr.split("\n");
 
-                for(int i=0;i<listSize;i++){
-                    System.out.println("datatResult : "+dataResult[i]);
-                }
-
                 String [][] medicInfoList = new String[listSize][4];
-                List<List<String>> listItems = new ArrayList<>();
-
 
                 new Thread(new Runnable() {
                     @Override
@@ -397,20 +394,19 @@ public class MedicRegisterActivity extends AppCompatActivity {
                             medicInfoList[i][1]=dataSplit[0];
                             medicInfoList[i][2]=dataSplit[1];
                             medicInfoList[i][3]=dataSplit[2];
+                            
+                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(); // Firebase와 연동
+                            addMedicine addMedicine = new addMedicine(dataSplit[0], dataSplit[1], dataSplit[2]); // Firebase에 저장할 클래스 설정
 
-                            //여기에 Firebase에 업로드하는 코드를 작성하시면 됩니다.
-                            //약품명, 제조사명, 약품사진URL, 약품종류 데이터가 들어있는 2차원 배열입니다.
-                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-                            addMedicine addMedicine = new addMedicine(dataSplit[0], dataSplit[1], dataSplit[2]);
-
-                            rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue("");
-                            rootRef.child("MedicineList").child(dataResult[i]).setValue(addMedicine);
+                            rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue(""); // 사용자가 복용 중인 약 DB에 저장
+                            rootRef.child("MedicineList").child(dataResult[i]).setValue(addMedicine); // 약품 목록 DB에 약 추가
                         }
                     }
                 }).start();
 
                 Toast.makeText(getApplicationContext(),"등록했습니다",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainPageActivity.class)); // 등록이 완료된 후 메인화면으로 전환
+                finish(); // Progress 완전 종료
             }
         });
 
@@ -418,27 +414,27 @@ public class MedicRegisterActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setSelectedItemId(R.id.cameraNav);
 
-        //바텀네비게이션을 나타나게 해주는 함수
+        /* 바텀 네비게이션을 나타나게 해주는 함수 */
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    //home버튼을 누르면 액티비티 화면을 전환시켜준다
+                    /* 지도 화면으로 전환 */
                     case R.id.homeNav:
                         startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MainPageActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //현재 화면에서 보여주는 액티비티
+                    /* 현재 페이지에서 보여주는 액티비티 */
                     case R.id.cameraNav:
                         return true;
-                    //article 버튼을 누르면 액티비티 화면을 전환시켜준다
+                    /* 복용 약 목록 화면으로 전환 */
                     case R.id.articleNav:
                         startActivity(new Intent(getApplicationContext(), MedicineListActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
                         return true;
-                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
+                    /* 마이페이지 화면으로 전환 */
                     case R.id.userNav:
                         startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MyPageActivity.class));
                         overridePendingTransition(0, 0);

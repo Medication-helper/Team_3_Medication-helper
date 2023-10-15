@@ -1,21 +1,19 @@
 /****************************
  ComForbiddenListActivity.java
- 작성 팀 : Hello World!
- 주 작성자 : 백인혁
- 프로그램명 : Medication Helper
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication-Helper
  ***************************/
+
 package com.cookandroid.medication_helper;
 
 import static com.cookandroid.medication_helper.FirebaseUtils.updateSideCount;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,7 +40,6 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -55,12 +52,11 @@ public class ComForbiddenListActivity extends AppCompatActivity {
     String data;
     int listSize;
 
-    ArrayList<String> medicList;
-
-    @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
+    /* 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작 */
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent Back = new Intent(ComForbiddenListActivity.this, MedicineListActivity.class); // 메인화면으로 돌아가는 기능
+        Intent Back = new Intent(ComForbiddenListActivity.this, MedicineListActivity.class); // 복용 약 목록으로 돌아가는 기능
         Back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 병용금지 페이지가 백그라운드에서 돌아가지 않도록 완전종료
         startActivity(Back); // 실행
         finish(); // Progress 완전 종료
@@ -79,36 +75,26 @@ public class ComForbiddenListActivity extends AppCompatActivity {
 
         Button btnBack = findViewById(R.id.btnback_comforbid);
         ListView comXList = findViewById(R.id.combinationXList);
+        ArrayList<String> medicList = new ArrayList<>();
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine");
-        medicList = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, medicList);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine"); // 사용자가 복용 중인 약품을 가져올 Firebase DB 경로 지정
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.child(userData.getUserID()).getChildren()) {
-                    String value = ds.getKey();
-                    System.out.println("Data : " + value);
-                    medicList.add(value);
-
-
+                    String value = ds.getKey(); // 복용 중인 약품의 이름을 읽어와
+                    medicList.add(value); // medicList에 저장
                 }
 
-                listSize=medicList.size();
-                System.out.println("약물 개수 : "+listSize);
-
-                String[] mediclist = new String[listSize];
+                listSize=medicList.size(); // 복용 중인 약품 개수
+                String[] mediclist = new String[listSize]; // 생성된 medicList 동적 배열을 바탕으로 medicList 정적 배열 생성
 
                 for(int i=0;i<listSize;i++){
-                    mediclist[i] = medicList.get(i);
+                    mediclist[i] = medicList.get(i); // 약품 이름 저장
                 }
 
-                for(int i=0;i<listSize;i++){
-                    System.out.println("medicList 약물 : "+mediclist[i]);
-                }
-
-                String[][] medicNameINGList = new String[listSize][4];
+                String[][] medicNameINGList = new String[listSize][4]; // 파싱해온 결과를 저장할 배열
 
                 //OpenAPI XML 파싱 스레드
                 new Thread(new Runnable() {
@@ -118,10 +104,9 @@ public class ComForbiddenListActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-
-                        //약물목록에 있는 약 이름들을 이용하여 부작용 정보 내용(주성분,부작용)을 가져와 저장한다.
+                        /* 약물목록에 있는 약 이름들을 이용하여 부작용 정보 내용(주성분,부작용)을 가져와 저장한다. */
                         for(int i=0;i<listSize;i++){
-                            final int index = i;
+                            final int index = i; // i를 DatabaseReference 과정에서 사용하고자 final int로 변경
                             data=getXmlData(mediclist[index]);
 
                             String []dataSplit=new String[3];
@@ -130,32 +115,29 @@ public class ComForbiddenListActivity extends AppCompatActivity {
                                 dataSplit= data.split("\n");
                             }
 
-                            medicNameINGList[index][0]=mediclist[index];
-                            System.out.println("약품명 : "+medicNameINGList[index][0]);
-                            medicNameINGList[index][1]=dataSplit[0];
-                            System.out.println("금기명 : "+medicNameINGList[index][1]);
-                            medicNameINGList[index][2]=dataSplit[1];
-                            System.out.println("유발성분명 : "+medicNameINGList[index][2]);
-                            medicNameINGList[index][3]=dataSplit[2];
-                            System.out.println("부작용 : "+medicNameINGList[index][3]);
+                            medicNameINGList[index][0]=mediclist[index]; // 약품명
+                            medicNameINGList[index][1]=dataSplit[0]; // 금기명
+                            medicNameINGList[index][2]=dataSplit[1]; // 유발성분명
+                            medicNameINGList[index][3]=dataSplit[2]; // 부작용
 
-                            DatabaseReference sideRef = FirebaseDatabase.getInstance().getReference("SideEffect");
-                            sideRef.child(medicNameINGList[index][0]).addListenerForSingleValueEvent(new ValueEventListener() {
+                            DatabaseReference sideRef = FirebaseDatabase.getInstance().getReference("SideEffect"); // 부작용 정보를 저장할 Firebase DB 경로 지정
+                            sideRef.child(medicNameINGList[index][0]).addListenerForSingleValueEvent(new ValueEventListener() { // DB의 약품이름 항목에 대해
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (!snapshot.child("cForbid").exists()) {
-                                        if (medicNameINGList[index][1] != null) {
-                                            updateSideCount("병용금기", 1);
-                                            Map<String, Object> comForbidUpdate = new HashMap<>();
-                                            if (medicNameINGList[index][2] != null)
-                                                comForbidUpdate.put("component", medicNameINGList[index][2]);
-                                            if (medicNameINGList[index][3] != null)
-                                                comForbidUpdate.put("cForbid", medicNameINGList[index][3]);
-                                            sideRef.child(medicNameINGList[index][0]).updateChildren(comForbidUpdate);
+                                    if (!snapshot.child("cForbid").exists()) { // DB에 파싱한 약품의 병용금기 정보가 적혀있지 않고
+                                        if (medicNameINGList[index][1] != null) { // 파싱한 약품이 병용금기 사항이 있다면
+                                            updateSideCount("병용금기", 1); // 병용금기 사항이 있는 데이터가 하나 늘었음을 기록
+                                            Map<String, Object> comForbidUpdate = new HashMap<>(); // DB 저장용 Map을 생성한 후
+                                            if (medicNameINGList[index][2] != null) // 파싱한 데이터에 성분이 있다면
+                                                comForbidUpdate.put("component", medicNameINGList[index][2]); // 성분을 Map에 저장
+                                            if (medicNameINGList[index][3] != null) // 파싱한 데이터에 병용금기 사항이 있다면
+                                                comForbidUpdate.put("cForbid", medicNameINGList[index][3]); // 해당 사항을 Map에 저장
+                                            sideRef.child(medicNameINGList[index][0]).updateChildren(comForbidUpdate); // Map을 기반으로 DB에 저장
                                         }
                                     }
                                 }
 
+                                /* 에러 처리 */
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
                                     Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
@@ -277,7 +259,7 @@ public class ComForbiddenListActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() { // 뒤로가기 버튼을 눌렀을 경우
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ComForbiddenListActivity.this, MedicineListActivity.class); // 이전 화면으로 돌아가는 동작
+                Intent intent = new Intent(ComForbiddenListActivity.this, MedicineListActivity.class); // 복용중인 약품 목록 화면으로 돌아가는 동작
                 startActivity(intent); // 동작 시행
                 finish(); // Progress 종료
             }

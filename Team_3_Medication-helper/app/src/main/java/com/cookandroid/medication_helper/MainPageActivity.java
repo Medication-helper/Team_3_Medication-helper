@@ -1,9 +1,9 @@
 /****************************
  MainPageActivity.java
- 작성 팀 : Hello World!
- 주 작성자 : 송승우
- 프로그램명 : Medication Helper
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication-Helper
  ***************************/
+
 package com.cookandroid.medication_helper;
 
 import android.Manifest;
@@ -22,16 +22,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.impl.CameraFactory;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -66,7 +63,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.sql.Array;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -183,17 +179,17 @@ public class MainPageActivity extends AppCompatActivity implements
     LatLng selectedpos;
 
 
-    //뒤로가기 누르면 앱종료시키는 함수
+    /* 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작 */
     @Override
     public void onBackPressed() {
-        //다이어로그를 화면에 나타냄
+        /* 화면에 나타낼 다이어로그 지정 */
         AlertDialog.Builder exitDialogBuilder = new AlertDialog.Builder(MainPageActivity.this);
         exitDialogBuilder
                 .setTitle("프로그램 종료")
                 .setMessage("종료하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("네",
-                        //네를 누르면 앱 종료
+                        /* 네를 누르면 앱 종료 */
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -202,7 +198,7 @@ public class MainPageActivity extends AppCompatActivity implements
                                 finish();
                             }
                         })
-                //아니오 누르면 다이어로그를 종료
+                /* 아니오를 누르면 다이어로그를 종료 */
                 .setNegativeButton("아니오",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -211,7 +207,7 @@ public class MainPageActivity extends AppCompatActivity implements
                             }
                         });
         AlertDialog exitDialog = exitDialogBuilder.create();
-        exitDialog.show();
+        exitDialog.show(); // 다이어로그 출력
     }
 
     @Override
@@ -235,8 +231,6 @@ public class MainPageActivity extends AppCompatActivity implements
         constraintLayout=findViewById(R.id.infoSquare);
 
         userData = (UserData) getApplicationContext();
-
-        ActionBar actionBar = getSupportActionBar();
 
         checkPermission();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
@@ -360,29 +354,29 @@ public class MainPageActivity extends AppCompatActivity implements
 
 
 
-        //바텀네비게이션을 나타나게 해주는 함수
+        /* 바텀 네비게이션을 나타나게 해주는 함수 */
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    //현재 페이지에서 보여주는 액티비티
+                    /* 현재 페이지에서 보여주는 액티비티 */
                     case R.id.homeNav:
                         return true;
-                    //camera 버튼을 누르면 화면을 전환시켜준다.
+                    /* 촬영 화면으로 전환 */
                     case R.id.cameraNav:
                         startActivity(new Intent(getApplicationContext(), MedicRegisterActivity.class));
                         overridePendingTransition(0, 0);
                         searchList.setVisibility(View.INVISIBLE);
                         finish();
                         return true;
-                    //article 버튼을 누르면 액티비티 화면을 전환시켜준다
+                    /* 복용 약 목록 화면으로 전환 */
                     case R.id.articleNav:
                         startActivity(new Intent(getApplicationContext(), MedicineListActivity.class));
                         overridePendingTransition(0, 0);
                         searchList.setVisibility(View.INVISIBLE);
                         finish();
                         return true;
-                    //user 버튼을 누르면 액티비티 화면을 전환시켜준다
+                    /* 마이페이지 화면으로 전환 */
                     case R.id.userNav:
                         startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.MyPageActivity.class));
                         overridePendingTransition(0, 0);

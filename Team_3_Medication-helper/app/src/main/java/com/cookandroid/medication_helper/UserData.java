@@ -1,7 +1,7 @@
 /***************************
- * 사용자 정보를 저장하는 클래스
- * 작성 팀 : Hello World!
- * 제작자 : 안현종
+ UserData.java
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication Helper
  **************************/
 
 package com.cookandroid.medication_helper;

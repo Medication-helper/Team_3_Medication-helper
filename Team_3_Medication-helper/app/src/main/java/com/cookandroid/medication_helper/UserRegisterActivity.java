@@ -1,8 +1,8 @@
-/******************
- * 회원가입 담당 코드
- * 작성 팀 : Hello World!
- * 제작자 : 안현종
- ******************/
+/****************************
+ UserRegisterActivity.java
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication Helper
+ ***************************/
 
 package com.cookandroid.medication_helper;
 
@@ -62,10 +62,11 @@ public class UserRegisterActivity extends AppCompatActivity{
         }
     }
 
-    @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
+    /* 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작 */
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(UserRegisterActivity.this, com.cookandroid.medication_helper.MainActivity.class); // 메인화면으로 돌아가는 기능
+        Intent BackToMain = new Intent(UserRegisterActivity.this, MainActivity.class); // 메인화면으로 돌아가는 기능
         BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 회원가입 페이지가 백그라운드에서 돌아가지 않도록 완전종료
         startActivity(BackToMain); // 실행
         finish(); // Progress 완전 종료
@@ -112,6 +113,7 @@ public class UserRegisterActivity extends AppCompatActivity{
         int mMonth = calendar.get(Calendar.MONTH);
         int mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
+        /* 뒤로 가기 버튼 기능 */
         btnRegister_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +133,7 @@ public class UserRegisterActivity extends AppCompatActivity{
 
             @Override // 텍스트가 변경될 때 호출되는 메소드
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                validate = false;
+                validate = false; // ID 중복확인 초기화
             }
 
             @Override // 텍스트가 변경된 후 호출되는 메소드이므로 상단의 메소드로도 충분함.
@@ -172,22 +174,23 @@ public class UserRegisterActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 String ID = E_ID.getText().toString();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(ID);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(ID); // Firebase DB와 연동
 
-                if (ID.isEmpty())
+                if (ID.isEmpty()) // ID가 입력되지 않았을 경우
                     Toast.makeText(getApplicationContext(), "ID가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 else {
                     ref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists())
+                            if (snapshot.exists()) // ID가 존재할 경우
                                 Toast.makeText(getApplicationContext(), "사용할 수 없는 ID입니다.", Toast.LENGTH_SHORT).show();
-                            else {
+                            else { // ID가 존재하지 않을 경우
                                 Toast.makeText(getApplicationContext(), "사용 가능한 ID입니다.", Toast.LENGTH_SHORT).show();
-                                validate = true;
+                                validate = true; // ID 중복확인을 했음을 체크
                             }
                         }
 
+                        /* 에러 처리 */
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
@@ -256,10 +259,10 @@ public class UserRegisterActivity extends AppCompatActivity{
                 } else if (tag.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "일반 사용자 및 관리자 여부를 선택해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
-                    mDatabase = FirebaseDatabase.getInstance().getReference();
-                    addUser addUser = new addUser(password, name, birth, gender, tag);
+                    mDatabase = FirebaseDatabase.getInstance().getReference(); // Firebase의 사용자 DB와 연동
+                    addUser addUser = new addUser(password, name, birth, gender, tag); // Firebase에 등록할 클래스 생성
 
-                    mDatabase.child("User").child(ID).setValue(addUser);
+                    mDatabase.child("User").child(ID).setValue(addUser); // Firebase에 DB 등록
 
                     Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                     Intent BackToMain = new Intent(UserRegisterActivity.this, com.cookandroid.medication_helper.MainActivity.class); // 메인화면으로 돌아가는 기능

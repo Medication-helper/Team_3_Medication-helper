@@ -1,9 +1,9 @@
 /****************************
  SplashActivity.java
- 작성 팀 : Hello World!
- 주 작성자 : 송승우
+ 작성 팀 : [02=-3]
  프로그램명 : Medication Helper
  ***************************/
+
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;

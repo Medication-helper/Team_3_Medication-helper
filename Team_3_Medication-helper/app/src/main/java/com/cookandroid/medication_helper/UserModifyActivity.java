@@ -1,7 +1,8 @@
-/******************
- * 회원수정 담당 코드
- * 제작자 : 안현종
- ******************/
+/****************************
+ UserModifyActivity.java
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication Helper
+ ***************************/
 
 package com.cookandroid.medication_helper;
 
@@ -49,7 +50,7 @@ public class UserModifyActivity extends AppCompatActivity{
         setContentView(R.layout.activity_usermodify);
 
         Intent tagintent = getIntent();
-        tag = tagintent.getIntExtra("tag", 0);
+        tag = tagintent.getIntExtra("tag", 0); // 어느 화면에서 넘어왔는지를 저장
         getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
         getSupportActionBar().setCustomView(R.layout.modify_titlebar_custom); // 커스텀 사용할 파일 위치
@@ -82,26 +83,27 @@ public class UserModifyActivity extends AppCompatActivity{
         int mMonth = calendar.get(Calendar.MONTH);
         int mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
+        /* 뒤로 가기 버튼 동작 */
         btnModify_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (tag) {
-                    case 1:
+                switch (tag) { // 어느 화면에서 넘어왔는지를 판별
+                    case 1: // 일반 사용자 마이페이지에서 넘어옴
                         Intent BackToMain_User = new Intent(UserModifyActivity.this, MyPageActivity.class);
                         BackToMain_User.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(BackToMain_User); // 실행
                         finish(); // Progress 완전 종료
                         break;
-                    case 2:
+                    case 2: // 관리자 마이페이지에서 넘어옴
                         Intent BackToMain_Manager = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class);
                         BackToMain_Manager.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(BackToMain_Manager); // 실행
                         finish(); // Progress 완전 종료
                         break;
-                    case 3:
+                    case 3: // 사용자 상세정보에서 넘어옴
                         Intent userintent = getIntent();
                         Intent BackToMain_Detail = new Intent(UserModifyActivity.this, UserDetailActivity.class);
-                        BackToMain_Detail.putExtra("selectedUser", userintent.getStringExtra("selectedUser"));
+                        BackToMain_Detail.putExtra("selectedUser", userintent.getStringExtra("selectedUser")); // 어느 사용자인지 전달
                         BackToMain_Detail.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(BackToMain_Detail); // 실행
                         finish(); // Progress 완전 종료
@@ -157,9 +159,9 @@ public class UserModifyActivity extends AppCompatActivity{
                 String gender = "";
 
                 DatabaseReference ref;
-                if (tag == 3) {
+                if (tag == 3) { // 사용자 상세정보에서 넘어왔을 경우
                     Intent userintent = getIntent();
-                    ref = FirebaseDatabase.getInstance().getReference("User").child(userintent.getStringExtra("selectedUser"));
+                    ref = FirebaseDatabase.getInstance().getReference("User").child(userintent.getStringExtra("selectedUser")); // 선택했던 사용자의 DB를 수정
                 } else
                     ref = FirebaseDatabase.getInstance().getReference("User").child(userData.getUserID()); // 로그인한 사용자를 수정
                 Map<String, Object> modifys = new HashMap<>();
@@ -198,24 +200,24 @@ public class UserModifyActivity extends AppCompatActivity{
                 if (PWCheckCounter == 0) {
                     Toast.makeText(getApplicationContext(), "비밀번호 확인란에 입력된 내용이 비밀번호와 다릅니다.", Toast.LENGTH_SHORT).show();
                 } else {
-                    ref.updateChildren(modifys);
+                    ref.updateChildren(modifys); // DB 수정
 
                     Toast.makeText(getApplicationContext(), "회원수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                     switch (tag) {
-                        case 1:
-                            Intent BackToMain_User = new Intent(UserModifyActivity.this, MyPageActivity.class); // 마이페이지로 돌아가는 기능
+                        case 1: // 일반 사용자 마이페이지에서 넘어옴
+                            Intent BackToMain_User = new Intent(UserModifyActivity.this, MyPageActivity.class); // 일반 사용자 마이페이지로 돌아가는 기능
                             BackToMain_User.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(BackToMain_User); // 실행
                             finish(); // Progress 완전 종료
-                        case 2:
-                            Intent BackToMain_Manager = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class); // 마이페이지로 돌아가는 기능
+                        case 2: // 관리자 마이페이지에서 넘어옴
+                            Intent BackToMain_Manager = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class); // 관리자 마이페이지로 돌아가는 기능
                             BackToMain_Manager.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(BackToMain_Manager); // 실행
                             finish(); // Progress 완전 종료
-                        case 3:
+                        case 3: // 사용자 상세정보에서 넘어옴
                             Intent userintent = getIntent();
-                            Intent BackToMain_Detail = new Intent(UserModifyActivity.this, UserDetailActivity.class); // 마이페이지로 돌아가는 기능
-                            BackToMain_Detail.putExtra("selectedUser", userintent.getStringExtra("selectedUser"));
+                            Intent BackToMain_Detail = new Intent(UserModifyActivity.this, UserDetailActivity.class); // 사용자 상세정보로 돌아가는 기능
+                            BackToMain_Detail.putExtra("selectedUser", userintent.getStringExtra("selectedUser")); // 어떤 사용자인지 전달
                             BackToMain_Detail.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(BackToMain_Detail); // 실행
                             finish(); // Progress 완전 종료
@@ -225,26 +227,27 @@ public class UserModifyActivity extends AppCompatActivity{
         });
     }
 
-    @Override // 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작
-    public void onBackPressed() { // 메인화면으로 돌아가는 기능
+    /* 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작 */
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
         switch (tag) {
-            case 1:
-                Intent BackToMain_User = new Intent(UserModifyActivity.this, MyPageActivity.class);
+            case 1: // 일반 사용자 마이페이지에서 넘어옴
+                Intent BackToMain_User = new Intent(UserModifyActivity.this, MyPageActivity.class); // 일반 사용자 마이페이지로 돌아가는 기능
                 BackToMain_User.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(BackToMain_User); // 실행
                 finish(); // Progress 완전 종료
                 break;
-            case 2:
-                Intent BackToMain_Manager = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class);
+            case 2: // 관리자 마이페이지에서 넘어옴
+                Intent BackToMain_Manager = new Intent(UserModifyActivity.this, MyPageActivity_Manager.class); // 관리자 마이페이지로 돌아가는 기능
                 BackToMain_Manager.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(BackToMain_Manager); // 실행
                 finish(); // Progress 완전 종료
                 break;
-            case 3:
+            case 3: // 사용자 상세정보에서 넘어옴
                 Intent userintent = getIntent();
-                Intent BackToMain_Detail = new Intent(UserModifyActivity.this, UserDetailActivity.class);
-                BackToMain_Detail.putExtra("selectedUser", userintent.getStringExtra("selectedUser"));
+                Intent BackToMain_Detail = new Intent(UserModifyActivity.this, UserDetailActivity.class); // 사용자 상세정보로 돌아가는 기능
+                BackToMain_Detail.putExtra("selectedUser", userintent.getStringExtra("selectedUser")); // 어떤 사용자인지 전달
                 BackToMain_Detail.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(BackToMain_Detail); // 실행
                 finish(); // Progress 완전 종료

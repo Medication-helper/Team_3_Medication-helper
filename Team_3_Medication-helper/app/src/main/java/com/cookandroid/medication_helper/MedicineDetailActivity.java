@@ -1,3 +1,9 @@
+/****************************
+ MedicineDetailActivity.java
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication Helper
+ ***************************/
+
 package com.cookandroid.medication_helper;
 
 import android.content.Intent;
@@ -26,11 +32,12 @@ public class MedicineDetailActivity extends AppCompatActivity {
     ImageView selectedmIMG;
     Button btnOk;
 
+    /* 하단의 뒤로가기(◀) 버튼을 눌렀을 시 동작 */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent BackToMain = new Intent(MedicineDetailActivity.this, MedicineListActivity_Manager.class);
-        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent BackToMain = new Intent(MedicineDetailActivity.this, MedicineListActivity_Manager.class); // 약 목록으로 돌아가는 기능
+        BackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 약 상세정보 페이지가 백그라운드에서 돌아가지 않도록 완전종료
         startActivity(BackToMain); // 실행
         finish(); // Progress 완전 종료
     }
@@ -44,6 +51,7 @@ public class MedicineDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        /* 어떤 약품의 상세정보를 출력할지를 받아옴 */
         Intent selectedMedicine = getIntent();
         String medicine = selectedMedicine.getStringExtra("selectedMedicine");
 
@@ -63,18 +71,19 @@ public class MedicineDetailActivity extends AppCompatActivity {
 
         selectedmName.setText(medicine);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MedicineList").child(medicine);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MedicineList").child(medicine); // Firebase의 약품목록 DB와 연동
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    selectedcName.setText(snapshot.child("cName").getValue(String.class));
-                    selectedmEffect.setText(snapshot.child("mEffect").getValue(String.class));
-                    String imageURL = snapshot.child("mIMG").getValue(String.class);
-                    Picasso.get().load(imageURL).into(selectedmIMG);
+                if (snapshot.exists()) { // 약품이 DB에 있다면
+                    selectedcName.setText(snapshot.child("cName").getValue(String.class)); // 약 이름 출력
+                    selectedmEffect.setText(snapshot.child("mEffect").getValue(String.class)); // 약 효능 출력
+                    String imageURL = snapshot.child("mIMG").getValue(String.class); // 약 이미지를 URL로 가져옴
+                    Picasso.get().load(imageURL).into(selectedmIMG); // 약 이미지 출력
                 }
             }
 
+            /* 에러 처리 */
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
@@ -84,8 +93,8 @@ public class MedicineDetailActivity extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MedicineDetailActivity.this, MedicineListActivity_Manager.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent intent = new Intent(MedicineDetailActivity.this, MedicineListActivity_Manager.class); // 약 목록으로 돌아가는 기능
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 약 상세정보 페이지가 백그라운드에서 돌아가지 않도록 완전종료
                 startActivity(intent); // 실행
                 finish(); // Progress 완전 종료
             }

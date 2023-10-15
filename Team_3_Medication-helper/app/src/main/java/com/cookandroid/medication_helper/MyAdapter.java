@@ -1,3 +1,9 @@
+/****************************
+ MyAdapter.java
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication Helper
+ ***************************/
+
 package com.cookandroid.medication_helper;
 
 import android.content.Context;
