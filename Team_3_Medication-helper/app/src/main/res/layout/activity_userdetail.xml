@@ -39,7 +39,7 @@
             android:id="@+id/SelectedmName"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -58,7 +58,7 @@
             android:id="@+id/SelectedcName"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -77,7 +77,7 @@
             android:id="@+id/SelectedmEffect"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -96,7 +96,7 @@
             android:id="@+id/SelectedUserBirth"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -115,7 +115,7 @@
             android:id="@+id/SelectedUserGender"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -134,7 +134,7 @@
             android:id="@+id/SelectedUsertag"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -142,25 +142,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnDetailModify"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:background="@drawable/dialog_button_background"
                 android:text="수정"
+                android:layout_marginRight="30dp"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:textStyle="bold" />
             <Button
                 android:id="@+id/btnDetailDelete"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
                 android:background="@drawable/dialog_button_background"
                 android:text="삭제"
@@ -173,7 +172,7 @@
         <Button
             android:id="@+id/btnOk"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:background="@drawable/dialog_button_background"
