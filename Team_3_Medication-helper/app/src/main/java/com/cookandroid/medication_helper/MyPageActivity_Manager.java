@@ -114,7 +114,7 @@ public class MyPageActivity_Manager extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyPageActivity_Manager.this, UserModifyActivity.class);
-                intent.putExtra("tag", 1);
+                intent.putExtra("tag", 2);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();

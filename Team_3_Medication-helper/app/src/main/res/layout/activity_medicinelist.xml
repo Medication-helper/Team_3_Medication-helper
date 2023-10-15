@@ -94,18 +94,7 @@ activity_medicinelist.xml
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-
-
     </LinearLayout>
-
-
-
-
-
-
-
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
