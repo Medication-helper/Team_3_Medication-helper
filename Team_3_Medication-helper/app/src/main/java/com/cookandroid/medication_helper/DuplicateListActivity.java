@@ -78,6 +78,8 @@ public class DuplicateListActivity extends AppCompatActivity {
         ListView DuplicateList = findViewById(R.id.duplicateList);
         ArrayList<String> medicList = new ArrayList<>();
 
+        Toast.makeText(getApplicationContext(),"목록을 불러오는 중입니다.\n잠시만 기다려주세요",Toast.LENGTH_LONG).show();
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicine"); // 사용자가 복용 중인 약품을 가져올 Firebase DB 경로 지정
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
