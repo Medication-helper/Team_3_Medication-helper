@@ -153,11 +153,7 @@ public class MainPageActivity extends AppCompatActivity implements
             "정형외과","내과","피부과","소아과","산부인과","비뇨기과","치과","안과","이비인후과","한의원","외과","약국"
     };
 
-    ArrayList<String> roadAddressNames = new ArrayList<>();
     ArrayList<String> placeNames = new ArrayList<>();
-    ArrayList<String> xValues = new ArrayList<>();
-    ArrayList<String> yValues = new ArrayList<>();
-    ArrayList<String> phoneNumbers = new ArrayList<>();
 
     ArrayList<Hospital> searchResult = new ArrayList<>();
 
@@ -557,6 +553,7 @@ public class MainPageActivity extends AppCompatActivity implements
                             String y = element.getElementsByTagName("y").item(0).getTextContent();
                             String phone = element.getElementsByTagName("phone").item(0).getTextContent();
 
+                            //Hospital 객체 생성
                             Hospital hospital = new Hospital(
                                     i,
                                     roadAddressName,
@@ -566,37 +563,13 @@ public class MainPageActivity extends AppCompatActivity implements
                                     phone
                             );
 
+                            //Hospital 객체 리스트 searchResult에 객체를 추가한다.
                             searchResult.add(hospital);
 
-                            // 추출한 데이터를 배열에 추가
-                            roadAddressNames.add(roadAddressName);
-                            placeNames.add(placeName);//병원 목록
-                            xValues.add(x);
-                            yValues.add(y);
-                            phoneNumbers.add(phone);
+                            placeNames.add(placeName);//병원 이름 목록에 데이터 추가
                         }
 
                         documentLength=documents.getLength();
-
-                        //여기서부터 데이터 사용 가능
-                        for (int i = 0; i < documents.getLength(); i++){
-                            //System.out.println("도로명주소 : "+roadAddressNames.get(i));
-                            System.out.println("병원명 : "+placeNames.get(i));
-                            //System.out.println("전화번호 : "+phoneNumbers.get(i));
-                            //System.out.println("x : "+xValues.get(i));
-                            //System.out.println("y : "+yValues.get(i));
-                            //System.out.println("다음 항목");
-                        }
-
-//                        for (int i=0;i<searchResult.size();i++){
-//                            System.out.println("인덱스 : "+searchResult.get(i).get_index());
-//                            System.out.println("도로명주소 : "+searchResult.get(i).get_roadAddress());
-//                            System.out.println("병원명 : "+searchResult.get(i).get_placeName());
-//                            System.out.println("전화번호 : "+searchResult.get(i).get_phone());
-//                            System.out.println("x : "+searchResult.get(i).get_xValues());
-//                            System.out.println("y : "+searchResult.get(i).get_yValues());
-//                            System.out.println("다음 항목");
-//                        }
 
                         LabelStyle style=LabelStyle.from(R.drawable.blue_dot_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
 
