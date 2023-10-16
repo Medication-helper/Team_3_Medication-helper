@@ -7,6 +7,7 @@
 package com.cookandroid.medication_helper;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -181,8 +182,8 @@ public class MedicineListActivity extends AppCompatActivity {
 
                                         String company = snapshot.child("cName").getValue().toString();
                                         String effect = snapshot.child("mEffect").getValue().toString();
-
                                         showCustomDialog(selectedItem,company,effect,imageURL);
+
                                     }
                                 }
 
@@ -283,32 +284,102 @@ public class MedicineListActivity extends AppCompatActivity {
 
     private void showCustomDialog(String medicname, String company, String Effect, String ImageURL){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MedicineListActivity.this,R.style.AlertDialogTheme);
-        View view=LayoutInflater.from(MedicineListActivity.this).inflate(R.layout.custom_diaolog,(LinearLayout)findViewById(R.id.medicinfodialog));
+        CustomDialog customDialog = new CustomDialog(MedicineListActivity.this, medicname, company, Effect, ImageURL);
+        customDialog.show();
 
-        builder.setView(view);
-        ((TextView)view.findViewById(R.id.infoname)).setText(medicname);
-        ((TextView)view.findViewById(R.id.infocompany)).setText(company);
-        ((TextView)view.findViewById(R.id.infoeffect)).setText(Effect);
-        ImageView medicPic=view.findViewById(R.id.infopic);
-        Picasso.get().load(ImageURL).into(medicPic);
-
-
-        AlertDialog alertDialog = builder.create();
-
-        view.findViewById(R.id.btnOk).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-
-        if(alertDialog.getWindow()!=null){
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
-        }
-
-        alertDialog.show();
-
-
+//        AlertDialog.Builder builder = new AlertDialog.Builder(MedicineListActivity.this,R.style.AlertDialogTheme);
+//        View view=LayoutInflater.from(MedicineListActivity.this).inflate(R.layout.custom_diaolog,(LinearLayout)findViewById(R.id.medicinfodialog));
+//
+//        builder.setView(view);
+//        ((TextView)view.findViewById(R.id.infoname)).setText(medicname);
+//        ((TextView)view.findViewById(R.id.infocompany)).setText(company);
+//        ((TextView)view.findViewById(R.id.infoeffect)).setText(Effect);
+//        ImageView medicPic=view.findViewById(R.id.infopic);
+//        Picasso.get().load(ImageURL).into(medicPic);
+//
+//
+//        AlertDialog alertDialog = builder.create();
+//
+//        view.findViewById(R.id.btnOk).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                alertDialog.dismiss();
+//            }
+//
+//
+//        });
+//
+//        if(alertDialog.getWindow()!=null){
+//            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+//        }
+//
+//        alertDialog.show();
     }
+    public class CustomDialog extends Dialog {
+
+        public CustomDialog(Context context, String medicname, String company, String Effect, String ImageURL) {
+            super(context);
+            setContentView(R.layout.custom_diaolog);
+
+            // 기존 내용 설정
+            TextView infoname=findViewById(R.id.infoname);
+            infoname.setText(medicname);
+            TextView infocompany=findViewById(R.id.infocompany);
+            infocompany.setText(company);
+            TextView infoeffect=findViewById(R.id.infoeffect);
+            infoeffect.setText(Effect);
+            ImageView medicPic=findViewById(R.id.infopic);
+            Picasso.get().load(ImageURL).into(medicPic);
+
+            Button comBtn = findViewById(R.id.Com);
+            Button pregBtn = findViewById(R.id.pregnant);
+            Button dupBtn = findViewById(R.id.duplicate);
+            Button closeBtn = findViewById(R.id.btnOk);
+
+            comBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Option 1을 클릭하면 다른 액티비티로 이동
+                    Intent intent = new Intent(context, ComForbidInfo.class);
+                    intent.putExtra("medicname", medicname); // "medicname" 키와 함께 데이터 추가
+                    context.startActivity(intent);
+                    dismiss();
+                    finish();
+                }
+            });
+
+            pregBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Option 2을 클릭하면 다른 액티비티로 이동
+                    Intent intent = new Intent(context, PregForbidInfo.class);
+                    intent.putExtra("medicname", medicname); // "medicname" 키와 함께 데이터 추가
+                    context.startActivity(intent);
+                    dismiss();
+                    finish();
+                }
+            });
+
+            dupBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Option 3을 클릭하면 다른 액티비티로 이동
+                    Intent intent = new Intent(context, DuplicateInfo.class);
+                    intent.putExtra("medicname", medicname); // "medicname" 키와 함께 데이터 추가
+                    context.startActivity(intent);
+                    dismiss();
+                    finish();
+                }
+            });
+
+            closeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+        }
+    }
+
+
 }
