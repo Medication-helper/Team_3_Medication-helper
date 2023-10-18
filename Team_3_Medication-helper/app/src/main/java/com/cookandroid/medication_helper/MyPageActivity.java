@@ -125,11 +125,13 @@ public class MyPageActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 String userID = userData.getUserID();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(userID); // Firebase의 회원 DB와 연동
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User").child(userID); // Firebase의 회원 DB와 연동
+                DatabaseReference medicineRef = FirebaseDatabase.getInstance().getReference("Medicine").child(userID); // Firebase의 약 DB와 연동
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ref.removeValue(); // 사용자 제거
+                        userRef.removeValue(); // 사용자 제거
+                        medicineRef.removeValue(); // 사용자가 복용중인 약 제거
                         userData.Init(); // UserData의 모든 내용 초기화
                         Toast.makeText(getApplicationContext(), "회원탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class)); // 로그인 화면으로 돌려보냄

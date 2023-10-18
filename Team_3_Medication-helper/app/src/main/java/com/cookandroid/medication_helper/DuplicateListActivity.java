@@ -324,5 +324,4 @@ public class DuplicateListActivity extends AppCompatActivity {
         }
         return buffer.toString();
     }
-
 }
