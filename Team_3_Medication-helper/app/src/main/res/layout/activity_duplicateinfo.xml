@@ -9,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/green_border"
         android:orientation="vertical">
 
@@ -37,13 +37,13 @@
             android:textSize="22dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/SelectedmName_S"
+        <TextView
+            android:id="@+id/medicname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textColor="@color/black"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/SelectedsEffect"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
@@ -78,8 +78,8 @@
             android:textSize="22dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/SelectedmEffect_S"
+        <TextView
+            android:id="@+id/sideeffect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"

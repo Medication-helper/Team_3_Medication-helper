@@ -48,7 +48,7 @@ public class DuplicateInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comforbidinfo);
+        setContentView(R.layout.activity_duplicateinfo);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 사용 안함
         ActionBar actionBar = getSupportActionBar();
