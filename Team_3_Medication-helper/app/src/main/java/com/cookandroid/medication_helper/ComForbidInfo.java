@@ -79,49 +79,54 @@ public class ComForbidInfo extends AppCompatActivity {
                             sideeffect.setText(cForbid);
                         }
                         else {
-                            data=getXmlData(medicname);
-
-                            String []dataSplit=new String[3];
-
-                            if(TextUtils.isEmpty(data)==false){
-                                dataSplit= data.split("\n");
-                            }
-
-                            medicNameINGList[0]=medicname; // 약품명
-                            medicNameINGList[1]=dataSplit[0]; // 금기명
-                            medicNameINGList[2]=dataSplit[1]; // 유발성분명
-                            medicNameINGList[3]=dataSplit[2]; // 부작용
-
-                            runOnUiThread(new Runnable() {
+                            new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    name.setText(medicname);
-                                    if(medicNameINGList[1]!=null)
-                                        sideeffect.setText(medicNameINGList[3]);
+                                    data=getXmlData(medicname);
 
-                                    ref.child(medicNameINGList[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    String []dataSplit=new String[3];
+
+                                    if(TextUtils.isEmpty(data)==false){
+                                        dataSplit= data.split("\n");
+                                    }
+
+                                    medicNameINGList[0]=medicname; // 약품명
+                                    medicNameINGList[1]=dataSplit[0]; // 금기명
+                                    medicNameINGList[2]=dataSplit[1]; // 유발성분명
+                                    medicNameINGList[3]=dataSplit[2]; // 부작용
+
+                                    runOnUiThread(new Runnable() {
                                         @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (!snapshot.child("cForbid").exists()) { // DB에 파싱한 약품의 병용금기 정보가 적혀있지 않고
-                                                if (medicNameINGList[1] != null) { // 파싱한 약품이 병용금기 사항이 있다면
-                                                    updateSideCount("병용금기", 1); // 병용금기 사항이 있는 데이터가 하나 늘었음을 기록
-                                                    Map<String, Object> comForbidUpdate = new HashMap<>(); // DB 저장용 Map을 생성한 후
-                                                    if (medicNameINGList[2] != null) // 파싱한 데이터에 성분이 있다면
-                                                        comForbidUpdate.put("component", medicNameINGList[2]); // 성분을 Map에 저장
-                                                    if (medicNameINGList[3] != null) // 파싱한 데이터에 병용금기 사항이 있다면
-                                                        comForbidUpdate.put("cForbid", medicNameINGList[3]); // 해당 사항을 Map에 저장
-                                                    ref.child(medicNameINGList[0]).updateChildren(comForbidUpdate); // Map을 기반으로 DB에 저장
+                                        public void run() {
+                                            name.setText(medicname);
+                                            if(medicNameINGList[1]!=null)
+                                                sideeffect.setText(medicNameINGList[3]);
+
+                                            ref.child(medicNameINGList[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    if (!snapshot.child("cForbid").exists()) { // DB에 파싱한 약품의 병용금기 정보가 적혀있지 않고
+                                                        if (medicNameINGList[1] != null) { // 파싱한 약품이 병용금기 사항이 있다면
+                                                            updateSideCount("병용금기", 1); // 병용금기 사항이 있는 데이터가 하나 늘었음을 기록
+                                                            Map<String, Object> comForbidUpdate = new HashMap<>(); // DB 저장용 Map을 생성한 후
+                                                            if (medicNameINGList[2] != null) // 파싱한 데이터에 성분이 있다면
+                                                                comForbidUpdate.put("component", medicNameINGList[2]); // 성분을 Map에 저장
+                                                            if (medicNameINGList[3] != null) // 파싱한 데이터에 병용금기 사항이 있다면
+                                                                comForbidUpdate.put("cForbid", medicNameINGList[3]); // 해당 사항을 Map에 저장
+                                                            ref.child(medicNameINGList[0]).updateChildren(comForbidUpdate); // Map을 기반으로 DB에 저장
+                                                        }
+                                                    }
                                                 }
-                                            }
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-                                            Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    Toast.makeText(getApplicationContext(), "알 수 없는 에러입니다.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                         }
                                     });
                                 }
-                            });
+                            }).start();
                         }
                     }
 
