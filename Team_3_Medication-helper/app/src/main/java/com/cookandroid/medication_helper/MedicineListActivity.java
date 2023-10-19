@@ -90,9 +90,6 @@ public class MedicineListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); // 커스텀 사용
         getSupportActionBar().setCustomView(R.layout.medilisttitlebar_custom); // 커스텀 사용할 파일 위치
 
-        Button forBtn = findViewById(R.id.forbtn); // 병용금기약물 항목 이동 버튼
-        Button prgBtn = findViewById(R.id.prgbtn); // 임부금기약물 항목 이동 버튼
-        Button overBtn = findViewById(R.id.overbtn); // 효능중복약물 항목 이동 버튼
         Button delBtn = findViewById(R.id.btnalldelete); // 약품 삭제 기능 활성화 버튼
 
         userData = (UserData) getApplicationContext();
@@ -217,35 +214,6 @@ public class MedicineListActivity extends AppCompatActivity {
                 else { // 그렇지 않을 경우
                     delBtn.setText("약 목록 삭제"); // 버튼 제목 변경
                 }
-            }
-        });
-
-        /* 각자 버튼에 맞는 화면으로 이동 */
-        /* 병용 금기 약품 조회 화면으로 이동 */
-        forBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.ComForbiddenListActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-            }
-        });
-        /* 임부 금기 약품 조회 화면으로 이동 */
-        prgBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.PregnantForbiddenListActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-            }
-        });
-        /* 중복 효능 약품 조회 화면으로 이동 */
-        overBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), com.cookandroid.medication_helper.DuplicateListActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
             }
         });
 
