@@ -37,13 +37,13 @@
             android:textSize="22dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/SelectedmName_S"
+        <TextView
+            android:id="@+id/medicname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -82,15 +82,15 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <EditText
-                android:id="@+id/SelectedpForbid"
+            <TextView
+                android:id="@+id/sideeffect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:text="해당없음"
                 android:textColor="@color/black"
                 android:textSize="25dp"
-                android:textStyle="bold"
-                android:text="해당없음"/>
+                android:textStyle="bold" />
         </ScrollView>
 
 
