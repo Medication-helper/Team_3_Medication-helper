@@ -259,8 +259,8 @@ public class MainPageActivity extends AppCompatActivity implements
             @Override
             public LatLng getPosition() {
                 // 지도 시작 시 위치 좌표를 설정
-                System.out.println("첫 시작 위치 : "+lat+" "+lng);
-                return LatLng.from(lat, lng);
+                System.out.println("첫 시작 위치 : "+37.39466+" "+127.111182);
+                return LatLng.from(37.39466, 127.111182);
             }
 
             @Override
@@ -553,15 +553,24 @@ public class MainPageActivity extends AppCompatActivity implements
                             String y = element.getElementsByTagName("y").item(0).getTextContent();
                             String phone = element.getElementsByTagName("phone").item(0).getTextContent();
 
-                            //Hospital 객체 생성
-                            Hospital hospital = new Hospital(
-                                    i,
-                                    roadAddressName,
-                                    placeName,
-                                    x,
-                                    y,
-                                    phone
-                            );
+                            String text = "코로나19";
+
+                            Hospital hospital;
+
+                            if(placeName.contains(text)){
+                                continue;
+                            }
+                            else {
+                                //Hospital 객체 생성
+                                hospital = new Hospital(
+                                        i,
+                                        roadAddressName,
+                                        placeName,
+                                        x,
+                                        y,
+                                        phone
+                                );
+                            }
 
                             //Hospital 객체 리스트 searchResult에 객체를 추가한다.
                             searchResult.add(hospital);
