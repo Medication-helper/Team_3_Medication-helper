@@ -384,22 +384,30 @@ public class MedicRegisterActivity extends AppCompatActivity {
                             String [] dataSplit = data.split("\n");
                             System.out.println("dataSplit Size: "+dataSplit.length);
 
-                            System.out.print("파싱 결과 : ");
-                            System.out.print(dataResult[i]+" ");
-                            System.out.print(dataSplit[0]+" ");
-                            System.out.print(dataSplit[1]+" ");
-                            System.out.println(dataSplit[2]);
+                            if(dataSplit.length==4) {
 
-                            medicInfoList[i][0]=dataResult[i];
-                            medicInfoList[i][1]=dataSplit[0];
-                            medicInfoList[i][2]=dataSplit[1];
-                            medicInfoList[i][3]=dataSplit[2];
-                            
-                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(); // Firebase와 연동
-                            addMedicine addMedicine = new addMedicine(dataSplit[0], dataSplit[1], dataSplit[2]); // Firebase에 저장할 클래스 설정
+                                System.out.print("파싱 결과 : ");
+                                System.out.println(dataResult[i]);
+                                System.out.print(dataSplit[0] + " ");
+                                System.out.print(dataSplit[1] + " ");
+                                System.out.print(dataSplit[2] + " ");
+                                System.out.println(dataSplit[3]);
 
-                            rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue(""); // 사용자가 복용 중인 약 DB에 저장
-                            rootRef.child("MedicineList").child(dataResult[i]).setValue(addMedicine); // 약품 목록 DB에 약 추가
+                                boolean contains = dataSplit[0].contains(dataResult[i]);
+
+                                if (contains) {
+                                    medicInfoList[i][0] = dataResult[i];
+                                    medicInfoList[i][1] = dataSplit[1];
+                                    medicInfoList[i][2] = dataSplit[2];
+                                    medicInfoList[i][3] = dataSplit[3];
+
+                                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(); // Firebase와 연동
+                                    addMedicine addMedicine = new addMedicine(dataSplit[1], dataSplit[2], dataSplit[3]); // Firebase에 저장할 클래스 설정
+
+                                    rootRef.child("Medicine").child(userData.getUserID()).child(dataResult[i]).setValue(""); // 사용자가 복용 중인 약 DB에 저장
+                                    rootRef.child("MedicineList").child(dataResult[i]).setValue(addMedicine); // 약품 목록 DB에 약 추가
+                                }
+                            }
                         }
                     }
                 }).start();
@@ -596,7 +604,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
         System.out.println("약품명:"+MedicineName);
 
 
-        String queryUrl="http://apis.data.go.kr/1471000/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&item_name="+MedicineName+"&pageNo=1&numOfRows=3&type=xml";
+        String queryUrl="http://apis.data.go.kr/1471000/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01?serviceKey=RZnyfUGsOhY2tWWUv262AHpeMQYn4Idqd5cgG0rGNHPd648m5j0Pu3eiS3ewN4XhhHT%2FvuliAmF9KLJdzh1TFA%3D%3D&item_name="+MedicineName+"&pageNo=1&numOfRows=1&type=xml";
         try {
             URL url=new URL(queryUrl);
             InputStream is=url.openStream();
@@ -619,6 +627,12 @@ public class MedicRegisterActivity extends AppCompatActivity {
                         if(tag.equals("item"));
 
 
+                        //약품명
+                        else if(tag.equals("ITEM_NAME")){
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                            buffer.append("\n");
+                        }
                         //약품 회사명
                         else if(tag.equals("ENTP_NAME")){
                             xpp.next();
