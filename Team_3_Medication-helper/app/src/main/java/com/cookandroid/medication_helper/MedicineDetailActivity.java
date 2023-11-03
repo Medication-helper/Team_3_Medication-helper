@@ -2,6 +2,7 @@
  MedicineDetailActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 관리자 - DB에 등록된 약품들에 대해 저장된 부작용들을 검색하고 DB에서 삭제할 수 있습니다.
  ***************************/
 
 package com.cookandroid.medication_helper;

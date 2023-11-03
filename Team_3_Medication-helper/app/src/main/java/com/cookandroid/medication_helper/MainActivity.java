@@ -2,6 +2,7 @@
  MainActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication-Helper
+ 설명 : 로고가 띄워진 다음 가장 먼저 나오는 로그인 화면입니다.
  ***************************/
 
 package com.cookandroid.medication_helper;

@@ -2,6 +2,7 @@
  MedicineListActivity_Manager.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 관리자 - DB에 등록되어 있는 모든 약품들의 항목을 보여주고, 필요없어진 약품은 DB에서 삭제 가능
  ***************************/
 
 package com.cookandroid.medication_helper;

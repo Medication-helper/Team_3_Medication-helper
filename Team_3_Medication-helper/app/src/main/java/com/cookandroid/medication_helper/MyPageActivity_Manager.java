@@ -2,6 +2,7 @@
  MyPageActivity_Manager.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 관리자 - 마이페이지입니다.
  ***************************/
 
 package com.cookandroid.medication_helper;

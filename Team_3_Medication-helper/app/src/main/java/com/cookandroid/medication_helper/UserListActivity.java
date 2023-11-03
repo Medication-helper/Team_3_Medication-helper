@@ -1,3 +1,9 @@
+/****************************
+ UserListActivity.java
+ 작성 팀 : [02-03]
+ 프로그램명 : Medication Helper
+ 설명 : 관리자 - DB에 등록된 사용자 목록
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import android.content.DialogInterface;

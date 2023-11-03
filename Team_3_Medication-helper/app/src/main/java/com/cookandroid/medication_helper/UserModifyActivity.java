@@ -2,6 +2,7 @@
  UserModifyActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 사용자 정보 수정 기능입니다.
  ***************************/
 
 package com.cookandroid.medication_helper;

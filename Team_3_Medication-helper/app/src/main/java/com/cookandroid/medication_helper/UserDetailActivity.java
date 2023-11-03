@@ -2,6 +2,7 @@
  UserDetailActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 관리자 - 선택한 사용자에 대한 상세 정보를 보여줍니다. 내용 수정 또는 삭제 기능도 제공합니다.
  ***************************/
 
 package com.cookandroid.medication_helper;

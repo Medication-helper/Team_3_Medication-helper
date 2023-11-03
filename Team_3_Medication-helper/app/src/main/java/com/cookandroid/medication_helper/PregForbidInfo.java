@@ -1,3 +1,9 @@
+/****************************
+ PregForbidInfo.java
+ 작성팀 : [02-03]
+ 프로그램명 : Medication-Helper
+ 설명 : 환자 - 선택한 약품에 대해 임부금기 정보를 제공합니다.
+ ***************************/
 package com.cookandroid.medication_helper;
 
 import static com.cookandroid.medication_helper.FirebaseUtils.updateSideCount;

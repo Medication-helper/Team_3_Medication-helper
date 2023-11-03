@@ -2,6 +2,7 @@
  MainPageActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication-Helper
+ 설명 : Medication-Helper 환자 로그인 시 메인 페이지
  ***************************/
 
 package com.cookandroid.medication_helper;
@@ -68,6 +69,7 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+/*공공데이터에서 불러온 병원 데이터를 저장하는 객체 Hospital*/
 class Hospital{
     int index;
     String roadAddressNames;
@@ -149,12 +151,12 @@ public class MainPageActivity extends AppCompatActivity implements
 
     private int startZoomLevel=15;
 
+    //진료과 케테고리 배열
     String[] category_name_array={
             "정형외과","내과","피부과","소아과","산부인과","비뇨기과","치과","안과","이비인후과","한의원","외과","약국"
     };
 
     ArrayList<String> placeNames = new ArrayList<>();
-
     ArrayList<Hospital> searchResult = new ArrayList<>();
 
     private LabelLayer labelLayer;
@@ -233,13 +235,14 @@ public class MainPageActivity extends AppCompatActivity implements
         bottomNavigationView.setSelectedItemId(R.id.homeNav);
 
         checkPermission();
+        showAlertDialog();//현재 위치를 가져온다는 확인 팝업을 출력
 
-        showAlertDialog();
-
+        
         searchadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, placeNames);
         searchList.setAdapter(searchadapter);
 
 
+        //카카오 맵뷰
         mapView.start(new KakaoMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull KakaoMap map) {
@@ -304,6 +307,7 @@ public class MainPageActivity extends AppCompatActivity implements
             }
         });
 
+        //선택 결과 상단에 나타나는 리스트에서 항목을 선택했을 경우의 처리
         searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -311,6 +315,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
                 labelExists=labelLayer.hasLabel("selected");
 
+                //이미 선택된 항목이 존재할 경우 파란색 점으로 리셋
                 if(labelExists){
                     labelLayer.remove(labelLayer.getLabel("selected"));
                     LabelStyle style=LabelStyle.from(R.drawable.blue_dot_marker).setTextStyles(15, Color.BLACK).setZoomLevel(5);
@@ -320,6 +325,7 @@ public class MainPageActivity extends AppCompatActivity implements
 
                 }
 
+                //항목 선택 시 초록색 점으로 변경
                 for (int i = 0; i < searchResult.size(); i++) {
                     if (searchResult.get(i).get_placeName().compareTo(selectedHospital) == 0) {
                         hname.setText(searchResult.get(i).get_placeName());
@@ -402,6 +408,7 @@ public class MainPageActivity extends AppCompatActivity implements
                 .show();
     }
 
+    //권한 체크
     public void checkPermission(){
         boolean isGrant=false;
         for(String str : permission_list){
@@ -415,6 +422,7 @@ public class MainPageActivity extends AppCompatActivity implements
             ActivityCompat.requestPermissions(this,permission_list,0);
         }
     }
+    
     // 사용자가 권한 허용/거부 버튼을 눌렀을 때 호출되는 메서드
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -428,6 +436,7 @@ public class MainPageActivity extends AppCompatActivity implements
         }
     }
 
+    //현재 위치 가져오기 메서드
     public void getMyLocation(){
         manager = (LocationManager) getSystemService(LOCATION_SERVICE);
         // 권한이 모두 허용되어 있을 때만 동작하도록 한다.
@@ -446,6 +455,7 @@ public class MainPageActivity extends AppCompatActivity implements
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, listener);
         }
     }
+    
     // GPS Listener
     class GpsListener implements LocationListener {
         @Override
@@ -468,6 +478,7 @@ public class MainPageActivity extends AppCompatActivity implements
         }
     }
 
+    //현재 위치로 지도 화면 이동
     public void showMyLocation(){
         // LocationManager.GPS_PROVIDER 부분에서 null 값을 가져올 경우를 대비하여 장치
         if(myLocation == null){
@@ -528,7 +539,7 @@ public class MainPageActivity extends AppCompatActivity implements
             String type=category_name_array[i];
             System.out.println("선택 항목 : "+type);
 
-            // 주변 정보를 가져온다
+            // 사용자 위치 주변의 병원/약국 정보를 가져온다
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -632,6 +643,7 @@ public class MainPageActivity extends AppCompatActivity implements
         }
     }
 
+    //카카오 REST API로 주변 정보 가져우기
     public static String coordToAddr(double lat, double lng, String keyword) {
         String longitude=Double.toString(lng);
         String latitude=Double.toString(lat);
@@ -657,6 +669,7 @@ public class MainPageActivity extends AppCompatActivity implements
     }
 
 
+    //인증키로 JSON 형식의 데이터 끌어오기
     private static String getJSONData(String apiURL) throws Exception{
         HttpURLConnection conn = null;
         StringBuffer response = new StringBuffer();
