@@ -2,6 +2,7 @@
  SplashActivity.java
  작성 팀 : [02=-3]
  프로그램명 : Medication Helper
+ 설명 : 앱 실행 시 가장 먼저 로고를 띄워줍니다
  ***************************/
 
 package com.cookandroid.medication_helper;

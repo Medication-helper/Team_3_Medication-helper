@@ -2,6 +2,7 @@
  MedicRegisterActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 환자 - 복약 등록 화면
  ***************************/
 
 package com.cookandroid.medication_helper;
@@ -378,10 +379,10 @@ public class MedicRegisterActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         for(int i=0;i<listSize;i++){
-                            data=getXmlData(dataResult[i]);
+                            data=getXmlData(dataResult[i]);//리스트에서 해당 약품의 정보 가져오기
                             System.out.println(data);
 
-                            String [] dataSplit = data.split("\n");
+                            String [] dataSplit = data.split("\n");//줄바꿈 단위로 문자열 분할
                             System.out.println("dataSplit Size: "+dataSplit.length);
 
                             if(dataSplit.length==4) {
@@ -393,6 +394,7 @@ public class MedicRegisterActivity extends AppCompatActivity {
                                 System.out.print(dataSplit[2] + " ");
                                 System.out.println(dataSplit[3]);
 
+                                //DB에 파싱 결과 저장
                                 boolean contains = dataSplit[0].contains(dataResult[i]);
 
                                 if (contains) {

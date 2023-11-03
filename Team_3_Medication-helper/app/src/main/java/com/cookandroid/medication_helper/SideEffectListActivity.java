@@ -2,6 +2,7 @@
  SideEffectListActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : DB에 저장되어 잇는 모든 약품들 중 부작용이 있는 항목들을 제공합니다.
  ***************************/
 
 package com.cookandroid.medication_helper;

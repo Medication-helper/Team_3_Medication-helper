@@ -2,6 +2,7 @@
  MedicineListActivity.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 환자가 자신이 등록한 약품 목록과 상세정보를 확인할 수 있는 페이지
  ***************************/
 
 package com.cookandroid.medication_helper;
@@ -254,34 +255,6 @@ public class MedicineListActivity extends AppCompatActivity {
 
         CustomDialog customDialog = new CustomDialog(MedicineListActivity.this, medicname, company, Effect, ImageURL);
         customDialog.show();
-
-//        AlertDialog.Builder builder = new AlertDialog.Builder(MedicineListActivity.this,R.style.AlertDialogTheme);
-//        View view=LayoutInflater.from(MedicineListActivity.this).inflate(R.layout.custom_diaolog,(LinearLayout)findViewById(R.id.medicinfodialog));
-//
-//        builder.setView(view);
-//        ((TextView)view.findViewById(R.id.infoname)).setText(medicname);
-//        ((TextView)view.findViewById(R.id.infocompany)).setText(company);
-//        ((TextView)view.findViewById(R.id.infoeffect)).setText(Effect);
-//        ImageView medicPic=view.findViewById(R.id.infopic);
-//        Picasso.get().load(ImageURL).into(medicPic);
-//
-//
-//        AlertDialog alertDialog = builder.create();
-//
-//        view.findViewById(R.id.btnOk).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                alertDialog.dismiss();
-//            }
-//
-//
-//        });
-//
-//        if(alertDialog.getWindow()!=null){
-//            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
-//        }
-//
-//        alertDialog.show();
     }
     public class CustomDialog extends Dialog {
 
@@ -304,10 +277,10 @@ public class MedicineListActivity extends AppCompatActivity {
             Button dupBtn = findViewById(R.id.duplicate);
             Button closeBtn = findViewById(R.id.btnOk);
 
+            //병용금기 확인 버튼 클릭시 해당 액티비티로 이동
             comBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Option 1을 클릭하면 다른 액티비티로 이동
                     Intent intent = new Intent(context, ComForbidInfo.class);
                     intent.putExtra("medicname", medicname); // "medicname" 키와 함께 데이터 추가
                     context.startActivity(intent);
@@ -316,10 +289,10 @@ public class MedicineListActivity extends AppCompatActivity {
                 }
             });
 
+            //임부금기 확인 버튼 클릭시 해당 액티비티로 이동
             pregBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Option 2을 클릭하면 다른 액티비티로 이동
                     Intent intent = new Intent(context, PregForbidInfo.class);
                     intent.putExtra("medicname", medicname); // "medicname" 키와 함께 데이터 추가
                     context.startActivity(intent);
@@ -328,10 +301,10 @@ public class MedicineListActivity extends AppCompatActivity {
                 }
             });
 
+            //효능중복 확인 버튼 클릭시 해당 액티비티로 이동
             dupBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Option 3을 클릭하면 다른 액티비티로 이동
                     Intent intent = new Intent(context, DuplicateInfo.class);
                     intent.putExtra("medicname", medicname); // "medicname" 키와 함께 데이터 추가
                     context.startActivity(intent);
@@ -340,6 +313,7 @@ public class MedicineListActivity extends AppCompatActivity {
                 }
             });
 
+            //확인 버튼 클릭시 customdialog 종료
             closeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

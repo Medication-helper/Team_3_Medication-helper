@@ -2,6 +2,7 @@
  MainPageActivity_Manager.java
  작성 팀 : [02-03]
  프로그램명 : Medication Helper
+ 설명 : 관리자용 메인 액티비티. DB에 등록되어있는 약품들에 대한 부작용 통게 시각화 화면을 제공합니다.
  ***************************/
 
 package com.cookandroid.medication_helper;
